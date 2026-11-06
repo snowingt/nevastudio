@@ -25,6 +25,7 @@ const etiqueta = (f: VideoFinal) => (f.ruta.split('/').pop() ?? f.ruta).replace(
 export function Final({ session, card, carpeta, finales }: { session: SessionMeta; card: Card; carpeta: string; finales: VideoFinal[] }) {
   const [pedido, setPedido] = useState('')
   const [error, setError] = useState('')
+  const [snowEstado, setSnowEstado] = useState<string | null>(null)
   const trabaja = session.running || !!session.background?.length || !!session.pendiente
   // El pedido se queda marcado hasta que el agente se pone a trabajar en él.
   useEffect(() => {
@@ -33,6 +34,9 @@ export function Final({ session, card, carpeta, finales }: { session: SessionMet
   // En El Diff la voz la graba el usuario: lo que cambiaría lo que se dice pediría grabarla otra vez.
   const narrado = !!card.editor
   const cambios = CAMBIOS.filter((c) => !narrado || c.conVoz)
+
+  const sep = carpeta.includes('\\') ? '\\' : '/'
+  const rutaAbsoluta = (r: string) => `${carpeta}${sep}${r.replaceAll(/[\\/]/g, sep)}`
 
   async function pedir(texto: string, hacer: () => Promise<unknown>) {
     setPedido(texto)
@@ -44,6 +48,40 @@ export function Final({ session, card, carpeta, finales }: { session: SessionMet
       setError(e instanceof Error ? e.message : String(e))
     }
   }
+
+  async function despacharTelegram(f: VideoFinal) {
+    setSnowEstado('Despachando a Telegram…')
+    setError('')
+    try {
+      const res = await api<{ success: boolean; salida?: string }>('/api/snow/telegram-dispatch', {
+        tipo: 'video',
+        archivo: rutaAbsoluta(f.ruta),
+        caption: `🎬 ${session.title}\nGenerado con Snow Studio 60fps`
+      })
+      setSnowEstado(res.success ? '¡Despachado a Telegram con éxito!' : 'Error despachando a Telegram')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e))
+      setSnowEstado(null)
+    }
+  }
+
+  async function subirYoutubeCdp(f: VideoFinal) {
+    setSnowEstado('Subiendo a YouTube Studio (CDP Autónomo)…')
+    setError('')
+    try {
+      const res = await api<{ success: boolean; salida?: string }>('/api/snow/youtube-upload', {
+        video: rutaAbsoluta(f.ruta),
+        title: session.title,
+        desc: `${session.title}\n\nCreado y renderizado autónomamente con Snow Studio.\n#Shorts #SnowStudio`,
+        visibility: 'PUBLIC'
+      })
+      setSnowEstado(res.success ? '¡Publicado en YouTube Studio con éxito!' : 'Fallo en subida CDP')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e))
+      setSnowEstado(null)
+    }
+  }
+
   const mandar = (c: (typeof CAMBIOS)[number]) =>
     pedir(c.texto, () => api(`/api/sessions/${session.id}/send`, { text: `${c.pide}${narrado ? ' La voz no se toca.' : ''} Cuando acabes, vuelve a renderizar el video final.` }))
   const src = (f: VideoFinal) => `/api/sessions/${session.id}/archivo?ruta=${encodeURIComponent(f.ruta)}&t=${Math.round(f.t)}&descarga=${encodeURIComponent(f.nombre)}`
@@ -62,12 +100,29 @@ export function Final({ session, card, carpeta, finales }: { session: SessionMet
             Descargar{finales.length > 1 ? ` ${etiqueta(f)}` : ''}
           </a>
         ))}
-        {finales.map((f) => <YoutubeBoton key={`youtube:${f.ruta}`} nombre={finales.length > 1 ? etiqueta(f) : undefined} disabled={trabaja} video={{ cardId: card.id, ruta: `${carpeta}\\${f.ruta.replaceAll('/', '\\')}`, titulo: session.title }} />)}
-        <button className="final-boton" title={carpeta} onClick={() => abrir(`${carpeta}\\${finales[0].ruta.replaceAll('/', '\\')}`)}>
+        {finales.map((f) => (
+          <button key={`telegram:${f.ruta}`} className="final-boton telegram" disabled={trabaja || !!snowEstado} onClick={() => despacharTelegram(f)} title="Enviar video por Telegram a @CloudhermesnowBot">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.77-1.18 3.35-1.39 3.73-1.39.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+            </svg>
+            Telegram
+          </button>
+        ))}
+        {finales.map((f) => (
+          <button key={`cdp:${f.ruta}`} className="final-boton cdp" disabled={trabaja || !!snowEstado} onClick={() => subirYoutubeCdp(f)} title="Publicar automáticamente en YouTube Studio mediante CDP sin cuotas">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+            </svg>
+            Publicar (CDP)
+          </button>
+        ))}
+        {finales.map((f) => <YoutubeBoton key={`youtube:${f.ruta}`} nombre={finales.length > 1 ? etiqueta(f) : undefined} disabled={trabaja} video={{ cardId: card.id, ruta: rutaAbsoluta(f.ruta), titulo: session.title }} />)}
+        <button className="final-boton" title={carpeta} onClick={() => abrir(rutaAbsoluta(finales[0].ruta))}>
           <CarpetaIcono />
           Ver en la carpeta
         </button>
       </div>
+      {snowEstado && <div className="final-estado-snow">⚡ {snowEstado}</div>}
       <div className="final-cambios">
         <span className="muted small">¿Algún cambio?</span>
         {cambios.map((c) => (
