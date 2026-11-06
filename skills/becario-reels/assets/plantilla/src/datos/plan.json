@@ -1,0 +1,63 @@
+{
+  "titulo": "Un reel hecho con código",
+  "estilo": "nube",
+  "subtitulos": "linea",
+  "personaje": false,
+  "frases": [
+    {
+      "texto": "Este reel está *hecho con código.*",
+      "emocion": "[excited]",
+      "sinSubtitulos": true,
+      "escena": { "tipo": "titular", "etiqueta": "DEMO", "texto": "Este reel está / *hecho con código*", "icono": "code-xml", "en": ["código"] }
+    },
+    {
+      "texto": "Escribes *una idea* y la IA escribe el reel *entero.*",
+      "emocion": "[confident]",
+      "escena": {
+        "tipo": "chat",
+        "mensaje": "haz un reel sobre café",
+        "anotacion": "una idea",
+        "movil": { "titulo": "Café", "subtitulo": "recién hecho", "icono": "coffee" },
+        "pildora": "reel.tsx · escrito en código",
+        "en": ["Escribes", "y", "escribe", "reel", "entero"]
+      }
+    },
+    {
+      "texto": "Hace el *guion,* sincroniza la *voz,* anima cada *escena* y mide el *ritmo.*",
+      "emocion": "[playfully]",
+      "escena": { "tipo": "lista", "items": [{ "texto": "Escribe el guion", "icono": "pen-line" }, { "texto": "Sincroniza la voz", "icono": "mic" }, { "texto": "Anima cada escena", "icono": "clapperboard" }, { "texto": "Mide el ritmo", "icono": "activity" }], "en": ["guion", "voz", "escena", "ritmo"] }
+    },
+    {
+      "texto": "No es una *IA de vídeo:* es *código,* así que no gasta créditos.",
+      "emocion": "[confident]",
+      "escena": { "tipo": "comparacion", "izquierda": { "titulo": "IA de vídeo", "texto": "gasta créditos en cada intento", "icono": "film" }, "derecha": { "titulo": "Código", "texto": "cero créditos de vídeo", "icono": "code-xml" }, "ganador": "derecha", "en": ["IA", "código", "créditos"] }
+    },
+    {
+      "texto": "¿Cuánto tarda en salir? *Unos minutos.*",
+      "emocion": "[curious]",
+      "escena": { "tipo": "pregunta", "pregunta": "¿Cuánto tarda en salir?", "opciones": ["Horas", "Unos minutos", "Días"], "correcta": 1, "en": ["Cuánto", "tarda", "minutos"] }
+    },
+    {
+      "texto": "¿Pensarás que es *difícil?* Escribes *una frase* y listo.",
+      "emocion": "[mischievously]",
+      "escena": { "tipo": "objecion", "texto": "esto es muy difícil", "respuesta": "Escribes una frase", "en": ["Pensarás", "frase"] }
+    },
+    {
+      "texto": "Sale en *vertical,* con *subtítulos* y lista para subir.",
+      "emocion": "[confident]",
+      "escena": { "tipo": "ficha", "titulo": "Tu reel", "icono": "smartphone", "etiqueta": "listo", "filas": [["formato", "1080×1920"], ["subtítulos", "palabra a palabra"], ["créditos de vídeo", 0, true]], "en": ["vertical", "subtítulos", "subir"] }
+    },
+    {
+      "texto": "Y antes de entregarlo, *mide su propio ritmo.*",
+      "emocion": "[impressed]",
+      "escena": { "tipo": "editor", "hecho": "hecho con código", "palabras": ["mide", "su", "ritmo"], "sonidos": ["pop", "whoosh", "ding"], "en": ["inicio", "entregarlo", "mide", "ritmo"] }
+    },
+    {
+      "texto": "Comenta *REEL* y te cuento cómo, *paso a paso.*",
+      "emocion": "[excited]",
+      "sinSubtitulos": true,
+      "escena": { "tipo": "cta", "palabra": "REEL", "texto": "y te cuento cómo, / paso a paso", "en": ["REEL", "cuento", "paso"] }
+    }
+  ],
+  "portada": { "etiqueta": "DEMO", "lineas": ["1 IDEA", "*1 REEL*"], "icono": "clapperboard", "pegatina": "hecho con código" }
+}

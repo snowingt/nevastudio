@@ -1,0 +1,248 @@
+[
+  {
+    "id": "becario-reels",
+    "title": "Becario Reels (Cinética Fluida 60fps)",
+    "description": "Reels y TikToks dinámicos con código (Remotion + React) aplicando los 5 efectos Anti-PowerPoint: texto desde máscara, empuje cinético, cámara continua, morphing de interfaces y sincronización rítmica.",
+    "skill": "becario-reels",
+    "icon": "claqueta",
+    "etapas": [
+      {
+        "nombre": "Idea & Investigación",
+        "listo": "fuentes/investigacion.md",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Guion Cinético",
+        "listo": "guion.md",
+        "copiar": true,
+        "fase": "guion"
+      },
+      {
+        "nombre": "Locución & Whisper",
+        "listo": "public/audio.mp3",
+        "fase": "sonido"
+      },
+      {
+        "nombre": "Escenas Remotion",
+        "listo": "src/scenes/escenas.json",
+        "fase": "video"
+      },
+      {
+        "nombre": "Hoja de Contactos",
+        "listo": "salida/hoja.png",
+        "fase": "video"
+      },
+      {
+        "nombre": "Video Final 60fps",
+        "listo": "salida/reel.mp4",
+        "fase": "video"
+      },
+      {
+        "nombre": "Portada & Entrega",
+        "listo": "salida/portada.png",
+        "fase": "entrega"
+      }
+    ]
+  },
+  {
+    "id": "collage-historia",
+    "title": "Collage Historia (Recortes de Papel)",
+    "description": "Videos verticales en estilo collage editorial de revista: recortes de papel rasgado, sellos de tinta roja, etiquetas vintage y assets fotográficos en alta resolución sin tira.",
+    "skill": "collage-historia",
+    "icon": "imagen",
+    "etapas": [
+      {
+        "nombre": "Historia & Hecho",
+        "listo": "guion.txt",
+        "copiar": true,
+        "fase": "idea"
+      },
+      {
+        "nombre": "Assets Fotográficos",
+        "listo": "imagenes/*.png",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Audio & Timestamps",
+        "listo": "audio.mp3",
+        "fase": "sonido"
+      },
+      {
+        "nombre": "Composición Collage",
+        "listo": "video.json",
+        "fase": "video"
+      },
+      {
+        "nombre": "Video Renderizado",
+        "listo": "salida/*_instagram.mp4",
+        "fase": "video"
+      },
+      {
+        "nombre": "Portada & Despacho",
+        "listo": "salida/portada.png",
+        "fase": "entrega"
+      }
+    ]
+  },
+  {
+    "id": "kinetic",
+    "title": "Tipografía Cinética (Cyberpunk HUD)",
+    "description": "Videos de retención masiva con tipografía cinética sincronizada a la voz, transientes de audio, efectos HUD y avatar reactivo.",
+    "skill": "kinetic",
+    "icon": "foco",
+    "etapas": [
+      {
+        "nombre": "Guion & Transcripción",
+        "listo": "guion.md",
+        "copiar": true,
+        "fase": "guion"
+      },
+      {
+        "nombre": "Locución & Beats",
+        "listo": "audio.mp3",
+        "fase": "sonido"
+      },
+      {
+        "nombre": "Animación Tipográfica",
+        "listo": "salida/video.mp4",
+        "fase": "video"
+      },
+      {
+        "nombre": "Portada",
+        "listo": "salida/portada.png",
+        "fase": "entrega"
+      }
+    ]
+  },
+  {
+    "id": "video-el-diff",
+    "title": "El Diff",
+    "description": "Tu noticiero para TikTok o YouTube, con tu nombre, tu sello y tu despedida: le das un enlace o un tema, te escribe el guion, grabas tu voz y arma el episodio, o un short.",
+    "skill": "video-el-diff",
+    "icon": "noticiero",
+    "etapas": [
+      {
+        "nombre": "Fuentes",
+        "listo": "fuentes/tema/transcripcion.txt",
+        "muestra": "fuentes/tema/video.mp4",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Material",
+        "listo": "material.md",
+        "muestra": "{material.md,fuentes/material/**/*.{png,jpg,jpeg,webp}}",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Guion",
+        "listo": "guion.md",
+        "copiar": true,
+        "fase": "guion"
+      },
+      {
+        "nombre": "Tu voz",
+        "listo": "public/voz/narracion.wav",
+        "espera": "Graba el guion (con el celular basta) y súbelo aquí o mándalo por el chat.",
+        "fase": "sonido"
+      },
+      {
+        "nombre": "Escenas",
+        "listo": "guion.json",
+        "fase": "video"
+      },
+      {
+        "nombre": "Revisión",
+        "listo": "revision/hoja_95_*.png",
+        "fase": "video"
+      },
+      {
+        "nombre": "Video",
+        "listo": "out/el-diff-final.mp4",
+        "fase": "video"
+      },
+      {
+        "nombre": "Portada",
+        "listo": "portada.png",
+        "fase": "entrega"
+      }
+    ]
+  },
+  {
+    "id": "video-explicativo",
+    "title": "Video explicativo 3D",
+    "description": "Un video que explica cualquier tema en el tiempo que necesite: un solo mundo 3D que la cámara recorre sin cortes, el texto palabra por palabra y tu personaje.",
+    "skill": "video-explicativo",
+    "icon": "pizarra",
+    "etapas": [
+      {
+        "nombre": "Investigación",
+        "listo": "fuentes/investigacion.md",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Guion",
+        "listo": "guion.md",
+        "copiar": true,
+        "fase": "guion"
+      },
+      {
+        "nombre": "Tu voz",
+        "listo": "fuentes/voz/original.wav",
+        "fase": "sonido"
+      },
+      {
+        "nombre": "Revisión",
+        "listo": "revision/borrador-*.png",
+        "fase": "video"
+      },
+      {
+        "nombre": "Video",
+        "listo": "out/!(render*|borrador*|_*).mp4",
+        "fase": "video"
+      },
+      {
+        "nombre": "Portada",
+        "listo": "portada.png",
+        "fase": "entrega"
+      }
+    ]
+  },
+  {
+    "id": "video-documental",
+    "title": "Documental",
+    "description": "Videos estilo documental cinematográfico para YouTube horizontal o vertical.",
+    "skill": "video-documental",
+    "icon": "video",
+    "etapas": [
+      {
+        "nombre": "Idea",
+        "listo": "idea.md",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Guion",
+        "listo": "guion.md",
+        "fase": "guion"
+      },
+      {
+        "nombre": "Video",
+        "listo": "out/documental.mp4",
+        "fase": "video"
+      }
+    ]
+  },
+  {
+    "id": "nuevo-estilo",
+    "title": "Nuevo estilo personalizado",
+    "description": "Crea una card con tu propio estilo de video para agregarlo a la barra de Snow Studio.",
+    "skill": "crear-estilo",
+    "icon": "mas",
+    "etapas": [
+      {
+        "nombre": "Configuración",
+        "listo": "estilo.json",
+        "fase": "idea"
+      }
+    ]
+  }
+]

@@ -1,0 +1,568 @@
+{
+ "voz": null,
+ "motor": "sin-voz",
+ "duracion": 30.936,
+ "frases": [
+  {
+   "texto": "Este reel está hecho con código.",
+   "inicio": 0.35,
+   "fin": 2.146,
+   "palabras": [
+    {
+     "w": "Este",
+     "t": 0.35,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "reel",
+     "t": 0.677,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "está",
+     "t": 0.84,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "hecho",
+     "t": 1.166,
+     "clave": true,
+     "g": 0
+    },
+    {
+     "w": "con",
+     "t": 1.493,
+     "clave": true,
+     "g": 0
+    },
+    {
+     "w": "código.",
+     "t": 1.656,
+     "clave": true,
+     "g": 0
+    }
+   ]
+  },
+  {
+   "texto": "Escribes una idea y la IA escribe el reel entero.",
+   "inicio": 2.496,
+   "fin": 5.435,
+   "palabras": [
+    {
+     "w": "Escribes",
+     "t": 2.496,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "una",
+     "t": 2.986,
+     "clave": true,
+     "g": 1
+    },
+    {
+     "w": "idea",
+     "t": 3.312,
+     "clave": true,
+     "g": 1
+    },
+    {
+     "w": "y",
+     "t": 3.639,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "la",
+     "t": 3.802,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "IA",
+     "t": 3.965,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "escribe",
+     "t": 4.129,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "el",
+     "t": 4.618,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "reel",
+     "t": 4.782,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "entero.",
+     "t": 4.945,
+     "clave": true,
+     "g": 2
+    }
+   ]
+  },
+  {
+   "texto": "Hace el guion, sincroniza la voz, anima cada escena y mide el ritmo.",
+   "inicio": 5.785,
+   "fin": 10.023,
+   "palabras": [
+    {
+     "w": "Hace",
+     "t": 5.785,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "el",
+     "t": 6.111,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "guion,",
+     "t": 6.274,
+     "clave": true,
+     "g": 3
+    },
+    {
+     "w": "sincroniza",
+     "t": 6.598,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "la",
+     "t": 7.251,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "voz,",
+     "t": 7.414,
+     "clave": true,
+     "g": 4
+    },
+    {
+     "w": "anima",
+     "t": 7.737,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "cada",
+     "t": 8.227,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "escena",
+     "t": 8.554,
+     "clave": true,
+     "g": 5
+    },
+    {
+     "w": "y",
+     "t": 9.043,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "mide",
+     "t": 9.207,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "el",
+     "t": 9.533,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "ritmo.",
+     "t": 9.697,
+     "clave": true,
+     "g": 6
+    }
+   ]
+  },
+  {
+   "texto": "No es una IA de vídeo: es código, así que no gasta créditos.",
+   "inicio": 10.373,
+   "fin": 14.122,
+   "palabras": [
+    {
+     "w": "No",
+     "t": 10.373,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "es",
+     "t": 10.536,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "una",
+     "t": 10.7,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "IA",
+     "t": 11.026,
+     "clave": true,
+     "g": 7
+    },
+    {
+     "w": "de",
+     "t": 11.189,
+     "clave": true,
+     "g": 7
+    },
+    {
+     "w": "vídeo:",
+     "t": 11.353,
+     "clave": true,
+     "g": 7
+    },
+    {
+     "w": "es",
+     "t": 11.839,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "código,",
+     "t": 12.002,
+     "clave": true,
+     "g": 8
+    },
+    {
+     "w": "así",
+     "t": 12.652,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "que",
+     "t": 12.979,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "no",
+     "t": 13.142,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "gasta",
+     "t": 13.305,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "créditos.",
+     "t": 13.632,
+     "clave": false,
+     "g": -1
+    }
+   ]
+  },
+  {
+   "texto": "¿Cuánto tarda en salir? Unos minutos.",
+   "inicio": 14.472,
+   "fin": 16.431,
+   "palabras": [
+    {
+     "w": "¿Cuánto",
+     "t": 14.472,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "tarda",
+     "t": 14.798,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "en",
+     "t": 15.125,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "salir?",
+     "t": 15.288,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "Unos",
+     "t": 15.614,
+     "clave": true,
+     "g": 9
+    },
+    {
+     "w": "minutos.",
+     "t": 15.941,
+     "clave": true,
+     "g": 9
+    }
+   ]
+  },
+  {
+   "texto": "¿Pensarás que es difícil? Escribes una frase y listo.",
+   "inicio": 16.781,
+   "fin": 19.72,
+   "palabras": [
+    {
+     "w": "¿Pensarás",
+     "t": 16.781,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "que",
+     "t": 17.271,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "es",
+     "t": 17.434,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "difícil?",
+     "t": 17.597,
+     "clave": true,
+     "g": 10
+    },
+    {
+     "w": "Escribes",
+     "t": 18.087,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "una",
+     "t": 18.577,
+     "clave": true,
+     "g": 11
+    },
+    {
+     "w": "frase",
+     "t": 18.903,
+     "clave": true,
+     "g": 11
+    },
+    {
+     "w": "y",
+     "t": 19.23,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "listo.",
+     "t": 19.393,
+     "clave": false,
+     "g": -1
+    }
+   ]
+  },
+  {
+   "texto": "Sale en vertical, con subtítulos y lista para subir.",
+   "inicio": 20.07,
+   "fin": 23.168,
+   "palabras": [
+    {
+     "w": "Sale",
+     "t": 20.07,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "en",
+     "t": 20.396,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "vertical,",
+     "t": 20.559,
+     "clave": true,
+     "g": 12
+    },
+    {
+     "w": "con",
+     "t": 21.209,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "subtítulos",
+     "t": 21.372,
+     "clave": true,
+     "g": 13
+    },
+    {
+     "w": "y",
+     "t": 22.026,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "lista",
+     "t": 22.189,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "para",
+     "t": 22.515,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "subir.",
+     "t": 22.842,
+     "clave": false,
+     "g": -1
+    }
+   ]
+  },
+  {
+   "texto": "Y antes de entregarlo, mide su propio ritmo.",
+   "inicio": 23.518,
+   "fin": 26.127,
+   "palabras": [
+    {
+     "w": "Y",
+     "t": 23.518,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "antes",
+     "t": 23.682,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "de",
+     "t": 24.008,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "entregarlo,",
+     "t": 24.171,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "mide",
+     "t": 24.984,
+     "clave": true,
+     "g": 14
+    },
+    {
+     "w": "su",
+     "t": 25.311,
+     "clave": true,
+     "g": 14
+    },
+    {
+     "w": "propio",
+     "t": 25.474,
+     "clave": true,
+     "g": 14
+    },
+    {
+     "w": "ritmo.",
+     "t": 25.801,
+     "clave": true,
+     "g": 14
+    }
+   ]
+  },
+  {
+   "texto": "Comenta REEL y te cuento cómo, paso a paso.",
+   "inicio": 26.477,
+   "fin": 29.086,
+   "palabras": [
+    {
+     "w": "Comenta",
+     "t": 26.477,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "REEL",
+     "t": 26.967,
+     "clave": true,
+     "g": 15
+    },
+    {
+     "w": "y",
+     "t": 27.13,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "te",
+     "t": 27.294,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "cuento",
+     "t": 27.457,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "cómo,",
+     "t": 27.783,
+     "clave": false,
+     "g": -1
+    },
+    {
+     "w": "paso",
+     "t": 28.27,
+     "clave": true,
+     "g": 16
+    },
+    {
+     "w": "a",
+     "t": 28.597,
+     "clave": true,
+     "g": 16
+    },
+    {
+     "w": "paso.",
+     "t": 28.76,
+     "clave": true,
+     "g": 16
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,55 @@
+{
+ "nombre": "ejemplo-tortuga",
+ "estilo": "arena",
+ "voz": "voz",
+ "clips": {"corre": "clips/liebre_corre.mp4", "duerme": "clips/liebre_duerme.mp4", "meta": "clips/tortuga_meta.mp4"},
+ "imagenes": {"liebre": "imagenes/liebre.png", "tortuga": "imagenes/tortuga.png"},
+ "fuente_clips": "Animación de ejemplo",
+ "personaje": {"carpeta": "personaje", "pose": "normal"},
+ "frases": [
+  {"titular": ["UNA FÁBULA", "**2.500 AÑOS**@años"], "pose": "sorpresa",
+   "elementos": [
+    {"tipo": "imagen", "src": "tortuga", "x": 330, "y": 760, "ancho": 420},
+    {"tipo": "sello", "texto": "-500 a. C.", "en": "años", "x": 760, "y": 640},
+    {"tipo": "icono", "nombre": "libro", "en": "aprender", "x": 760, "y": 1040, "ancho": 260}]},
+  {"titular": "LA **LIEBRE**", "transicion": "papel",
+   "elementos": [
+    {"tipo": "clip", "src": "corre", "x": 540, "y": 760},
+    {"tipo": "etiqueta", "texto": "LA MÁS RÁPIDA", "fondo": "acento", "en": "rapida", "x": 700, "y": 1130}]},
+  {"titular": ["LA CARRERA"],
+   "elementos": [
+    {"tipo": "imagen", "src": "liebre", "x": 320, "y": 760, "ancho": 380},
+    {"tipo": "imagen", "src": "tortuga", "en": "tortuga", "x": 760, "y": 900, "ancho": 380},
+    {"tipo": "icono", "nombre": "rayo", "en": "disparada", "x": 380, "y": 1120, "ancho": 200}]},
+  {"titular": ["A MITAD", "¿UNA **SIESTA**?@siesta"], "pose": "sorpresa",
+   "elementos": [
+    {"tipo": "clip", "src": "duerme", "x": 540, "y": 760},
+    {"tipo": "nota", "texto": "voy sobrada…", "en": "sobrada", "x": 800, "y": 1100, "giro": 6}]},
+  {"titular": ["**PASO A PASO**"], "pose": "normal",
+   "elementos": [
+    {"tipo": "pasos", "textos": ["Un paso", "Otro paso", "Sin parar"], "en_cada": ["tortuga", "paso#2", "parar"], "x": 540, "y": 850}]},
+  {"titular": ["LA META"],
+   "elementos": [
+    {"tipo": "clip", "src": "meta", "x": 540, "y": 760},
+    {"tipo": "sello", "texto": "GANA", "color": "acento", "en": "meta", "x": 760, "y": 1080}]},
+  {"titular": ["¿TE SUENA?"], "transicion": "papel", "pose": "pulgar",
+   "elementos": [
+    {"tipo": "cuadricula", "n": 12, "columnas": 4, "llena": "arriba", "x": 540, "y": 760, "ancho": 760},
+    {"tipo": "sello", "texto": "A MEDIAS", "en": "medias", "x": 560, "y": 1120}]},
+  {"titular": ["**UN POCO**", "CADA DÍA@cada"],
+   "elementos": [
+    {"tipo": "icono", "nombre": "reloj", "x": 360, "y": 780, "ancho": 300},
+    {"tipo": "imagen", "src": "tortuga", "en": "tortuga", "x": 760, "y": 1000, "ancho": 340}]},
+  {"titular": ["10 MIN > 1 ATRACÓN"],
+   "elementos": [
+    {"tipo": "precio", "texto": "10 min/día", "x": 360, "y": 720},
+    {"tipo": "etiqueta", "texto": "un atracón al mes", "en": "atracon", "x": 680, "y": 1000},
+    {"tipo": "tachar", "sobre": 1, "en": "mes"}]},
+  {"titular": ["COMENTA"], "pose": "pulgar",
+   "elementos": [
+    {"tipo": "palabra", "texto": "TORTUGA", "x": 540, "y": 760},
+    {"tipo": "icono", "nombre": "regalo", "en": "plan", "x": 540, "y": 1080, "ancho": 240}]}
+ ],
+ "portada": {"etiqueta": "UNA FÁBULA", "linea": "por qué no aprendes", "grande": "IA", "remate": "en 10 minutos al día",
+             "imagen": "tortuga", "pose": "sorpresa"}
+}
