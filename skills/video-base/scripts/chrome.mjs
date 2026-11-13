@@ -101,7 +101,7 @@ export function banderasTarjeta(gpu, sistema = process.platform) {
 
 /**
  * Cuántos de estos navegadores hay a la vez en toda la máquina, sumando los hilos (ADR 0011): uno por cada 5 GB. `procesos()`
- * de El Diff mira solo su script: tres hilos abrían 12, y cada uno ocupa ~1 GB. Con 4 en 16 GB, los cuatro peores momentos
+ * de Noticiero mira solo su script: tres hilos abrían 12, y cada uno ocupa ~1 GB. Con 4 en 16 GB, los cuatro peores momentos
  * de la prueba quedaron por debajo de 0,3 GB libres. Uno más no abre con menos de `LIBRE` libres, salvo que no haya ninguno.
  * Tras `PACIENCIA` abre igual: un navegador de más es mejor que un agente colgado.
  */

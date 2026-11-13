@@ -29,7 +29,7 @@ const salio = (red: RedId, p: Pick<Publicacion, 'estado' | 'cuando'>, ahora = Da
 
 /**
  * Una sección con el navegador de las redes a la derecha, como el de los hilos, mientras está abierto y `puede`: en Mis
- * videos, lo que sube Sloth; en Opciones, donde inicias sesión.
+ * videos, lo que sube Neva Studio; en Opciones, donde inicias sesión.
  */
 export function ConNavegadorRedes({ puede = true, children }: { puede?: boolean; children: ReactNode }) {
   const abierto = useNavegadorAbierto(NAVEGADOR_REDES)
@@ -145,8 +145,8 @@ const PERFIL: Record<RedId, (usuario: string) => string> = {
 
 /**
  * Una red: su logo, el ritmo (se elige en «Mis videos») en una línea, la cuenta en un desplegable y, debajo, lo que
- * tiene programado. TikTok se conecta iniciando sesión en el navegador de la app, que se abre a la derecha (fuera de la ventana de Sloth, en Edge); una red con `token` (Instagram), pegando un token de su API, que
- * Sloth prueba antes de guardarlo y renueva solo. Como las llaves, vive en las variables de tu usuario de Windows. Debajo,
+ * tiene programado. TikTok se conecta iniciando sesión en el navegador de la app, que se abre a la derecha (fuera de la ventana de Neva Studio, en Edge); una red con `token` (Instagram), pegando un token de su API, que
+ * Neva Studio prueba antes de guardarlo y renueva solo. Como las llaves, vive en las variables de tu usuario de Windows. Debajo,
  * lo que falló en ella y ya no está en el disco (`sinVideo`): sigue en la nube, y se reintenta o se quita desde aquí.
  */
 function RedFila(props: { red: Red; conectando: 'abriendo' | 'app' | 'edge' | null; onConectar(): void; onCuenta(cuenta: string | null): void; onNube(): void; sinVideo: Publicacion[]; onCambio(): void; calendario?: CalendarioRedTipo; ahora: number }) {
@@ -209,7 +209,7 @@ function RedFila(props: { red: Red; conectando: 'abriendo' | 'app' | 'edge' | nu
       {props.conectando === 'app' && (
         <p className="muted small fila-extra">
           {red.enEdge
-            ? 'Google no deja entrar desde una app. Al terminar en Edge, la ventana se cierra y la sesión pasa sola a Sloth.'
+            ? 'Google no deja entrar desde una app. Al terminar en Edge, la ventana se cierra y la sesión pasa sola a Neva Studio.'
             : `Lo más rápido: «Usar código QR» con la app de ${red.nombre} en tu teléfono. Si entras con Google, se abre Edge para ese paso.`}
         </p>
       )}
@@ -252,7 +252,7 @@ function RedFila(props: { red: Red; conectando: 'abriendo' | 'app' | 'edge' | nu
               <a href="https://developers.facebook.com/apps/creation/" target="_blank" rel="noreferrer">
                 developers.facebook.com
               </a>{' '}
-              con tu Facebook y crea una app (por ejemplo, «Sloth») con el caso de uso «Administrar mensajes y contenido en Instagram», sin portafolio comercial.
+              con tu Facebook y crea una app (por ejemplo, «Neva Studio») con el caso de uso «Administrar mensajes y contenido en Instagram», sin portafolio comercial.
             </li>
             <li>
               En ese caso de uso, abre «Configuración de la API con el inicio de sesión de Instagram» → «Generar tokens de acceso» → «Agregar cuenta», y entra
@@ -262,7 +262,7 @@ function RedFila(props: { red: Red; conectando: 'abriendo' | 'app' | 'edge' | nu
               Instagram tiene que estar vinculado a una Página de Facebook.
             </li>
             <li>
-              Pulsa «Generar token», cópialo y pégalo aquí. Sloth lo prueba al momento. El que empieza con IGAA lo renueva solo cada día; del EAA, te avisa
+              Pulsa «Generar token», cópialo y pégalo aquí. Neva Studio lo prueba al momento. El que empieza con IGAA lo renueva solo cada día; del EAA, te avisa
               una semana antes si caduca.
             </li>
           </ol>
@@ -290,7 +290,7 @@ const TOKEN_CLOUDFLARE = `https://dash.cloudflare.com/profile/api-tokens?${new U
   permissionGroupKeys: JSON.stringify([{ key: 'workers_scripts', type: 'edit' }, { key: 'workers_r2', type: 'edit' }]),
   accountId: '*',
   zoneId: 'all',
-  name: 'Sloth',
+  name: 'Neva Studio',
 })}`
 
 /**
@@ -328,7 +328,7 @@ function MontarNube(props: { onLista(): void; onCancelar(): void }) {
           <a href="https://dash.cloudflare.com/?to=/:account/r2/overview" target="_blank" rel="noreferrer">
             R2
           </a>
-          , donde esperan los videos. Pide una tarjeta, pero no cobra hasta pasar de 10 GB, y Sloth borra cada video al publicarlo.
+          , donde esperan los videos. Pide una tarjeta, pero no cobra hasta pasar de 10 GB, y Neva Studio borra cada video al publicarlo.
         </li>
         <li>
           Abre{' '}
@@ -337,7 +337,7 @@ function MontarNube(props: { onLista(): void; onCancelar(): void }) {
           </a>
           , que ya trae los permisos. Baja hasta «Continuar», pulsa «Crear token» y cópialo.
         </li>
-        <li>Pégalo aquí. Sloth monta tu nube en menos de un minuto y la pone al día con cada versión.</li>
+        <li>Pégalo aquí. Neva Studio monta tu nube en menos de un minuto y la pone al día con cada versión.</li>
       </ol>
       <div className="opcion-fila">
         <input type="password" autoFocus placeholder="Pega el token de Cloudflare" value={token} onChange={(e) => setToken(e.target.value)} autoComplete="off" />
@@ -519,7 +519,7 @@ export function ResumenRedes(props: { marcas?: MarcasDeRedes; videos: VideoHecho
           </button>
         )
       })}
-      {cuenta('enCola') > 0 && <span className="muted small">Los de la cola los sube Sloth solo.</span>}
+      {cuenta('enCola') > 0 && <span className="muted small">Los de la cola los sube Neva Studio solo.</span>}
       {faltan.length > 0 && (
         <button className="primary" title="Eliges cuáles van ahora; cada uno, al siguiente hueco libre" onClick={() => setRevisar(faltan)}>
           Revisar y programar ({faltan.length})

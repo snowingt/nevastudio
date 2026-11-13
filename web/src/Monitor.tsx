@@ -69,7 +69,10 @@ type Marco = { url: string; n: number }
  * segundos, y en el mismo proceso congelaba la interfaz entera cada vez que el agente cambiaba algo. Se habla con ella por
  * `postMessage`, que no necesita el mismo sitio (`server/origen.ts` la deja abrir así).
  */
-const aparte = (ruta: string) => `${location.protocol}//${location.hostname === '127.0.0.1' ? 'localhost' : '127.0.0.1'}:${location.port}${ruta}`
+const aparte = (ruta: string) => {
+  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') return ruta
+  return `${location.protocol}//${location.hostname === '127.0.0.1' ? 'localhost' : '127.0.0.1'}:${location.port}${ruta}`
+}
 
 /**
  * Todo lo que suena en el monitor, sea el motor en vivo, la vista en vivo de la skill o el render: qué se ve, el segundo,

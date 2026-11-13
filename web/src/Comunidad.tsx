@@ -10,7 +10,7 @@ import { Liberar } from './Liberar'
 import './Comunidad.css'
 
 /**
- * «Comunidad»: lo que la gente hace con Sloth y cómo lo hace, como la comunidad de Skool y en la paleta de Sloth. Arriba
+ * «Comunidad»: lo que la gente hace con Neva Studio y cómo lo hace, como la comunidad de Skool y en la paleta de Sloth. Arriba
  * se escribe; luego, las secciones y el feed: lo fijado y después lo que tuvo actividad más reciente (un comentario la
  * sube). Cada publicación se abre en grande, con sus comentarios. A la derecha, la comunidad con sus números y tu perfil.
  * Vive en el Worker del cobro (`licencias/src/comunidad.ts`), por `server/comunidad.ts`, y se vuelve a pedir cada minuto
@@ -29,10 +29,10 @@ import './Comunidad.css'
 
 export const SECCIONES: { id: CategoriaComunidad; nombre: string; icono: NombreIcono; escribe: string }[] = [
   { id: 'general', nombre: 'General', icono: 'hilo', escribe: 'Preséntate, platica o comparte lo que quieras.' },
-  { id: 'hice', nombre: 'Lo que hice', icono: 'video', escribe: 'Cuenta cómo lo hiciste: el estilo, lo que le pediste a Sloth, lo que aprendiste.' },
+  { id: 'hice', nombre: 'Lo que hice', icono: 'video', escribe: 'Cuenta cómo lo hiciste: el estilo, lo que le pediste a Neva Studio, lo que aprendiste.' },
   { id: 'ayuda', nombre: 'Ayuda', icono: 'pregunta', escribe: '¿Qué no te sale? Cuéntalo y, si puedes, pega una captura.' },
-  { id: 'mejoras', nombre: 'Mejoras', icono: 'flechaArriba', escribe: '¿Qué le falta a Sloth o qué debería hacer mejor?' },
-  { id: 'anuncios', nombre: 'Anuncios', icono: 'megafono', escribe: '¿Qué hay de nuevo en Sloth?' },
+  { id: 'mejoras', nombre: 'Mejoras', icono: 'flechaArriba', escribe: '¿Qué le falta a Neva Studio o qué debería hacer mejor?' },
+  { id: 'anuncios', nombre: 'Anuncios', icono: 'megafono', escribe: '¿Qué hay de nuevo en Neva Studio?' },
 ]
 const seccionDe = (id: CategoriaComunidad) => SECCIONES.find((s) => s.id === id) ?? SECCIONES[0]
 
@@ -256,13 +256,13 @@ export function Comunidad() {
         <main className="com-centro">
           <header className="com-cabeza">
             <div>
-              <div className="com-antetitulo">Sloth</div>
+              <div className="com-antetitulo">Neva Studio</div>
               <h1>Comunidad</h1>
             </div>
             {feed && <Avisos sinLeer={feed.avisos} onAbrir={setAbierta} onLeidos={() => setFeed((f) => f && { ...f, avisos: 0 })} />}
           </header>
 
-          {yo?.creador && <Liberar onAnunciar={(v) => abrirCompositor('anuncios', `Sloth ${v} ya es para todos`)} />}
+          {yo?.creador && <Liberar onAnunciar={(v) => abrirCompositor('anuncios', `Neva Studio ${v} ya es para todos`)} />}
 
           {escribiendo && escribe ? (
             <div className="com-nueva">
@@ -331,7 +331,7 @@ export function Comunidad() {
                 <img src="/icon.svg" alt="" />
               </div>
               <strong>{seccion ? `Aún no hay nada en ${seccionDe(seccion).nombre}` : 'Aún no hay nada aquí'}</strong>
-              <p>{seccion === 'anuncios' ? 'Lo nuevo de Sloth saldrá aquí.' : 'Sé el primero: preséntate o comparte un video que hiciste con Sloth.'}</p>
+              <p>{seccion === 'anuncios' ? 'Lo nuevo de Neva Studio saldrá aquí.' : 'Sé el primero: preséntate o comparte un video que hiciste con Neva Studio.'}</p>
             </div>
           )}
 
@@ -363,8 +363,8 @@ export function Comunidad() {
               <img src="/icon.svg" alt="" />
             </div>
             <div className="com-comunidad-cuerpo">
-              <h2>Comunidad Sloth</h2>
-              <p>Lo que la gente hace con Sloth y cómo lo hace. Comparte tus videos, pregunta lo que no te sale y pide lo que le falta.</p>
+              <h2>Comunidad Neva Studio</h2>
+              <p>Lo que la gente hace con Neva Studio y cómo lo hace. Comparte tus videos, pregunta lo que no te sale y pide lo que le falta.</p>
               <div className="com-numeros">
                 <div>
                   <strong>{feed ? feed.miembros.toLocaleString('es-MX') : '–'}</strong>
@@ -483,7 +483,7 @@ function Bienvenida({ yo, onNombre, onPresentarse, onComentar }: { yo: Yo; onNom
   const [oculta, setOculta] = useState(() => localStorage.getItem('comunidad:bienvenida') === 'no')
   const pasos = [
     { hecho: !!yo.nombre, texto: 'Ponte tu nombre y tu foto', accion: onNombre },
-    { hecho: yo.publicaciones > 0, texto: 'Preséntate: quién eres y qué quieres hacer con Sloth', accion: onPresentarse },
+    { hecho: yo.publicaciones > 0, texto: 'Preséntate: quién eres y qué quieres hacer con Neva Studio', accion: onPresentarse },
     { hecho: yo.comentarios > 0, texto: 'Comenta un video que hizo alguien', accion: onComentar },
   ]
   const hechos = pasos.filter((p) => p.hecho).length
@@ -1144,7 +1144,7 @@ function Comentar(props: {
   )
 }
 
-const MOTIVOS = ['Es spam o publicidad', 'Es ofensivo o agresivo', 'No tiene que ver con Sloth', 'Otro']
+const MOTIVOS = ['Es spam o publicidad', 'Es ofensivo o agresivo', 'No tiene que ver con Neva Studio', 'Otro']
 
 /** Reportar una publicación o un comentario: por qué, y le llega al creador. Con 3 reportes deja de verse hasta que lo revise. */
 function Reportar({ que, onListo, onCerrar }: { que: 'publicación' | 'comentario'; onListo(motivo: string): Promise<void>; onCerrar(): void }) {
@@ -1180,7 +1180,7 @@ function Reportar({ que, onListo, onCerrar }: { que: 'publicación' | 'comentari
         {listo ? (
           <>
             <h2 id="com-reportar-titulo">Gracias</h2>
-            <p>El creador de Sloth lo va a revisar. Si más personas lo reportan, deja de verse mientras tanto.</p>
+            <p>El creador de Neva Studio lo va a revisar. Si más personas lo reportan, deja de verse mientras tanto.</p>
             <div className="com-caja-pie">
               <button className="esc-listo" autoFocus onClick={onCerrar}>
                 Listo
@@ -1190,7 +1190,7 @@ function Reportar({ que, onListo, onCerrar }: { que: 'publicación' | 'comentari
         ) : (
           <>
             <h2 id="com-reportar-titulo">Reportar {que === 'publicación' ? 'esta publicación' : 'este comentario'}</h2>
-            <p>¿Qué tiene? Solo lo ve el creador de Sloth.</p>
+            <p>¿Qué tiene? Solo lo ve el creador de Neva Studio.</p>
             <div className="com-motivos" role="radiogroup">
               {MOTIVOS.map((m) => (
                 <button key={m} role="radio" aria-checked={motivo === m} className={motivo === m ? 'on' : ''} onClick={() => setMotivo(m)}>
@@ -1300,7 +1300,7 @@ function fraseDe(a: AvisoComunidad) {
 }
 
 /** Tu nombre y tu foto: así te ven en la comunidad. */
-/** Qué sigue en el roadmap de sloth.vancci.org: un voto por persona, que se puede cambiar; el de un Fundador vale dos. */
+/** Qué sigue en el roadmap de nevastudio.app: un voto por persona, que se puede cambiar; el de un Fundador vale dos. */
 function Votar({ roadmap, fundador, onVoto }: { roadmap: RoadmapComunidad; fundador: boolean; onVoto(r: RoadmapComunidad): void }) {
   const [enviando, setEnviando] = useState('')
   const [error, setError] = useState('')
@@ -1426,7 +1426,7 @@ function Perfil({ yo, onListo, onCerrar }: { yo: Yo; onListo(a: Autor): void; on
         {yo.insignia === 'fundador' && (
           <label className="com-creditos">
             <input type="checkbox" checked={creditos} onChange={(e) => setCreditos(e.target.checked)} />
-            <span>Salir con este nombre en los créditos de los Fundadores, en sloth.vancci.org</span>
+            <span>Salir con este nombre en los créditos de los Fundadores, en nevastudio.app</span>
           </label>
         )}
         {error && <p className="bad small">{error}</p>}

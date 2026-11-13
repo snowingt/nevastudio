@@ -43,9 +43,9 @@ const MAC12 = MAC && process.env.SLOTH_MAC12 === '1'
 const ELECTRON_MAC12 = '43.8.7'
 if (MAC12 && (process.arch !== 'x64' || process.versions.node.split('.')[0] !== '22')) throw new Error('La de macOS 12 se compila en un Mac con Intel y con Node 22 (su Node viaja dentro de la app).')
 /** El nombre de sus archivos, `-mac12-` en la de macOS 12: el cobro los tiene juntos. */
-const NOMBRE_MAC = MAC12 ? 'Sloth-${version}-mac12-${arch}.${ext}' : 'Sloth-${version}-mac-${arch}.${ext}'
+const NOMBRE_MAC = MAC12 ? 'NevaStudio-${version}-mac12-${arch}.${ext}' : 'NevaStudio-${version}-mac-${arch}.${ext}'
 /** El cobro de Sloth (`licencias/`): de ahí bajan el instalador y las actualizaciones. */
-const COBRO = 'https://api.sloth.vancci.org'
+const COBRO = 'https://api.nevastudio.app'
 const VERSION = JSON.parse(readFileSync(join(REPO, 'package.json'), 'utf8')).version
 const SIN_INSTALADOR = process.argv.includes('--sin-instalador')
 /** Lo que trae esta versión, en un renglón (`novedad.txt`): va en latest.yml y la app lo enseña sobre «Actualizar». */
@@ -214,14 +214,14 @@ if (WINDOWS) {
 // nombre que enseña Windows (el Administrador de tareas). En Windows lleva koffi, con el que Sloth.exe le pide anclarla.
 // Linux pide además una página de la app.
 const ventana = {
-  name: 'sloth',
-  productName: 'Sloth',
+  name: 'nevastudio',
+  productName: 'Neva Studio',
   version: VERSION,
-  description: 'Sloth',
-  author: 'Sloth',
-  homepage: 'https://sloth.vancci.org',
+  description: 'Neva Studio',
+  author: 'Neva Studio',
+  homepage: 'https://nevastudio.app',
   // En Linux, el nombre con que el escritorio junta la ventana con su icono.
-  desktopName: 'sloth.desktop',
+  desktopName: 'nevastudio.desktop',
   main: 'main.cjs',
   dependencies: WINDOWS ? { koffi: instalada('koffi') } : {}
 }
@@ -285,11 +285,10 @@ const hechos = await empaquetar({
   targets: objetivo,
   publish: 'never',
   config: {
-    // El mismo nombre ante Windows que la 0.2: lo ya anclado y los avisos siguen siendo de Sloth.
-    appId: 'Sloth.App',
+    appId: 'app.nevastudio.desktop',
     electronVersion: MAC12 ? ELECTRON_MAC12 : JSON.parse(readFileSync(join(REPO, 'node_modules', 'electron', 'package.json'), 'utf8')).version,
-    productName: 'Sloth',
-    copyright: 'Sloth',
+    productName: 'Neva Studio',
+    copyright: 'Neva Studio',
     directories: { app: VENTANA, output: join(DIST, 'instalador') },
     files: ['**/*', '!ayudante.exe'],
     extraFiles: WINDOWS ? fuera : [],
@@ -304,9 +303,9 @@ const hechos = await empaquetar({
       perMachine: false,
       runAfterFinish: true,
       createDesktopShortcut: true,
-      shortcutName: 'Sloth',
-      uninstallDisplayName: 'Sloth',
-      artifactName: 'Sloth-Setup-${version}.${ext}',
+      shortcutName: 'Neva Studio',
+      uninstallDisplayName: 'Neva Studio',
+      artifactName: 'NevaStudio-Setup-${version}.${ext}',
       installerIcon: ICONO,
       uninstallerIcon: ICONO,
       include: join(REPO, 'scripts', 'instalador.nsh'),
@@ -318,22 +317,19 @@ const hechos = await empaquetar({
       category: 'public.app-category.video',
       artifactName: NOMBRE_MAC,
       ...(MAC12 ? { minimumSystemVersion: '12.0' } : {}),
-      // Sin certificado, firma ad hoc: sin ninguna, macOS dice que Sloth «está dañada». Con ella, se
-      // abre una vez desde Configuración → Privacidad y seguridad → «Abrir de todos modos».
       identity: MAC_FIRMADA ? undefined : '-',
       hardenedRuntime: MAC_FIRMADA,
       notarize: MAC_FIRMADA,
       entitlements: join(REPO, 'scripts', 'mac.entitlements'),
       entitlementsInherit: join(REPO, 'scripts', 'mac.entitlements'),
-      // La voz se graba en la interfaz: sin esto, macOS ni siquiera pregunta por el micrófono.
-      extendInfo: { NSMicrophoneUsageDescription: 'Sloth graba tu voz para los videos.' }
+      extendInfo: { NSMicrophoneUsageDescription: 'Neva Studio graba tu voz para los videos.' }
     },
     dmg: { artifactName: NOMBRE_MAC },
     linux: {
       icon: ICONO_PNG,
       category: 'AudioVideo',
-      synopsis: 'Cada skill es una card: describes el trabajo y el agente lo hace a la vista.',
-      artifactName: 'Sloth-${version}-linux-${arch}.${ext}',
+      synopsis: 'Neva Studio: Suite de Automatización de Video con Agentes de IA.',
+      artifactName: 'NevaStudio-${version}-linux-${arch}.${ext}',
       syncDesktopName: true
     },
     // La app va en español: de los 55 idiomas de Chromium solo hacen falta el suyo y el inglés, al que recurre.

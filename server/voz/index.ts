@@ -26,7 +26,7 @@ import { integrado } from '../navegador-agente.ts'
  * sesión de Google no la tiene ningún agente. Google no deja iniciar sesión dentro de una app, así que se entra en Edge
  * (Chrome en Mac) con su perfil, `data/voz/perfil`, y las cookies de Google pasan a la página (`copiarSesion`).
  * Si la página la pierde, se vuelven a pasar de Edge sin preguntar; solo si Edge también la perdió hay que volver a
- * entrar. Sin la ventana de Sloth (Sloth en Edge), se genera en ese Edge, sin ventana. Probado el 29 de octubre de 2026:
+ * entrar. Sin la ventana de Neva Studio (Sloth en Edge), se genera en ese Edge, sin ventana. Probado el 29 de octubre de 2026:
  * Google acepta en la app la sesión copiada, y una frase sale en unos 4 s; un guion de 6 minutos, en unos 100 s.
  *
  * Una voz a la vez, en fila: los videos de un lote no se pisan la página. El WAV (24 kHz, mono) lo baja el botón
@@ -45,7 +45,7 @@ const URL_VOZ = 'https://aistudio.google.com/generate-speech'
 const BIENVENIDA = /^https:\/\/aistudio\.google\.com\/(onboarding|welcome)\b/
 const SIN_BIENVENIDA = 'AI Studio te pide aceptar sus términos la primera vez. Pulsa «Conectar con Google» (Opciones → Voz) y acéptalos en la ventana que se abre: se cierra sola al terminar.'
 const ENTRAR = `https://accounts.google.com/ServiceLogin?continue=${encodeURIComponent(URL_VOZ)}`
-/** El del script con que El Diff generaba antes la voz: si dejó abierto su Edge, con el mismo perfil, se usa ese. */
+/** El del script con que Noticiero generaba antes la voz: si dejó abierto su Edge, con el mismo perfil, se usa ese. */
 const PUERTO = 9336
 /**
  * Donde se entra con Google, el primero que haya: en Windows Edge, que viene con el sistema; en Mac Chrome, que es el que
@@ -64,7 +64,7 @@ type Cookie = { name: string; value: string; domain: string; path: string; expir
 export function voz(app: string) {
   const carpeta = join(app, 'data', 'voz')
   const descargas = join(carpeta, 'descargas')
-  // El perfil del Edge donde se entra con Google. El del script viejo de El Diff ya tiene la sesión: se usa mientras no
+  // El perfil del Edge donde se entra con Google. El del script viejo de Noticiero ya tiene la sesión: se usa mientras no
   // haya uno de Sloth.
   const nuevo = join(carpeta, 'perfil')
   const viejo = join(process.env.LOCALAPPDATA ?? join(homedir(), '.cache'), 'video-el-diff', 'aistudio')
@@ -167,7 +167,7 @@ export function voz(app: string) {
   }
 
   /**
-   * Pasa la sesión de Google del Edge a la página de la app (sin la ventana de Sloth, se queda en Edge, que es donde se
+   * Pasa la sesión de Google del Edge a la página de la app (sin la ventana de Neva Studio, se queda en Edge, que es donde se
    * genera). `false` si Edge no la tiene. Antes abre AI Studio en Edge, para que Google renueve lo que haga falta.
    */
   async function copiarSesion(): Promise<boolean> {
@@ -208,7 +208,7 @@ export function voz(app: string) {
   // ── La página de AI Studio ──────────────────────────────────────────────────────────────────────────────────────
 
   /**
-   * La página donde se trabaja: la del navegador integrado o, sin la ventana de Sloth, una pestaña del Edge sin ventana.
+   * La página donde se trabaja: la del navegador integrado o, sin la ventana de Neva Studio, una pestaña del Edge sin ventana.
    * `bajarA` pone la carpeta de lo que baje; `soltar` la deja.
    */
   async function pagina(): Promise<{ page: Page; bajarA(carpeta: string): Promise<void>; soltar(): Promise<void> }> {
@@ -270,7 +270,7 @@ export function voz(app: string) {
         if (correo !== cuenta) (cuenta = correo), guardarCuenta()
         break
       }
-      // Sin la ventana de Sloth la página ya es la de Edge: no hay de dónde pasarla.
+      // Sin la ventana de Neva Studio la página ya es la de Edge: no hay de dónde pasarla.
       if (intento === 0 && integrado()?.voz && (await copiarSesion().catch(() => false))) continue
       cuenta = null
       guardarCuenta()

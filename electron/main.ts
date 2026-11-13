@@ -26,7 +26,8 @@ import { opcionesClicDerecho } from './clic-derecho.ts'
 import { archivos, huella, huellas, nombreCopia, quitarViejos, respaldar } from '../server/originales.ts'
 import { MODELOS_VIEJOS } from './modelos-viejos.ts'
 import { iniciarNavegador, ventanaDelNavegador } from './navegador.ts'
-import type { ActualizacionSloth } from '../shared/types.ts'
+import { ensureRuntimes } from './bootstrap.ts'
+import type { ActualizacionNevaStudio } from '../shared/types.ts'
 
 /** En el repo: la dirección del servidor que ya levantó `npm start`. */
 const SOLO_VENTANA = process.env.SLOTH_VENTANA
@@ -42,8 +43,8 @@ const DATOS = MAC ? join(homedir(), 'Library', 'Application Support', 'Sloth') :
 /** La carpeta de Sloth.exe. */
 const RAIZ = dirname(process.execPath)
 const APP = SOLO_VENTANA ? (process.env.SLOTH_APP ?? process.cwd()) : WINDOWS ? join(RAIZ, 'app') : DATOS
-/** El cobro de Sloth (`licencias/`): de ahí bajan el instalador y las actualizaciones. */
-const COBRO = 'https://api.sloth.vancci.org'
+/** Endpoint del servicio de actualizaciones y licencias. */
+const COBRO = process.env.LICENCIA_ENDPOINT ?? 'https://api.nevastudio.app'
 /**
  * En Mac, electron-updater solo pone la versión nueva en una app firmada por Apple (scripts/compilar.mjs). Sin firma,
  * «Actualizar» abre en el navegador la descarga de la nueva, que se instala encima.
@@ -56,7 +57,7 @@ const LUGAR = join(APP, 'data', 'ventana.json')
 /** Existe si marcaste «No volver a mostrar» en el aviso al cerrar. */
 const SIN_AVISO = join(APP, 'data', 'sin-aviso-al-cerrar.json')
 /** --bg de web/src/styles.css: el fondo mientras carga y el de la barra de título. */
-const FONDO = '#0f0e0c'
+const FONDO = '#09090b'
 /** Cada cuánto se pregunta si hay versión nueva. */
 const CADA = 6 * 3600_000
 /**
@@ -77,10 +78,10 @@ const INTENTOS = 5
 let ventana: BrowserWindow | undefined
 let servidor: ChildProcess | undefined
 let registro: WriteStream | undefined
-/** El servidor ya dijo «Sloth en …»: la ventana puede cargar la interfaz. */
+/** El servidor ya dijo «Neva Studio en …»: la ventana puede cargar la interfaz. */
 let listo = !!SOLO_VENTANA
 let cerrando = false
-let actualizacion: ActualizacionSloth = { actual: app.getVersion(), ...(A_MANO && { aMano: true }) }
+let actualizacion: ActualizacionNevaStudio = { actual: app.getVersion(), ...(A_MANO && { aMano: true }) }
 /** La descarga en curso: cancelarla la da por muerta. */
 let bajada: CancellationToken | undefined
 let avanzo = 0
@@ -92,7 +93,7 @@ let avisarListo = () => {}
 const servidorListo = new Promise<void>((ok) => (avisarListo = ok))
 
 // Su propio nombre ante Windows: la ventana se junta con el acceso anclado y los avisos salen a nombre de Sloth.
-app.setAppUserModelId(SOLO_VENTANA ? 'Sloth.Dev' : 'Sloth.App')
+app.setAppUserModelId(SOLO_VENTANA ? 'NevaStudio.Dev' : 'NevaStudio.App')
 app.setPath('userData', join(APP, 'data', 'ventana'))
 nativeTheme.themeSource = 'dark'
 
@@ -101,7 +102,7 @@ else {
   mudarPerfil()
   app.on('second-instance', () => abrir())
   app.on('activate', () => abrir())
-  // Cerrar la ventana cierra Sloth entera, también en Mac: el servidor y lo que lanzó se detienen (`before-quit`).
+  // Cerrar la ventana cierra Neva Studio entera, también en Mac: el servidor y lo que lanzó se detienen (`before-quit`).
   app.on('window-all-closed', () => app.quit())
   app.on('before-quit', () => {
     cerrando = true
@@ -131,6 +132,9 @@ async function iniciar() {
   Menu.setApplicationMenu(menu())
   iniciarNavegador(APP)
   abrir()
+  void ensureRuntimes(join(app.getPath('userData'), 'runtimes')).catch((err) => {
+    console.warn('Bootstrap runtimes check:', err?.message || err)
+  })
   if (SOLO_VENTANA) return
   mkdirSync(join(APP, 'data'), { recursive: true })
   registro = createWriteStream(REGISTRO)
@@ -139,7 +143,7 @@ async function iniciar() {
     if (!WINDOWS) await prepararApp()
     await prepararSkills()
   } catch (e) {
-    anotar(`No se pudo poner esta versión de Sloth: ${e instanceof Error ? e.message : e}`)
+    anotar(`No se pudo poner esta versión de Neva Studio: ${e instanceof Error ? e.message : e}`)
   }
   arrancar()
   actualizaciones()
@@ -151,13 +155,13 @@ function abrir() {
   const { maximizada, ...medidas } = lugar()
   const v = new BrowserWindow({
     ...medidas,
-    title: 'Sloth',
+    title: 'Neva Studio',
     show: false,
     backgroundColor: FONDO,
     // En Windows 11, la barra de título y el borde del color de Sloth (Electron los vuelve a pintar al enfocarla). En
     // Windows 10 solo se oscurecen.
     accentColor: FONDO,
-    // La compilada lleva el logo en Sloth.exe y en Sloth.app; en el repo es electron.exe, con el suyo. Linux lo pide siempre.
+    // La compilada lleva el logo en NevaStudio.exe y en NevaStudio.app; en el repo es electron.exe, con el suyo. Linux lo pide siempre.
     icon: MAC || (WINDOWS && app.isPackaged) ? undefined : app.isPackaged ? join(process.resourcesPath, 'icon.png') : join(APP, 'assets', WINDOWS ? 'icon.ico' : 'icon.png'),
     webPreferences: { preload: join(__dirname, 'preload.cjs'), sandbox: true, autoplayPolicy: 'no-user-gesture-required' }
   })
@@ -176,7 +180,7 @@ function abrir() {
     if (d.reason === 'clean-exit') return
     caidas = [...caidas.filter((t) => Date.now() - t < 60_000), Date.now()]
     if (caidas.length <= 3) v.reload()
-    else if (caidas.length === 4) dialog.showErrorBox('Sloth', 'La ventana se cerró varias veces seguidas. Recárgala con Ctrl+R: los agentes y tus archivos siguen trabajando.')
+    else if (caidas.length === 4) dialog.showErrorBox('Neva Studio', 'La ventana se cerró varias veces seguidas. Recárgala con Ctrl+R: los agentes y tus archivos siguen trabajando.')
   })
   v.on('close', (e) => {
     // Solo si el servidor es de esta ventana: si no (el repo, o Sloth ya abierta de otra forma), cerrarla no detiene nada.
@@ -199,10 +203,10 @@ async function avisarAlCerrar(v: BrowserWindow) {
   avisando = true
   const { response, checkboxChecked } = await dialog.showMessageBox(v, {
     type: 'question',
-    title: 'Sloth',
-    message: '¿Cerrar Sloth?',
+    title: 'Neva Studio',
+    message: '¿Cerrar Neva Studio?',
     detail: 'Se cierra por completo, sin quedarse de fondo: se detiene todo lo que esté haciendo, también los videos a medias.',
-    buttons: ['Cerrar Sloth', 'Cancelar'],
+    buttons: ['Cerrar Neva Studio', 'Cancelar'],
     defaultId: 0,
     cancelId: 1,
     // Botones normales: si no, Windows los pinta como enlaces grandes con flecha.
@@ -407,7 +411,7 @@ function arrancar() {
   s.stdout!.on('data', escribir)
   s.stderr!.on('data', escribir)
   s.on('error', (e) => {
-    dialog.showErrorBox('Sloth', `No se pudo abrir Sloth: ${e.message}`)
+    dialog.showErrorBox('Neva Studio', `No se pudo abrir Neva Studio: ${e.message}`)
     salir()
   })
   s.on('exit', termino)
@@ -416,7 +420,7 @@ function arrancar() {
 function escribir(d: Buffer) {
   registro?.write(d)
   // Lo que escribe el servidor al quedar escuchando (server/index.ts).
-  if (!listo && String(d).includes('Sloth en ')) marcarListo()
+  if (!listo && String(d).includes('Neva Studio en ')) marcarListo()
 }
 
 function marcarListo() {
@@ -437,7 +441,7 @@ function termino(codigo: number | null) {
     if (!ventana) app.quit()
     return
   }
-  dialog.showMessageBoxSync({ type: 'warning', title: 'Sloth', message: 'Sloth se cerró.', detail: `Lo que pasó está en el registro:\n${REGISTRO}` })
+  dialog.showMessageBoxSync({ type: 'warning', title: 'Neva Studio', message: 'Sloth se cerró.', detail: `Lo que pasó está en el registro:\n${REGISTRO}` })
   salir()
 }
 

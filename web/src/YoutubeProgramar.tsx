@@ -158,7 +158,7 @@ export function RevisionYoutube({ cardId, ruta, cerrar, onCambio }: { cardId?: s
       await guardar()
       const r = await api<{ encolados: number }>('/api/youtube/programar', { borradores: listos.map((v) => borradores[v.huella]) })
       dispatchEvent(new Event('sloth-youtube'))
-      setAviso(`${r.encolados} ${r.encolados === 1 ? 'video en cola' : 'videos en cola'}. Sloth los sube de uno en uno y YouTube los publica a su hora.`)
+      setAviso(`${r.encolados} ${r.encolados === 1 ? 'video en cola' : 'videos en cola'}. Neva Studio los sube de uno en uno y YouTube los publica a su hora.`)
       setElegidos(new Set())
       await leer()
       onCambio?.()

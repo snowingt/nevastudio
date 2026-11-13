@@ -21,7 +21,7 @@ const escribir = (f: string, texto: string) => (mkdirSync(dirname(f), { recursiv
 test('la card dice qué cambiaste en su skill y en video-base, y vuelve a la original sin perder lo tuyo', async (t) => {
   t.after(() => rmSync(casa, { recursive: true, force: true }))
   for (const raiz of [originales, join(casa, '.claude', 'skills')]) {
-    escribir(join(raiz, 'video-el-diff', 'SKILL.md'), '# El Diff\nLee video-base.\n')
+    escribir(join(raiz, 'video-el-diff', 'SKILL.md'), '# Noticiero\nLee video-base.\n')
     escribir(join(raiz, 'video-el-diff', 'guion', 'tono.md'), 'seco\n')
     escribir(join(raiz, 'video-el-diff', 'logo.png'), 'png')
     escribir(join(raiz, 'video-base', 'PORTADA.md'), 'portada\n')
@@ -30,7 +30,7 @@ test('la card dice qué cambiaste en su skill y en video-base, y vuelve a la ori
   const skills = join(casa, '.claude', 'skills')
   // Lo que le pidió el usuario a su agente, un CRLF que no cambia nada, lo que guarda la skill y una skill que no es suya.
   writeFileSync(join(skills, 'video-el-diff', 'guion', 'tono.md'), 'alegre\n')
-  writeFileSync(join(skills, 'video-el-diff', 'SKILL.md'), '# El Diff\r\nLee video-base.\r\n')
+  writeFileSync(join(skills, 'video-el-diff', 'SKILL.md'), '# Noticiero\r\nLee video-base.\r\n')
   rmSync(join(skills, 'video-el-diff', 'logo.png'))
   writeFileSync(join(skills, 'video-base', 'PORTADA.md'), 'portada roja\n')
   escribir(join(skills, 'video-el-diff', 'huellas', 'registro.jsonl'), '{}\n')
@@ -100,12 +100,12 @@ test('al estrenar una versión se va lo que ya no trae, pero no lo que cambiaste
   const nueva = join(raiz, 'nueva')
   const actual = join(raiz, 'actual')
   for (const base of [vieja, actual]) {
-    escribir(join(base, 'video-el-diff', 'SKILL.md'), '# el diff\n')
+    escribir(join(base, 'video-el-diff', 'SKILL.md'), '# noticiero\n')
     escribir(join(base, 'video-el-diff', 'scripts', 'costo.py'), 'print(1)\n')
     escribir(join(base, 'video-el-diff', 'scripts', 'voz.py'), 'print(2)\n')
     escribir(join(base, 'video-el-diff', 'viejo', 'solo.md'), 'nada\n')
   }
-  escribir(join(nueva, 'video-el-diff', 'SKILL.md'), '# el diff nuevo\n')
+  escribir(join(nueva, 'video-el-diff', 'SKILL.md'), '# noticiero nuevo\n')
   // El usuario cambió uno de los que se van, y tiene lo suyo (sus huellas), que ninguna versión trajo.
   escribir(join(actual, 'video-el-diff', 'scripts', 'voz.py'), 'print(3)\n')
   escribir(join(actual, 'video-el-diff', 'huellas', 'registro.jsonl'), '{}\n')

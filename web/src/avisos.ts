@@ -17,7 +17,7 @@ import type { AvisoComunidad, Card, SessionMeta } from '../../shared/types'
 type Aviso = 'notificaciones' | 'sonido'
 /**
  * Los interruptores de Opciones, encendidos de entrada. Las notificaciones, además, necesitan el permiso del navegador;
- * en la ventana de Sloth (electron/main.ts) se da solo, y salen como avisos de Windows a nombre de Sloth.
+ * en la ventana de Neva Studio (electron/main.ts) se da solo, y salen como avisos de Windows a nombre de Sloth.
  */
 export const encendido = (a: Aviso) => localStorage.getItem(`avisos:${a}`) !== '0'
 export const encender = (a: Aviso, si: boolean) => localStorage.setItem(`avisos:${a}`, si ? '1' : '0')
@@ -71,7 +71,7 @@ export function useAvisos(p: { sessions: SessionMeta[]; cards: Card[]; openId: s
   }, [p.openId])
 
   useEffect(() => {
-    document.title = p.sinVer ? `(${p.sinVer}) Sloth` : 'Sloth'
+    document.title = p.sinVer ? `(${p.sinVer}) Neva Studio` : 'Neva Studio'
   }, [p.sinVer])
 }
 
@@ -139,7 +139,7 @@ export function avisarAnuncio(avisos: AvisoComunidad[], abrir: (publicacion: str
   if (!a) return
   localStorage.setItem('avisos:anuncio', a.creado)
   if (encendido('sonido')) sonar()
-  void notificar({ titulo: `${a.de.nombre || 'Sloth'} publicó un anuncio`, cuerpo: a.sobre, abre: a.publicacion, ids: [] }, abrir)
+  void notificar({ titulo: `${a.de.nombre || 'Neva Studio'} publicó un anuncio`, cuerpo: a.sobre, abre: a.publicacion, ids: [] }, abrir)
 }
 
 /** Las notificaciones que siguen en la esquina de Windows, por cada hilo que nombran. */
@@ -150,7 +150,7 @@ export async function notificar({ titulo, cuerpo, abre, ids }: Nota, abrir?: (id
   if (!encendido('notificaciones') || !('Notification' in window) || Notification.permission !== 'granted') return
   const n = new Notification(titulo, { body: cuerpo, icon: await icono(), silent: true })
   n.onclick = () => {
-    // Una ventana que no está al frente no puede traerse sola: se lo pide a la ventana de Sloth.
+    // Una ventana que no está al frente no puede traerse sola: se lo pide a la ventana de Neva Studio.
     if (window.sloth) window.sloth.traer()
     else window.focus()
     if (abre) abrir?.(abre)
@@ -180,7 +180,7 @@ function icono() {
 }
 
 /**
- * Dos notas suaves que suben, hechas con Web Audio: sin archivos de sonido. La ventana de Sloth deja sonar siempre; un
+ * Dos notas suaves que suben, hechas con Web Audio: sin archivos de sonido. La ventana de Neva Studio deja sonar siempre; un
  * navegador, solo a una página que ya pulsaste desde que cargó: tras una recarga, el primero puede no oírse.
  */
 export function sonar() {
@@ -206,7 +206,7 @@ export function sonar() {
 
 /**
  * El permiso de notificaciones que el navegador le da a Sloth, al día: se vuelve a leer al volver a la ventana, que es
- * cuando lo pudiste cambiar en sus ajustes. En la ventana de Sloth siempre está dado.
+ * cuando lo pudiste cambiar en sus ajustes. En la ventana de Neva Studio siempre está dado.
  */
 export function usePermiso() {
   const leer = () => ('Notification' in window ? Notification.permission : 'sin-api')

@@ -8,7 +8,7 @@ import './Licencia.css'
 const dinero = (n: number) => `$${n.toLocaleString('es-MX')}`
 const fecha = (iso?: string) => (iso ? new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' }) : '')
 /** La página de Sloth: ahí se apoya, y tiene los términos y el aviso de privacidad. */
-const PAGINA = 'https://sloth.vancci.org'
+const PAGINA = 'https://nevastudio.app'
 /** La versión de los términos que acepta quien crea su cuenta: la de `TERMINOS` en la página. */
 const TERMINOS = '2026-10-30'
 /** Cada cuántos inicios sale el recordatorio a quien no apoya. */
@@ -20,7 +20,7 @@ const apoya = (l?: Licencia) => !!l?.activa && l.plan !== 'cuenta'
 const apoyar = () => window.open(`${PAGINA}/#apoyar`, '_blank')
 
 /**
- * Sloth es gratis (`server/licencia.ts`). Cada `CADA` inicios, a quien no apoya le recuerda que puede hacerlo, sin
+ * Neva Studio es gratis (`server/licencia.ts`). Cada `CADA` inicios, a quien no apoya le recuerda que puede hacerlo, sin
  * bloquear nada: «Recordarme más tarde» vuelve a contar desde cero. Un inicio es una ventana nueva (`sessionStorage`).
  */
 export function Recordatorio() {
@@ -46,14 +46,14 @@ export function Recordatorio() {
   if (!abierto || !licencia) return null
   return createPortal(
     <div className="modal-backdrop" onClick={luego}>
-      <div className="modal licencia-caja" role="dialog" aria-modal aria-label="Apoya a Sloth" onClick={(e) => e.stopPropagation()}>
+      <div className="modal licencia-caja" role="dialog" aria-modal aria-label="Apoya a Neva Studio" onClick={(e) => e.stopPropagation()}>
         {clave ? (
           <Clave licencia={licencia} onCambio={(l) => (setLicencia(l), apoya(l) && setAbierto(false))} onVolver={() => setClave(false)} />
         ) : (
           <>
-            <Cabeza titulo="Sloth es gratis">
+            <Cabeza titulo="Neva Studio es gratis">
               La hace una sola persona. Si te sirve, <b>apóyala al mes</b>: quien apoya recibe lo nuevo antes y decide qué sale
-              primero. Mira lo que viene en sloth.vancci.org.
+              primero. Mira lo que viene en nevastudio.app.
             </Cabeza>
             <div className="licencia-pie">
               <button className="primary" autoFocus onClick={() => (apoyar(), luego())}>
@@ -87,7 +87,7 @@ function Clave({ licencia, aviso, onCambio, onVolver }: { licencia: Licencia; av
     setError('')
     try {
       const l = await api<Licencia>('/api/licencia/clave', { clave })
-      if (!l.activa) setError(l.estado === 'pending' ? 'Todavía no se confirma el pago de esa clave.' : 'Ese apoyo ya terminó. Puedes renovarlo en sloth.vancci.org.')
+      if (!l.activa) setError(l.estado === 'pending' ? 'Todavía no se confirma el pago de esa clave.' : 'Ese apoyo ya terminó. Puedes renovarlo en nevastudio.app.')
       onCambio(l)
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
@@ -101,7 +101,7 @@ function Clave({ licencia, aviso, onCambio, onVolver }: { licencia: Licencia; av
       <Cabeza titulo="Escribe tu clave">
         {aviso ?? (
           <>
-            <b>Te llegó a tu correo</b> al apoyar en sloth.vancci.org, en «Tu clave de Sloth» (si no lo ves, revisa spam o promociones).
+            <b>Te llegó a tu correo</b> al apoyar en nevastudio.app, en «Tu clave de Neva Studio» (si no lo ves, revisa spam o promociones).
             {licencia.plan === 'cuenta' && ' Tu cuenta de la comunidad se queda: es la misma con tu correo.'}
           </>
         )}
@@ -109,7 +109,7 @@ function Clave({ licencia, aviso, onCambio, onVolver }: { licencia: Licencia; av
       <form onSubmit={usarClave}>
         <label>
           Tu clave
-          <input className="mono" autoFocus placeholder="SLOTH-XXXX-XXXX-XXXX-XXXX" value={clave} onChange={(e) => setClave(e.target.value)} autoComplete="off" spellCheck={false} />
+          <input className="mono" autoFocus placeholder="NEVA-XXXX-XXXX-XXXX-XXXX" value={clave} onChange={(e) => setClave(e.target.value)} autoComplete="off" spellCheck={false} />
         </label>
         <span className="muted small">Sirve en dos computadoras a la vez. Si ya la usas en otra, también está en sus Opciones.</span>
         {error && <p className="bad small">{error}</p>}
@@ -158,7 +158,7 @@ export function Unirse({ onListo }: { onListo(): void }) {
           licencia={enviada}
           aviso={
             <>
-              <b>Te la mandamos a {email.trim()}</b>, en «Tu cuenta de Sloth» (si no lo ves, revisa spam o promociones).
+              <b>Te la mandamos a {email.trim()}</b>, en «Tu cuenta de Neva Studio» (si no lo ves, revisa spam o promociones).
             </>
           }
           onCambio={(l) => l.activa && onListo()}
@@ -170,7 +170,7 @@ export function Unirse({ onListo }: { onListo(): void }) {
   return (
     <div className="licencia-caja licencia-unirse">
       <Cabeza titulo="Entra a la comunidad">
-        Mira qué hace la gente con Sloth y cómo, y enseña lo tuyo. Crea tu cuenta gratis con tu correo: ahí te llega tu clave.
+        Mira qué hace la gente con Neva Studio y cómo, y enseña lo tuyo. Crea tu cuenta gratis con tu correo: ahí te llega tu clave.
       </Cabeza>
       <form onSubmit={unirse}>
         <label>
@@ -251,7 +251,7 @@ export function SuscripcionOpciones() {
       : !pagado
         ? l.plan === 'cuenta'
           ? 'Tienes tu cuenta gratis de la comunidad'
-          : 'Sloth es gratis: si te sirve, apóyala'
+          : 'Neva Studio es gratis: si te sirve, apóyala'
         : l.estado === 'authorized'
           ? `${l.monto ? `${dinero(l.monto)} ${cada}` : 'Activo'}${l.pagadaHasta ? ` · próximo cobro el ${fecha(l.pagadaHasta)}` : ''}`
           : l.estado === 'pagado' && l.activa
@@ -331,7 +331,7 @@ export function SuscripcionOpciones() {
           onConfirm={() => api<Licencia>('/api/licencia/cancelar', {}).then(setL)}
           onClose={() => setCancelando(false)}
         >
-          Dejamos de cobrarte desde ahora, sin penalización. Sloth sigue siendo gratis; lo que ya pagaste vale hasta el{' '}
+          Dejamos de cobrarte desde ahora, sin penalización. Neva Studio sigue siendo gratis; lo que ya pagaste vale hasta el{' '}
           {fecha(l.pagadaHasta)}. Te damos un folio de la cancelación.
         </Confirm>
       )}

@@ -351,7 +351,7 @@ function Muestra({ sessionId, archivos, writing, copiar }: { sessionId: string; 
 
 /**
  * Un texto de la etapa. Si se lee en voz alta (`copiar`), «Copiar» nace arriba a la derecha, acompaña la lectura
- * mientras bajas y copia el texto entero. No se parte en el primer `##`: en El Diff, antes va la intro, que también se lee.
+ * mientras bajas y copia el texto entero. No se parte en el primer `##`: en Noticiero, antes va la intro, que también se lee.
  */
 function Texto({ url, copiar }: { url: string; copiar?: boolean }) {
   const [text, setText] = useState('')

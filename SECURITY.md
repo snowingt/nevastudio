@@ -3,7 +3,7 @@
 ## Reportar un problema
 
 Si encuentras una vulnerabilidad, **no abras un issue público**: escríbenos a
-[soporte@vancci.org](mailto:soporte@vancci.org) con los pasos para reproducirla. Te respondemos en un máximo de
+[soporte@snowstudio.app](mailto:soporte@snowstudio.app) con los pasos para reproducirla. Te respondemos en un máximo de
 3 días hábiles y te avisamos cuando esté arreglada.
 
 ## Lo que debes saber antes de usar Sloth

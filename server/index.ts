@@ -43,6 +43,10 @@ import { licencia } from './licencia.ts' // suscripción
 import { Sessions } from './sessions.ts'
 import { mantenerVoz } from './voz-viva.ts'
 import { avisoDeVideos } from '../shared/limites.ts'
+import { profileHardware } from './services/hardware-profiler.ts'
+import { generateFastTTS, cloneLocalVoice, getVoiceLibrary } from './services/voice-engine.ts'
+import { handlePiAgentChat } from './services/pi-agent-controller.ts'
+import { batchFactory } from './batch-factory.ts'
 import { eventosEnVivo } from './eventos-en-vivo.ts'
 import { enviarCliente } from './enviar-cliente.ts'
 import { cambiosDeCard, carpetaSkill, configClaudeDev, duplicateCard, enlazarSkills, enlazarSkillsCodex, guardarSkillTuya, readCards, removeCard, seriesDe, SKILLS, skillRef, volverAOriginal } from './skills.ts'
@@ -326,6 +330,139 @@ async function api(req: IncomingMessage, res: ServerResponse, url: URL): Promise
   const path = url.pathname
   const method = req.method ?? 'GET'
 
+  if (path === '/api/hardware' && method === 'GET') {
+    const profile = await profileHardware(APP)
+    send(res, 200, profile)
+    return true
+  }
+
+  if (path === '/api/voz/tts-rapido' && method === 'POST') {
+    const b = await body<{ text: string; voice?: string; rate?: string; outputAudio?: string; outputTimestamps?: string }>(req)
+    if (!b.text) return send(res, 400, { error: 'El parámetro text es requerido' }), true
+    const audioOut = b.outputAudio || join(APP, 'data', 'voces', `tts_${Date.now()}.mp3`)
+    const tsOut = b.outputTimestamps || join(APP, 'data', 'voces', `tts_${Date.now()}.json`)
+    try {
+      const resTTS = await generateFastTTS({ text: b.text, voice: b.voice, rate: b.rate, outputAudio: audioOut, outputTimestamps: tsOut, appPath: APP })
+      send(res, 200, resTTS)
+    } catch (e: any) {
+      send(res, 500, { error: e.message || String(e) })
+    }
+    return true
+  }
+
+  if (path === '/api/voz/clonar' && method === 'POST') {
+    const b = await body<{ refAudio: string; name: string; text: string; speed?: number }>(req)
+    if (!b.refAudio || !b.text) return send(res, 400, { error: 'Faltan parámetros: refAudio y text requeridos' }), true
+    const audioOut = join(APP, 'data', 'voces', `clonada_${Date.now()}.wav`)
+    try {
+      const resClone = await cloneLocalVoice({ refAudio: b.refAudio, name: b.name || 'Voz Clonada', text: b.text, speed: b.speed, outputAudio: audioOut, appPath: APP })
+      send(res, 200, resClone)
+    } catch (e: any) {
+      send(res, 500, { error: e.message || String(e) })
+    }
+    return true
+  }
+
+  if (path === '/api/voz/biblioteca' && method === 'GET') {
+    send(res, 200, getVoiceLibrary(APP))
+    return true
+  }
+
+  if (path === '/api/skills/install' && method === 'POST') {
+    const b = await body<{ url: string }>(req)
+    if (!b.url) return send(res, 400, { error: 'Falta parámetro url' }), true
+    const repoName = b.url.split('/').pop()?.replace('.git', '') || `skill_${Date.now()}`
+    const dest = join(APP, 'skills', repoName)
+    try {
+      const { execSync } = await import('node:child_process')
+      execSync(`git clone --depth 1 ${b.url} "${dest}"`, { stdio: 'ignore' })
+      send(res, 200, { ok: true, name: repoName, path: dest })
+    } catch (e: any) {
+      send(res, 500, { error: `Error al clonar: ${e.message}` })
+    }
+    return true
+  }
+
+  if (path === '/api/media/list' && method === 'GET') {
+    const items: Array<{ id: string; name: string; type: 'video' | 'image' | 'audio'; url: string; path: string; sizeBytes: number; createdAt: string }> = []
+    const dirsToScan = [join(APP, 'data', 'voces'), join(APP, 'salida'), join(APP, 'out'), join(APP, 'clips')]
+    for (const d of dirsToScan) {
+      if (!existsSync(d)) continue
+      try {
+        const files = readdirSync(d)
+        for (const f of files) {
+          const full = join(d, f)
+          const st = statSync(full)
+          if (!st.isFile()) continue
+          const ext = extname(f).toLowerCase()
+          let type: 'video' | 'image' | 'audio' | null = null
+          if (['.mp4', '.mov', '.webm'].includes(ext)) type = 'video'
+          else if (['.png', '.jpg', '.jpeg', '.webp'].includes(ext)) type = 'image'
+          else if (['.mp3', '.wav', '.ogg', '.m4a'].includes(ext)) type = 'audio'
+          if (type) {
+            items.push({
+              id: `${d}_${f}`,
+              name: f,
+              type,
+              url: `/api/disco?ruta=${encodeURIComponent(full)}`,
+              path: full,
+              sizeBytes: st.size,
+              createdAt: st.mtime.toISOString()
+            })
+          }
+        }
+      } catch { /* ignore */ }
+    }
+    send(res, 200, items)
+    return true
+  }
+
+  if (path === '/api/disco' && (method === 'GET' || method === 'HEAD')) {
+    const ruta = url.searchParams.get('ruta')
+    if (!ruta || !existsSync(ruta)) return send(res, 404, { error: 'No existe el archivo' }), true
+    const ext = extname(ruta).toLowerCase()
+    const mimeMap: Record<string, string> = {
+      '.mp4': 'video/mp4',
+      '.webm': 'video/webm',
+      '.mov': 'video/quicktime',
+      '.mp3': 'audio/mpeg',
+      '.wav': 'audio/wav',
+      '.ogg': 'audio/ogg',
+      '.png': 'image/png',
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.webp': 'image/webp'
+    }
+    const mime = mimeMap[ext] ?? 'application/octet-stream'
+    res.writeHead(200, { 'content-type': mime, 'content-length': statSync(ruta).size, 'accept-ranges': 'bytes' })
+    if (method === 'HEAD') {
+      res.end()
+    } else {
+      createReadStream(ruta).pipe(res)
+    }
+    return true
+  }
+
+  if (path === '/api/pi-agent/chat' && method === 'POST') {
+    const b = await body<any>(req)
+    const reply = await handlePiAgentChat(b, APP)
+    send(res, 200, reply)
+    return true
+  }
+
+  if (path === '/api/batch/queue' && method === 'GET') {
+    send(res, 200, batchFactory.getQueue())
+    return true
+  }
+
+  if (path === '/api/batch/add' && method === 'POST') {
+    const b = await body<{ items: any[] }>(req)
+    if (!b.items || !Array.isArray(b.items)) return send(res, 400, { error: 'Falta array items' }), true
+    const added = batchFactory.addItems(b.items)
+    send(res, 200, { ok: true, added })
+    return true
+  }
+
   if (path === '/api/state' && method === 'GET') {
     if (!cargandoModelos && (['claude', 'codex', 'opencode'] as const).some((p) => rutaAgente(p) && !modelos.some((m) => proveedorDe(m.id) === p))) pedirModelos()
     send(res, 200, { cards: cards(), sessions: sessions.list(), models: modelos, app: APP, avances: avance?.todos() ?? {} })
@@ -371,6 +508,34 @@ async function api(req: IncomingMessage, res: ServerResponse, url: URL): Promise
     proc.on('close', (code) => {
       send(res, code === 0 ? 200 : 500, { success: code === 0, salida })
     })
+    return true
+  }
+
+  if (path === '/api/snow/social-launch' && method === 'POST') {
+    const data = await body<{ platform: 'tiktok' | 'instagram' | 'facebook' | 'youtube'; video?: string }>(req)
+    if (!data.platform) {
+      send(res, 400, { error: 'Falta parámetro platform' })
+      return true
+    }
+    const URLS: Record<string, string> = {
+      tiktok: 'https://www.tiktok.com/tiktokstudio/upload?from=webapp',
+      instagram: 'https://www.instagram.com/',
+      facebook: 'https://www.facebook.com/reels/create',
+      youtube: 'https://studio.youtube.com'
+    }
+    const targetUrl = URLS[data.platform] || 'https://www.google.com'
+    if (data.video) {
+      spawn('wl-copy', [data.video], { stdio: 'ignore' }).on('error', () => {})
+    }
+    let abierto = false
+    try {
+      const cdpRes = await fetch(`http://127.0.0.1:9222/json/new?${targetUrl}`, { method: 'PUT' })
+      if (cdpRes.ok) abierto = true
+    } catch {}
+    if (!abierto) {
+      spawn('xdg-open', [targetUrl], { detached: true, stdio: 'ignore' }).on('error', () => {}).unref()
+    }
+    send(res, 200, { success: true, platform: data.platform, url: targetUrl, videoCopiado: !!data.video })
     return true
   }
 
@@ -451,13 +616,13 @@ async function api(req: IncomingMessage, res: ServerResponse, url: URL): Promise
   }
 
   // Pagar con la cuenta o con una llave de API (`server/acceso.ts`). Devuelve la cuenta como queda.
-  const acceso = /^\/api\/(claude|codex|deepseek|gemini)\/acceso$/.exec(path)
+  const acceso = /^\/api\/(claude|codex|deepseek|gemini|antigravity)\/acceso$/.exec(path)
   if (acceso && method === 'POST') {
     const { api, llave } = await body<{ api: boolean; llave?: string | null }>(req)
     const p = acceso[1] as Proveedor
     try {
       await cambiarAcceso(p, !!api, llave)
-      const soloLlave = p === 'deepseek' || p === 'gemini'
+      const soloLlave = p === 'deepseek' || p === 'gemini' || p === 'antigravity'
       send(res, 200, await (p === 'codex' ? cuentaCodex() : soloLlave ? OTROS[p]!.cuenta() : cuentaClaude(APP, true)))
       if (soloLlave) pedirModelos()
     } catch (error) {
@@ -754,7 +919,7 @@ async function interfazDelRepo(vite: typeof import('vite'), react: typeof import
       // a armar en cada arranque, y recargaba la página.
       optimizeDeps: { rolldownOptions: { transform: { define: produccion } } },
       environments: { client: { keepProcessEnv: true } },
-      server: { middlewareMode: true, hmr: { server } },
+      server: { middlewareMode: true, hmr: { server }, allowedHosts: true },
       appType: 'spa'
     })
     return servidor.middlewares
@@ -811,7 +976,7 @@ const v6 = servidorTcp((socket) => server.emit('connection', socket))
 v6.on('error', () => {})
 v6.listen(PORT, '::1')
 server.listen(PORT, '127.0.0.1', () => {
-  console.log(`Sloth en http://localhost:${PORT}`)
+  console.log(`Neva Studio en http://localhost:${PORT}`)
   setTimeout(() => {
     cargandoModelos = false
     pedirModelos()

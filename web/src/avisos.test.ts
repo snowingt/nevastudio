@@ -6,7 +6,7 @@ import { anuncioPorAvisar } from './avisos.ts'
 const aviso = (id: string, creado: string, extra: Partial<AvisoComunidad> = {}): AvisoComunidad => ({
   id,
   tipo: 'anuncio',
-  de: { id: 'creador', nombre: 'Vancci' },
+  de: { id: 'creador', nombre: 'Neva Studio' },
   publicacion: `p-${id}`,
   sobre: 'NUEVA ACTUALIZACION',
   creado,

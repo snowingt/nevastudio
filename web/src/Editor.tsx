@@ -9,7 +9,7 @@ import './Editor.css'
 /**
  * La fase Video del estudio, la misma para todos los estilos: el monitor en vivo (`Monitor.tsx`) y la línea de tiempo
  * (`LineaDeTiempo.tsx`), que se ve también en las demás fases. Las escenas salen del motor en vivo (las secuencias de
- * Remotion) o, si la card trae `editor` (El Diff), de su guion, con la miniatura de cada una; las piezas (cada texto,
+ * Remotion) o, si la card trae `editor` (Noticiero), de su guion, con la miniatura de cada una; las piezas (cada texto,
  * imagen o 3D y cuándo se ve), del sondeo del motor, que vale también para un video de una sola toma. Lo que el usuario elige —un
  * elemento del cuadro, una escena o un tramo— va al chat como referencia (`Referencia.tsx`): basta con decir qué cambiar.
  */
@@ -191,7 +191,7 @@ export function Editor(props: PropsDeVideo) {
     return () => removeEventListener('keydown', onKey)
   }, [m.visible, !!ref])
 
-  // Donde trabaja el agente (El Diff): se marca su escena, sin mover el cabezal.
+  // Donde trabaja el agente (Noticiero): se marca su escena, sin mover el cabezal.
   const foco = useFoco(guion, tomas, p.items)
   const sinEscenas = m.motor?.armando && !m.info ? 'Preparando el video en vivo…' : m.info && m.modo === 'vivo' ? 'Este video no marca escenas: recórrelo por su audio.' : 'Las escenas aparecen aquí en cuanto el agente las arme.'
 
@@ -351,7 +351,7 @@ function Cuadro({ v, pub }: { v: Record<string, any>; pub: (ruta: string) => str
         </div>
       </div>
     )
-  else if (v?.tipo === 'logo') body = <div className="cuadro-titular crema"><span>{v.final ? 'Cierre' : `El Diff\n${v.fecha ?? ''}`}</span></div>
+  else if (v?.tipo === 'logo') body = <div className="cuadro-titular crema"><span>{v.final ? 'Cierre' : `Noticiero\n${v.fecha ?? ''}`}</span></div>
   else body = <div className="cuadro-titular"><span className="muted">{v?.tipo ?? '?'}</span></div>
   return <div className="cuadro">{body}</div>
 }

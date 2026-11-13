@@ -70,7 +70,7 @@ export function RadarOpciones() {
             <strong>{datos.deSiempre ? 'Noticias de IA y tecnología' : 'Tus fuentes de noticias'}</strong>
             <span className="una-linea">
               {!datos.fuentes.length
-                ? 'Ninguna fuente: El Diff solo busca en la web'
+                ? 'Ninguna fuente: El Noticiero solo busca en la web'
                 : leidas
                   ? `${cuantas} · ${plural(datos.recientes, 'noticia', 'noticias')} en 24 h · leídas ${hace(leidas)}`
                   : `${cuantas} · se leen por primera vez en un minuto`}

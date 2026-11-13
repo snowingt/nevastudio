@@ -1,33 +1,31 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Icono } from './Iconos'
 import { Logo } from './Logos'
-import { CuentaChatGPT, CuentaClaude, CuentaOpenCode, Requisitos } from './Opciones'
+import { CuentaAntigravity, CuentaChatGPT, CuentaClaude, CuentaOpenCode, Requisitos } from './Opciones'
 import './Bienvenida.css'
 
 const VISTA = 'bienvenida'
 const EVENTO = 'sloth-bienvenida'
 
-/** Todos los agentes, según haya que pagar para usarlos. Los del rango gratis no son gratis: su uso gratis tiene límites. */
+/** Todos los agentes, destacando Google Antigravity como primera opción recomendada. */
 const OPCIONES = [
   {
-    titulo: 'De paga',
+    titulo: 'Motor de IA Recomendado',
+    agentes: [
+      ['antigravity', 'Google Antigravity (Gemini 2.5 & Claude Bridge)'],
+    ]
+  },
+  {
+    titulo: 'Otros agentes compatibles',
     agentes: [
       ['claude', 'Claude'],
       ['codex', 'ChatGPT'],
+      ['opencode', 'OpenCode'],
       ['deepseek', 'DeepSeek'],
       ['gemini', 'Gemini'],
       ['cursor', 'Cursor'],
       ['muse', 'Muse Code'],
       ['pi', 'Pi']
-    ]
-  },
-  {
-    titulo: 'Rango gratis',
-    nota: 'No son gratis del todo: su uso gratis tiene límites, y esos límites varían.',
-    agentes: [
-      ['opencode', 'OpenCode'],
-      ['antigravity', 'Antigravity'],
-      ['grok', 'Grok']
     ]
   }
 ]
@@ -41,11 +39,12 @@ export const abrirBienvenida = () => dispatchEvent(new Event(EVENTO))
  */
 export function Bienvenida() {
   const [abierta, setAbierta] = useState(() => !localStorage.getItem(VISTA))
+  const [antigravity, setAntigravity] = useState<boolean>()
   const [claude, setClaude] = useState<boolean>()
   const [chatgpt, setChatgpt] = useState<boolean>()
   const [opencode, setOpencode] = useState<boolean>()
   const [listo, setListo] = useState<boolean>()
-  // En la app instalada en Windows: si Sloth está anclada a la barra de tareas. `null`, aquí no se ofrece.
+  // En la app instalada en Windows: si Neva Studio está anclada a la barra de tareas. `null`, aquí no se ofrece.
   const [anclada, setAnclada] = useState<boolean | null>(null)
   const [anclando, setAnclando] = useState(false)
   const [sinPermiso, setSinPermiso] = useState(false)
@@ -86,24 +85,23 @@ export function Bienvenida() {
         <header>
           <img src="/icon.svg" alt="" />
           <div>
-            <h2>Te damos la bienvenida a Sloth</h2>
+            <h2>Te damos la bienvenida a Neva Studio</h2>
             <p>
-              Sloth hace videos con Claude, con ChatGPT, con OpenCode y otros agentes. Eliges un estilo, le das un tema o un enlace, y
+              Neva Studio hace videos con Google Antigravity, Claude, ChatGPT, OpenCode y otros agentes. Eliges un estilo, le das un tema o un enlace, y
               lo ves trabajar paso a paso: investiga, escribe el guion, te pide tu voz y arma el video.
             </p>
           </div>
         </header>
 
         {/* Con uno basta. Con ChatGPT, además, hace las imágenes de los videos. */}
-        <Paso n={1} titulo="Elige con qué trabaja" hecho={claude || chatgpt || opencode}>
-          Con uno basta, y Sloth no te cobra aparte. Todos se conectan en Opciones → Agentes; Pi usa el plan o la llave que le
-          conectes.
-          {OPCIONES.map(({ titulo, nota, agentes }) => (
+        <Paso n={1} titulo="Elige con qué trabaja" hecho={antigravity || claude || chatgpt || opencode}>
+          Con uno basta, y Neva Studio no te cobra aparte. Puedes conectar Google Antigravity (Recomendado), o tus cuentas de Claude, ChatGPT u OpenCode.
+          {OPCIONES.map(({ titulo, nota, agentes }: any) => (
             <div className="opcion" key={titulo}>
               <b>{titulo}</b>
               <div>
                 <ul>
-                  {agentes.map(([id, nombre]) => (
+                  {agentes.map(([id, nombre]: any) => (
                     <li key={id}>
                       <Logo de={id} nombre={nombre} chico />
                       {nombre}
@@ -114,6 +112,7 @@ export function Bienvenida() {
               </div>
             </div>
           ))}
+          <CuentaAntigravity onFalta={(falta) => setAntigravity(falta === undefined ? undefined : !falta)} />
           <CuentaClaude onFalta={(falta) => setClaude(falta === undefined ? undefined : !falta)} />
           <CuentaChatGPT onFalta={(falta) => setChatgpt(falta === undefined ? undefined : !falta)} />
           <CuentaOpenCode aviso onFalta={(falta) => setOpencode(falta === undefined ? undefined : !falta)} />
@@ -124,8 +123,8 @@ export function Bienvenida() {
           <Requisitos onListo={setListo} />
         </Paso>
         {anclada !== null && (
-          <Paso n={3} titulo="Ten Sloth a mano (opcional)" hecho={anclada}>
-            {anclada ? 'Sloth está anclada a la barra de tareas.' : 'Ánclala a la barra de tareas para abrirla con un clic.'}
+          <Paso n={3} titulo="Ten Neva Studio a mano (opcional)" hecho={anclada}>
+            {anclada ? 'Neva Studio está anclada a la barra de tareas.' : 'Ánclala a la barra de tareas para abrirla con un clic.'}
             {!anclada && (
               <div className="anclar">
                 <button className="boton" disabled={anclando} onClick={() => void anclar()}>
@@ -133,7 +132,7 @@ export function Bienvenida() {
                 </button>
                 {sinPermiso && (
                   <p className="small">
-                    Windows no dejó anclarla desde aquí. Haz clic derecho en el icono de Sloth en la barra de tareas y elige
+                    Windows no dejó anclarla desde aquí. Haz clic derecho en el icono de Neva Studio en la barra de tareas y elige
                     «Anclar a la barra de tareas».
                   </p>
                 )}
@@ -142,8 +141,8 @@ export function Bienvenida() {
           </Paso>
         )}
         <Paso n={anclada === null ? 3 : 4} titulo="Haz tu primer video">
-          Elige un estilo, escribe el tema o pega un enlace y pulsa <b>↑</b>. Cuando el guion está listo, Sloth te pide tu voz:
-          grábalo con el celular y súbelo en la etapa «Tu voz». Luego arma el video y lo revisa. El Diff tarda de una a dos
+          Elige un estilo, escribe el tema o pega un enlace y pulsa <b>↑</b>. Cuando el guion está listo, Neva Studio te pide tu voz:
+          grábalo con el celular y súbelo en la etapa «Tu voz». Luego arma el video y lo revisa. El Noticiero tarda de una a dos
           horas; el Video explicativo, unos 40 minutos. Cuando acaba, lo descargas desde el video o en «Mis videos».
         </Paso>
         <Paso n={anclada === null ? 4 : 5} titulo="Lo que gasta">

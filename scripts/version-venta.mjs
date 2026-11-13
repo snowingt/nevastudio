@@ -7,7 +7,7 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const COBRO = 'https://api.sloth.vancci.org'
+const COBRO = 'https://api.nevastudio.app'
 const PAQUETE = join(dirname(fileURLToPath(import.meta.url)), '..', 'package.json')
 
 const cifras = (v) => v.split('.').map(Number)

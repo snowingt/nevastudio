@@ -51,7 +51,7 @@ console.log(`· ${cards.length} estilos de video, con los dos formatos`)
 /**
  * Los node_modules con Remotion de un video de ese estilo: primero los de un video de verdad (de la Sloth instalada o de
  * la del repo), de donde se toma lo que el script de crear un video le pone a la plantilla; si no hay, los compartidos
- * (`<estilo>/modulos/*` de El Diff y `sloth-modulos/<estilo>-*` de los demás, ver espacio.py de video-base). De cada
+ * (`<estilo>/modulos/*` de Noticiero y `neva-modulos/<estilo>-*` de los demás, ver espacio.py de video-base). De cada
  * grupo, el más nuevo.
  */
 function modulosDe(skill) {

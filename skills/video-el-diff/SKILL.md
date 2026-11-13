@@ -1,9 +1,9 @@
 ---
 name: video-el-diff
-description: Hace un episodio de El Diff, un noticiero seco y burlón en español con el nombre, el sello y la despedida que elija el usuario, por ahora en vertical para TikTok (el episodio entero), o sus shorts. Saca el guion de un video o tema (o usa el que trae el usuario, con su voz), junta el material original y arma el video con el audio que aporta el usuario. Úsala cuando pidan otro video "como el que hiciste", un guion de El Diff o de su noticiero, shorts de un tema, armar el video con su audio, o vestir de El Diff un guion propio.
+description: Noticiero Vertical & Resumen de Impacto. Produce síntesis de noticias y resúmenes diarios de alta retención para TikTok, Instagram Reels o YouTube Shorts, con tu nombre, sello de canal y despedida personalizada. Estructura el guion a partir de fuentes verificadas o artículos de actualidad, sincroniza la narración y compone escenas dinámicas con tipografía contundente, comparativas visuales y cierre con llamado a la acción.
 ---
 
-# El Diff
+# Noticiero Vertical & Resumen de Impacto
 
 Un episodio son dos fases separadas por algo que solo hace el usuario: grabar la narración. En la fase 1 le entregas
 el guion; en la fase 2 (cuando llega su voz) armas el video con ella. `<skill>` es la carpeta de esta skill y los

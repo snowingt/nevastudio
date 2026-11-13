@@ -41,7 +41,7 @@ else {
 process.env.PATH = [...camino, process.env.PATH].join(delimiter)
 
 /**
- * La ventana de Sloth, la misma que la app que se vende. Sin Electron (falta `npm install`), Edge en modo app: una
+ * La ventana de Neva Studio, la misma que la app que se vende. Sin Electron (falta `npm install`), Edge en modo app: una
  * ventana sin barra de direcciones; en Mac y Linux, el navegador de siempre. La app compilada pone su ventana ella misma
  * (`--no-open`).
  */
@@ -51,7 +51,7 @@ async function abrir() {
     const { abrirVentana } = await import('./electron.mjs')
     if (await abrirVentana(URL)) return
   } catch (error) {
-    console.error(`No se pudo abrir la ventana de Sloth; va en el navegador. ${error instanceof Error ? error.message : error}`)
+    console.error(`No se pudo abrir la ventana de Neva Studio; va en el navegador. ${error instanceof Error ? error.message : error}`)
   }
   const [cmd, ...args] = process.platform === 'win32' ? ['cmd', '/c', 'start', '', 'msedge', `--app=${URL}`] : [process.platform === 'darwin' ? 'open' : 'xdg-open', URL]
   spawn(cmd, args, { detached: true, stdio: 'ignore' }).on('error', () => {}).unref()
@@ -61,7 +61,7 @@ function run() {
   const child = spawn(process.execPath, SERVIDOR, { cwd: APP, stdio: ['inherit', 'pipe', 'inherit'] })
   child.stdout.on('data', (d) => {
     process.stdout.write(d)
-    if (!opened && String(d).includes('Sloth en')) void abrir()
+    if (!opened && (String(d).includes('Neva Studio en') || String(d).includes('Sloth en'))) void abrir()
   })
   child.on('exit', (code, signal) => {
     if (code === 75) return run()

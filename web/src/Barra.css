@@ -3,7 +3,15 @@
  * abajo, Opciones y Reiniciar backend. Los títulos de sección se ven como los grupos de Opciones.
  */
 
-.sidebar { display: flex; flex-direction: column; background: var(--panel); border-right: 1px solid var(--line); min-height: 0; }
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background: rgba(18, 18, 20, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid var(--line);
+  min-height: 0;
+}
 .brand { display: flex; align-items: center; gap: 10px; padding: 16px 16px 12px; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
 .brand img { width: 26px; height: 26px; }
 

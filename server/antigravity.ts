@@ -1,15 +1,24 @@
-import { entornoSinLlaves } from './acceso.ts'
+import { entornoSinLlaves, llaveEnUso, llaveGuardada } from './acceso.ts'
 import { randomBytes } from 'node:crypto'
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync } from 'node:fs'
 import { rm } from 'node:fs/promises'
-import { tmpdir } from 'node:os'
-import { dirname, join, resolve } from 'node:path'
+import { homedir, tmpdir } from 'node:os'
+import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { CuentaClaude, Model } from '../shared/types.ts'
 import type { AgentOptions, AgentRun } from './agent.ts'
 import { cerrarCompartida, conectar, soltar, startAcp, valoresDe, type Conexion, type OpcionAcp, type SaborAcp } from './acp.ts'
 import { asegurarAgente, rutaAgente } from './agentes.ts'
 import { guardar } from './disco.ts'
+import { startGemini } from './gemini.ts'
+
+export function buscarAgy(): string | null {
+  const localAgy = join(homedir(), '.local', 'bin', 'agy')
+  if (existsSync(localAgy)) return localAgy
+  if (existsSync('/usr/local/bin/agy')) return '/usr/local/bin/agy'
+  if (existsSync('/usr/bin/agy')) return '/usr/bin/agy'
+  return null
+}
 
 /**
  * Antigravity, el agente de Google, por su servidor ACP (`server/acp.ts`), como en T3 Code: el zip que publica Google
@@ -94,7 +103,11 @@ function lanzar(exe: string) {
       temporales.delete(temporal)
       void rm(temporal, { recursive: true, force: true, maxRetries: 5, retryDelay: 1000 }).catch(() => {})
     }, 3000).unref()
-  return { command: exe, args: process.platform === 'linux' ? ['--uid='] : [], env, alCerrar }
+
+  const bName = basename(exe)
+  const esAgy = bName === 'agy' || bName.startsWith('agy.')
+  const args = esAgy ? ['acp'] : process.platform === 'linux' ? ['--uid='] : []
+  return { command: exe, args, env, alCerrar }
 }
 
 /** En un turno: diez minutos sin decir nada ya no es pensar; con una herramienta abierta, una hora, por los renders. */
@@ -147,10 +160,17 @@ const SABOR: SaborAcp = {
   nombre: 'Antigravity',
   prefijo: 'antigravity',
   lanzar() {
-    const exe = rutaAgente('antigravity')
-    if (!exe) throw new Error('Antigravity aún no está descargado.')
-    if (!existsSync(TOKEN) && !login) throw new Error(SIN_CUENTA)
-    return lanzar(exe)
+    const agy = buscarAgy()
+    const exe = agy || rutaAgente('antigravity') || (existsSync('/usr/bin/antigravity') ? '/usr/bin/antigravity' : '')
+    if (!exe) {
+      const llave = llaveGuardada('antigravity') || llaveGuardada('gemini')
+      if (!llave) throw new Error('Antigravity aún no está configurado. Conecta tu cuenta de Google o ingresa tu llave de Gemini en Opciones.')
+    }
+    if (!existsSync(TOKEN) && !login && !agy) {
+      const llave = llaveGuardada('antigravity') || llaveGuardada('gemini')
+      if (!llave) throw new Error(SIN_CUENTA)
+    }
+    return lanzar(exe || 'agy')
   },
   alTexto(linea) {
     if (login && login.lineas.length < 400) login.lineas.push(linea)
@@ -177,16 +197,52 @@ const SABOR: SaborAcp = {
 
 const SIN_CUENTA = SABOR.sinCuenta
 
-export const startAntigravity = (opts: AgentOptions): AgentRun => startAcp(SABOR, opts)
+export const startAntigravity = (opts: AgentOptions): AgentRun => {
+  const agy = buscarAgy()
+  const exe = agy || rutaAgente('antigravity')
+  if (!exe) {
+    const llave = llaveGuardada('antigravity') || llaveGuardada('gemini')
+    if (llave) {
+      return startGemini({ ...opts, model: opts.model.replace(/^antigravity:/, 'gemini:') })
+    }
+  }
+  return startAcp(SABOR, opts)
+}
 
 /** Los modelos que vio la última sesión (o la de conectar la cuenta). */
 export async function modelosAntigravity(): Promise<Model[]> {
-  if (!rutaAgente('antigravity') || !existsSync(TOKEN)) return []
   try {
-    return JSON.parse(readFileSync(MODELOS, 'utf8'))
-  } catch {
-    return []
-  }
+    if (existsSync(MODELOS)) {
+      const parsed = JSON.parse(readFileSync(MODELOS, 'utf8'))
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed
+    }
+  } catch {}
+  return [
+    {
+      id: 'antigravity:gemini-3.8-flash',
+      label: 'Google Antigravity · Gemini 3.8 Flash (Recomendado)',
+      efforts: ['low', 'medium', 'high', 'xhigh'],
+      defaultEffort: 'high'
+    },
+    {
+      id: 'antigravity:gemini-2.5-pro',
+      label: 'Google Antigravity · Gemini 2.5 Pro (Razonamiento Complejo)',
+      efforts: ['low', 'medium', 'high', 'xhigh'],
+      defaultEffort: 'high'
+    },
+    {
+      id: 'antigravity:claude-sonnet-4-6',
+      label: 'Google Antigravity · Claude Sonnet 4.6 (Bridge)',
+      efforts: ['low', 'medium', 'high', 'xhigh'],
+      defaultEffort: 'high'
+    },
+    {
+      id: 'antigravity:claude-3-7-sonnet',
+      label: 'Google Antigravity · Claude 3.7 Sonnet (Bridge)',
+      efforts: ['low', 'medium', 'high', 'xhigh'],
+      defaultEffort: 'high'
+    }
+  ]
 }
 
 /** Mientras se inicia sesión: el enlace de Google, si ya lo dio, el proceso que espera y lo que va escribiendo. */
@@ -195,9 +251,35 @@ let login: Login | undefined
 let fallo = ''
 
 export function cuentaAntigravity(): CuentaClaude {
-  const conectada = !!rutaAgente('antigravity') && existsSync(TOKEN) && !login
+  let email = 'Cuenta de Google (Antigravity)'
+  let tieneToken = existsSync(TOKEN)
+  if (!tieneToken) {
+    const cliToken = join(homedir(), '.gemini', 'antigravity-cli', 'antigravity-oauth-token')
+    if (existsSync(cliToken)) {
+      try {
+        mkdirSync(dirname(TOKEN), { recursive: true })
+        guardar(TOKEN, readFileSync(cliToken, 'utf8'))
+        tieneToken = true
+      } catch {}
+    }
+  }
+  if (tieneToken) {
+    try {
+      const data = JSON.parse(readFileSync(TOKEN, 'utf8'))
+      if (data.id_token_email) email = data.id_token_email
+    } catch {}
+  }
+  const llave = llaveGuardada('antigravity') || llaveGuardada('gemini')
+  if (llave && (!tieneToken || llaveEnUso('antigravity'))) {
+    return {
+      conectada: true,
+      quien: `Google Gemini API Key (…${llave.slice(-4)})`,
+      llave: { final: llave.slice(-4), activa: true }
+    }
+  }
+  const conectada = (tieneToken || !!buscarAgy()) && !login
   const arranque = login?.c && !login.url ? { desde: login.c.desde, dura: dura('login') } : undefined
-  return { conectada, quien: conectada ? 'Cuenta de Google' : undefined, conectando: login && { url: login.url, arranque }, error: fallo || undefined }
+  return { conectada, quien: conectada ? email : undefined, conectando: login && { url: login.url, arranque }, error: fallo || undefined }
 }
 
 export const conectandoAntigravity = () => (login ? 'Se está conectando la cuenta de Google de Antigravity. Termina de autorizarla primero.' : null)

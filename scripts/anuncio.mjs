@@ -6,7 +6,7 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
-const COBRO = 'https://api.sloth.vancci.org'
+const COBRO = 'https://api.nevastudio.app'
 const archivo = process.argv.slice(2).find((a) => !a.startsWith('--'))
 if (!archivo) {
   console.error('Uso: node scripts/anuncio.mjs <archivo> [--probar] (el título en el primer renglón, el texto debajo)')

@@ -1,0 +1,21 @@
+{
+  "name": "Neva Studio",
+  "tagline": "Estudio Autónomo de Video Cinético & Automatización",
+  "avoid": [
+    "Sloth",
+    "sloth.vancci.org",
+    "vancci.org",
+    "Vancci",
+    "Snow Studio",
+    "snowstudio"
+  ],
+  "domains": [
+    "vancci.org",
+    "sloth.vancci.org"
+  ],
+  "colors": [
+    "#f59e0b",
+    "#e8a33d",
+    "#0f0e0c"
+  ]
+}

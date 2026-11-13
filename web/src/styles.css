@@ -1,29 +1,41 @@
-/* La paleta de Sloth: oscuro cálido con acento ámbar. */
+/* Neva Studio: Estética Apple Cupertino Dark Glass */
 :root {
-  --bg: #0f0e0c;
-  --panel: #171512;
-  --panel-2: #221f1b;
-  --line: #2e2a24;
-  --text: #ede6d6;
-  --muted: #9a907f;
-  --amber: #e8a33d;
-  --amber-2: #f4b04a;
-  --amber-tinte: rgba(232, 163, 61, 0.13);
-  --sobre-ambar: #1b1408;
-  --ok: #8fc177;
-  --bad: #e06c55;
-  --radio: 10px;
-  --mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+  --bg: #09090b;
+  --panel: rgba(24, 24, 27, 0.78);
+  --panel-2: rgba(39, 39, 42, 0.65);
+  --panel-solid: #18181b;
+  --panel-2-solid: #27272a;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-focus: rgba(255, 255, 255, 0.18);
+  --text: #f4f4f5;
+  --text-pure: #ffffff;
+  --muted: #a1a1aa;
+  --muted-dark: #71717a;
+  --amber: #0a84ff; /* Apple System Blue */
+  --amber-2: #0071e3;
+  --amber-tinte: rgba(10, 132, 255, 0.12);
+  --sobre-ambar: #ffffff;
+  --apple-blue: #0a84ff;
+  --apple-purple: #8b5cf6;
+  --apple-cyan: #0ea5e9;
+  --ok: #10b981;
+  --bad: #ef4444;
+  --radio: 14px;
+  --radio-sm: 8px;
+  --radio-pill: 999px;
+  --mono: 'SF Mono', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; margin: 0; }
 body {
-  background: var(--bg);
+  background: #09090b radial-gradient(circle at 50% 0%, rgba(10, 132, 255, 0.06), transparent 50%), radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.04), transparent 40%);
   color: var(--text);
-  font: 14px/1.55 Inter, 'Segoe UI', system-ui, sans-serif;
+  font: 14px/1.55 var(--font-system);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
 button:disabled { cursor: default; opacity: 0.45; }

@@ -1,7 +1,7 @@
 // Publica lo que dejó `npm run compilar` en dist/instalador para este sistema: lo sube al cobro de Sloth (`licencias/`,
 // en R2). Primero el instalador (Sloth-Setup-<versión>.exe, el .dmg de Mac o el AppImage de Linux), que desde ese
-// momento es el que da https://api.sloth.vancci.org/descargar (`?so=mac`, `?so=linux`), el enlace de
-// sloth.vancci.org; luego lo demás (el .zip de Mac y los mapas de bloques), y al final latest.yml (latest-mac.yml,
+// momento es el que da https://api.nevastudio.app/descargar (`?so=mac`, `?so=linux`), el enlace de
+// nevastudio.app; luego lo demás (el .zip de Mac y los mapas de bloques), y al final latest.yml (latest-mac.yml,
 // latest-linux.yml), que es lo que mira la app instalada para ofrecer la versión nueva: cuando lo ve, lo demás ya está.
 // Va por partes de 64 MB: el instalador pesa más de lo que aceptan wrangler y un Worker de una vez. La llave está en
 // %APPDATA%\sloth\licencias\publicar.txt (es el secreto PUBLICAR del Worker); en GitHub, la rama `venta` la pasa en la
@@ -12,7 +12,7 @@ import { closeSync, existsSync, openSync, readFileSync, readSync, statSync } fro
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const COBRO = 'https://api.sloth.vancci.org'
+const COBRO = 'https://api.nevastudio.app'
 const PARTE = 64 * 1024 * 1024
 const REPO = join(dirname(fileURLToPath(import.meta.url)), '..')
 const VERSION = JSON.parse(readFileSync(join(REPO, 'package.json'), 'utf8')).version

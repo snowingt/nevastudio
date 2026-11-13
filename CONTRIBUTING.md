@@ -24,7 +24,7 @@ imágenes):
 
 - Confirmas que es tuyo o que tienes derecho a aportarlo.
 - Aceptas que se publique con la licencia de este repo.
-- Le das a Vancci un permiso mundial, gratuito, perpetuo, irrevocable y no exclusivo para usarlo, modificarlo,
+- Le das a Snow Studio un permiso mundial, gratuito, perpetuo, irrevocable y no exclusivo para usarlo, modificarlo,
   sublicenciarlo y distribuirlo, también en la versión oficial de Sloth y en sus servicios de paga (por ejemplo, lo
   que en el roadmap dice «para quien apoya»).
 

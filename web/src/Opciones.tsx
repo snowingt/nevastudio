@@ -68,7 +68,7 @@ function Ajustes({ onDone, iniciando, onIniciando }: { onDone(): void; iniciando
         <div className="redes-cabeza">
           <div>
             <h2>Redes</h2>
-            <p>Por donde salen tus videos. Sloth los programa en cada red y te avisa si algo falla.</p>
+            <p>Por donde salen tus videos. Neva Studio los programa en cada red y te avisa si algo falla.</p>
           </div>
           <a className="boton" href="#/mis-videos" title="Revisa y programa los que faltan, de todos los estilos">
             Programar videos
@@ -78,27 +78,28 @@ function Ajustes({ onDone, iniciando, onIniciando }: { onDone(): void; iniciando
           <RedesOpciones onIniciando={onIniciando} />
           <YoutubeOpciones />
         </div>
-        <p className="grupo-nota">Los verticales salen en TikTok e Instagram; los largos, en YouTube. Sloth tiene que estar abierto mientras sube a TikTok y a YouTube; Instagram publica aunque la computadora esté apagada.</p>
+        <p className="grupo-nota">Los verticales salen en TikTok e Instagram; los largos, en YouTube. Neva Studio tiene que estar abierto mientras sube a TikTok y a YouTube; Instagram publica aunque la computadora esté apagada.</p>
       </section>
       {VENTA && (
-        <Grupo titulo="Apoyo" nota="Sloth es gratis. El apoyo es opcional y se cobra con PayPal; cancelado, lo ya pagado sigue valiendo hasta su fecha.">
+        <Grupo titulo="Apoyo" nota="Neva Studio es gratis. El apoyo es opcional y se cobra con PayPal; cancelado, lo ya pagado sigue valiendo hasta su fecha.">
           <SuscripcionOpciones />
         </Grupo>
       )}
-      <Grupo ref={agentes} titulo="Agentes" nota="Cada agente se descarga la primera vez que lo eliges. Claude y ChatGPT necesitan un plan de pago o una llave de API; OpenCode, solo tu cuenta, que es gratis. Los demás, la cuenta o la llave de cada uno.">
+      <Grupo ref={agentes} titulo="Agentes de Inteligencia Artificial" nota="Conecta tus cuentas o llaves de API. Google Antigravity y Gemini se encuentran activos y listos para producción.">
+        <CuentaAntigravity />
         <Agentes />
         <CuentaCodex />
         <CuentaOpenCode />
-        {OTROS_AGENTES.map((p) => (
+        {OTROS_AGENTES.filter((p) => p !== 'antigravity').map((p) => (
           <CuentaAgente key={p} p={p} />
         ))}
       </Grupo>
-      <Grupo titulo="Voz" nota="Al pedir un video eliges en «Voz» si la mandas tú o si el agente la genera aquí. La sesión de Google vive en un perfil aparte del navegador de Sloth: ningún agente la usa.">
+      <Grupo titulo="Voz" nota="Al pedir un video eliges en «Voz» si la mandas tú o si el agente la genera aquí. La sesión de Google vive en un perfil aparte del navegador de Neva Studio: ningún agente la usa.">
         <VozOpciones voz={voz} />
       </Grupo>
       <Grupo
         titulo="Google Flow"
-        nota="Los agentes generan imágenes y videos con tus cuentas de Google: la de la Voz y las que agregues aquí, hasta 50. Las imágenes son gratis; los videos gastan créditos de Flow, y si una cuenta se queda sin ellos, Sloth sigue con otra. Agrega solo cuentas tuyas: Google puede limitar o bloquear las que usa de más."
+        nota="Los agentes generan imágenes y videos con tus cuentas de Google: la de la Voz y las que agregues aquí, hasta 50. Las imágenes son gratis; los videos gastan créditos de Flow, y si una cuenta se queda sin ellos, Neva Studio sigue con otra. Agrega solo cuentas tuyas: Google puede limitar o bloquear las que usa de más."
       >
         <FlowOpciones voz={voz} />
       </Grupo>
@@ -109,7 +110,7 @@ function Ajustes({ onDone, iniciando, onIniciando }: { onDone(): void; iniciando
           <Llave id="meta" />
         </Grupo>
       )}
-      <Grupo titulo="Radar" nota="El Diff investiga aquí primero: el radar lee estas fuentes cada 5 minutos y guarda sus noticias, así cada noticiero sale con lo último.">
+      <Grupo titulo="Radar" nota="El Noticiero investiga aquí primero: el radar lee estas fuentes cada 5 minutos y guarda sus noticias, así cada noticiero sale con lo último.">
         <RadarOpciones />
       </Grupo>
       <Grupo titulo="Avisos">
@@ -135,7 +136,7 @@ function Grupo({ ref, titulo, extra, nota, children }: { ref?: Ref<HTMLElement>;
   )
 }
 
-/** Las llaves de API que usa Sloth: para qué es cada una y dónde se saca. `logo`, si no es el de su id. */
+/** Las llaves de API que usa Neva Studio: para qué es cada una y dónde se saca. `logo`, si no es el de su id. */
 const LLAVES: Record<'youtube' | 'meta', { nombre: string; para: string; url: string; logo?: string; ayuda: ReactNode }> = {
   youtube: {
     nombre: 'YouTube',
@@ -280,7 +281,7 @@ function Llave({ id }: { id: keyof typeof LLAVES }) {
 }
 
 /**
- * La cuenta de Claude con la que trabaja Sloth (la de Claude Code en esta computadora). «Conectar con Claude» abre el
+ * La cuenta de Claude con la que trabaja Neva Studio (la de Claude Code en esta computadora). «Conectar con Claude» abre el
  * navegador para autorizarla; si no se abrió, el enlace de respaldo da un código que se pega aquí. Sirve también para
  * cambiar de cuenta: vuelve a autorizar.
  */
@@ -424,11 +425,130 @@ function useLlave(c: UsoCuenta, proveedor: 'claude' | 'codex') {
         <a href={a.llaves} target="_blank" rel="noreferrer">
           {a.marca}
         </a>
-        , no en tu plan. Se guarda solo en Sloth, en esta computadora. {a.hilos}
+        , no en tu plan. Se guarda solo en Neva Studio, en esta computadora. {a.hilos}
       </p>
     </form>
   )
   return { activa: !!l?.activa, menu, elegir, selector, boton, formulario }
+}
+
+export function CuentaAntigravity({ aviso = false, onFalta }: { aviso?: boolean; onFalta?(falta?: boolean): void }) {
+  const c = useCuenta(true, 'antigravity')
+  const [pegando, setPegando] = useState(false)
+  const [llave, setLlave] = useState('')
+  const [errorLlave, setErrorLlave] = useState('')
+  const cuenta = c.cuenta
+  const falta = cuenta ? !cuenta.conectada : undefined
+
+  useEffect(() => onFalta?.(falta), [falta])
+  if (aviso && !falta) return null
+
+  const guardarLlave = (nueva: string | null) => {
+    setErrorLlave('')
+    return c
+      .pedir('/api/antigravity/acceso', { api: !!nueva, llave: nueva })
+      .then((x) => {
+        if (x) {
+          setPegando(false)
+          setLlave('')
+        }
+      })
+      .catch((err: any) => setErrorLlave(err?.message || String(err)))
+  }
+
+  const conectarGoogle = () => {
+    const ventana = window.open('about:blank', '_blank')
+    if (ventana) ventana.opener = null
+    void c.conectar().then((x) => {
+      const url = x?.conectando?.url
+      if (ventana && url) ventana.location.href = url
+      else ventana?.close()
+    })
+  }
+
+  const elegir = (que: string) => {
+    if (que === 'llave') setPegando(true)
+    if (que === 'google') conectarGoogle()
+    if (que === 'quitar') void (cuenta?.llave ? guardarLlave(null) : c.pedir('/api/antigravity/salir', {}))
+  }
+
+  return (
+    <div className="item item-antigravity">
+      <div className="fila">
+        <Logo de="antigravity" nombre="Google Antigravity" />
+        <div className="fila-nombre">
+          <strong style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            Google Antigravity
+            <span style={{ fontSize: 10, background: 'rgba(56, 189, 248, 0.2)', color: '#38bdf8', padding: '2px 6px', borderRadius: 6, fontWeight: 700 }}>
+              OPCIÓN #1 RECOMENDADA
+            </span>
+          </strong>
+          {cuenta?.conectada ? (
+            <Picker
+              className="sub"
+              label={cuenta.quien || 'Cuenta de Google Conectada'}
+              value=""
+              disabled={c.ocupado}
+              groups={[
+                {
+                  label: 'Antigravity',
+                  options: [
+                    { value: 'llave', label: 'Cambiar o ingresar llave Gemini API' },
+                    { value: 'google', label: 'Conectar con otra cuenta de Google' },
+                    { value: 'quitar', label: 'Desconectar' }
+                  ]
+                }
+              ]}
+              onChange={elegir}
+            />
+          ) : (
+            <span>Motor principal de IA (Gemini 3.8 Flash, 2.5 Pro y Claude Sonnet Bridge). Conecta tu cuenta de Google o una llave de AI Studio.</span>
+          )}
+        </div>
+
+        {cuenta?.conectada ? (
+          <span className="estado" style={{ color: '#10b981', fontWeight: 600 }}>● Conectado</span>
+        ) : (
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button className="primary" disabled={c.ocupado} onClick={conectarGoogle}>
+              Conectar con Google
+            </button>
+            <button className="boton ghost" disabled={c.ocupado} onClick={() => setPegando(true)}>
+              Pega tu llave de Gemini
+            </button>
+          </div>
+        )}
+      </div>
+
+      {pegando && (
+        <div className="fila fila-llave" style={{ padding: '12px 16px', background: 'rgba(255,255,255,0.03)', borderRadius: 10, marginTop: 8 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
+            <span className="small muted">
+              Pega tu llave de Gemini de AI Studio (disponible gratis en aistudio.google.com). Se guarda en esta computadora.
+            </span>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input
+                type="password"
+                className="input mono"
+                placeholder="AIzaSy..."
+                value={llave}
+                onChange={(e) => setLlave(e.target.value)}
+                autoFocus
+                style={{ flex: 1 }}
+              />
+              <button className="primary small" disabled={!llave.trim() || c.ocupado} onClick={() => void guardarLlave(llave)}>
+                Guardar llave
+              </button>
+              <button className="ghost small" onClick={() => setPegando(false)}>
+                Cancelar
+              </button>
+            </div>
+            {errorLlave && <span className="bad small">{errorLlave}</span>}
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
 
 /**
@@ -452,14 +572,20 @@ const CUENTA_CONECTADA = 'sloth-cuenta-conectada'
  * al conectar una cuenta.
  */
 export function useSinClaude(models: Model[] = []) {
-  const [cuentas, setCuentas] = useState<'codex' | 'opencode' | 'ninguna' | false>()
+  const [cuentas, setCuentas] = useState<'codex' | 'opencode' | 'antigravity' | 'ninguna' | false>()
   const otro = OTROS_AGENTES.find((p) => models.some((m) => proveedorDe(m.id) === p))
   const sin: Proveedor | false | undefined = cuentas === 'ninguna' ? (otro ?? false) : cuentas
   useEffect(() => {
     let vivo = true
     const leer = () =>
-      Promise.all([api<Cuenta>('/api/claude/cuenta'), api<Cuenta>('/api/codex/cuenta'), api<Cuenta>('/api/opencode/cuenta')]).then(
-        ([claude, codex, opencode]) => vivo && setCuentas(claude.conectada ? false : codex.conectada ? 'codex' : opencode.conectada ? 'opencode' : 'ninguna'),
+      Promise.all([
+        api<Cuenta>('/api/claude/cuenta'),
+        api<Cuenta>('/api/codex/cuenta'),
+        api<Cuenta>('/api/opencode/cuenta'),
+        api<Cuenta>('/api/antigravity/cuenta')
+      ]).then(
+        ([claude, codex, opencode, antigravity]) =>
+          vivo && setCuentas(claude.conectada ? false : antigravity?.conectada ? 'antigravity' : codex.conectada ? 'codex' : opencode.conectada ? 'opencode' : 'ninguna'),
         () => vivo && setCuentas(false)
       )
     void leer()
@@ -568,7 +694,7 @@ export function CuentaOpenCode({ aviso = false, onFalta }: { aviso?: boolean; on
             />
           ) : (
             <span>
-              Sloth trabaja con tu cuenta de OpenCode, que se crea gratis en su página. Sus modelos gratis no te cobran nada; si
+              Neva Studio trabaja con tu cuenta de OpenCode, que se crea gratis en su página. Sus modelos gratis no te cobran nada; si
               le pones saldo, también puedes usar los de pago. Pueden equivocarse más que Claude o ChatGPT, y no hacen imágenes
               (portadas ni personajes nuevos).
             </span>
@@ -635,14 +761,14 @@ const OTROS: Record<OtroAgente, { titulo: string; logo: string; como: 'ventana' 
     logo: 'deepseek',
     como: 'llave',
     beta: true,
-    texto: 'Trabaja en el mismo Claude Code de Sloth, con los modelos de DeepSeek: las skills, los subagentes y el navegador van igual que con Claude. Se cobra por uso, del saldo de tu cuenta de DeepSeek.',
+    texto: 'Trabaja en el mismo Claude Code de Neva Studio, con los modelos de DeepSeek: las skills, los subagentes y el navegador van igual que con Claude. Se cobra por uso, del saldo de tu cuenta de DeepSeek.',
     ayuda: (
       <>
         Créala en{' '}
         <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noreferrer">
           platform.deepseek.com
         </a>{' '}
-        y ponle saldo. Se guarda solo en Sloth, en esta computadora.
+        y ponle saldo. Se guarda solo en Neva Studio, en esta computadora.
       </>
     )
   },
@@ -651,17 +777,17 @@ const OTROS: Record<OtroAgente, { titulo: string; logo: string; como: 'ventana' 
     logo: 'grok',
     como: 'ventana',
     beta: true,
-    texto: 'Sloth trabaja con tu cuenta de Grok. Al conectar se abre una ventana de Grok que te lleva a autorizarla en el navegador.',
+    texto: 'Neva Studio trabaja con tu cuenta de Grok. Al conectar se abre una ventana de Grok que te lleva a autorizarla en el navegador.',
     uso: 'https://grok.com',
     salir: true
   },
   antigravity: {
-    titulo: 'Antigravity · Google',
+    titulo: 'Google Antigravity · Gemini 2.5 & Claude Bridge',
     logo: 'antigravity',
     como: 'navegador',
-    beta: true,
+    beta: false,
     abreSolo: 'Abriendo Antigravity: al terminar se abre sola la página de Google',
-    texto: 'Sloth trabaja con tu cuenta de Google en Antigravity, con sus modelos de Gemini. La cuenta se autoriza en el navegador.'
+    texto: 'Neva Studio trabaja con tu cuenta de Google en Antigravity, con sus modelos Gemini 2.5 Pro, Flash y Claude Bridge autorizados localmente.'
   },
   gemini: {
     titulo: 'Gemini · con tu llave de API',
@@ -675,7 +801,7 @@ const OTROS: Record<OtroAgente, { titulo: string; logo: string; como: 'ventana' 
         <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">
           aistudio.google.com
         </a>
-        . Se guarda solo en Sloth, en esta computadora.
+        . Se guarda solo en Neva Studio, en esta computadora.
       </>
     )
   },
@@ -683,13 +809,13 @@ const OTROS: Record<OtroAgente, { titulo: string; logo: string; como: 'ventana' 
     titulo: 'Cursor',
     logo: 'cursor',
     como: 'navegador',
-    texto: 'Sloth trabaja con tu cuenta de Cursor, que pide un plan de pago para su agente. La cuenta se autoriza en el navegador.'
+    texto: 'Neva Studio trabaja con tu cuenta de Cursor, que pide un plan de pago para su agente. La cuenta se autoriza en el navegador.'
   },
   muse: {
     titulo: 'Muse Code · Meta',
     logo: 'muse',
     como: 'ventana',
-    texto: 'Sloth trabaja con tu cuenta de Meta. Al conectar se abre una ventana de Muse Code que te lleva a autorizarla.'
+    texto: 'Neva Studio trabaja con tu cuenta de Meta. Al conectar se abre una ventana de Muse Code que te lleva a autorizarla.'
   },
   pi: {
     titulo: 'Pi',
@@ -700,7 +826,7 @@ const OTROS: Record<OtroAgente, { titulo: string; logo: string; como: 'ventana' 
     ayuda: (
       <>
         En la ventana de Pi, elige tu proveedor y sigue sus pasos: se cierra sola al terminar. Pi también usa las llaves de API que tengas en las variables
-        de tu usuario, pero no las que guardaste en Sloth, salvo que se lo elijas aquí.
+        de tu usuario, pero no las que guardaste en Neva Studio, salvo que se lo elijas aquí.
       </>
     )
   }
@@ -823,7 +949,7 @@ export function CuentaAgente({ p, aviso = false, onFalta }: { p: OtroAgente; avi
       {cuenta?.llavesSloth && !!cuenta.llavesSloth.de.length && !aviso && (
         <div className="fila-extra pago">
           <span className="muted small">
-            Tienes en Sloth llaves de {cuenta.llavesSloth.de.join(', ')}.{' '}
+            Tienes en Neva Studio llaves de {cuenta.llavesSloth.de.join(', ')}.{' '}
             {cuenta.llavesSloth.usar ? `${o.titulo} las usa, y lo que hagas con esos modelos se cobra por uso en ellas.` : `${o.titulo} no las ve: así no cobra en ellas sin que lo elijas.`}
           </span>
           <Interruptor on={cuenta.llavesSloth.usar} disabled={c.ocupado} onCambiar={(usar) => void c.pedir(`/api/${p}/llaves`, { usar })} etiqueta="Usarlas en Pi" />
@@ -855,7 +981,7 @@ function AvisoClaude({ onFalta, aAgentes }: { onFalta?(falta?: boolean): void; a
             <Logo de="python-sloth" />
             <div className="fila-nombre">
               <strong>Conecta tu primer agente</strong>
-              <span>Sloth hace los videos con una IA: Claude, ChatGPT, OpenCode (gratis) u otra. Elige una en Opciones y conéctala una sola vez.</span>
+              <span>Neva Studio hace los videos con una IA: Claude, ChatGPT, OpenCode (gratis) u otra. Elige una en Opciones y conéctala una sola vez.</span>
             </div>
             <button className="primary" onClick={() => (location.hash = AGENTES)}>
               Conectar la IA
@@ -871,7 +997,7 @@ function AvisoClaude({ onFalta, aAgentes }: { onFalta?(falta?: boolean): void; a
           <Logo de="claude" />
           <div className="fila-nombre">
             <strong>Conecta tu cuenta de Claude</strong>
-            {!c.cuenta.conectando && <span>Sloth trabaja con tu plan de pago de Claude (Pro o Max), o con una llave de API. La cuenta se autoriza una sola vez en el navegador.</span>}
+            {!c.cuenta.conectando && <span>Neva Studio trabaja con tu plan de pago de Claude (Pro o Max), o con una llave de API. La cuenta se autoriza una sola vez en el navegador.</span>}
           </div>
           {agentes?.claude.instalando ? (
             <Bajando a={agentes.claude} />
@@ -946,7 +1072,7 @@ function CuentaCodex({ aviso = false, onFalta }: { aviso?: boolean; onFalta?(fal
               onChange={(que) => llave.elegir(que) || (que === 'uso' ? window.open('https://chatgpt.com/codex/settings/usage', '_blank', 'noreferrer') : conectar())}
             />
           ) : (
-            <span>Sloth trabaja con tu plan de pago de ChatGPT (Plus o Pro), o con una llave de API, y con ella hace las imágenes de los videos: portadas y personajes. La cuenta se autoriza en el navegador.</span>
+            <span>Neva Studio trabaja con tu plan de pago de ChatGPT (Plus o Pro), o con una llave de API, y con ella hace las imágenes de los videos: portadas y personajes. La cuenta se autoriza en el navegador.</span>
           )}
         </div>
         {agentes?.codex.instalando ? <Bajando a={agentes.codex} /> : version.estado}
@@ -979,7 +1105,7 @@ function CuentaCodex({ aviso = false, onFalta }: { aviso?: boolean; onFalta?(fal
 const conMayuscula = (s?: string) => s && s[0].toUpperCase() + s.slice(1)
 
 /**
- * Lo que las skills necesitan fuera de Sloth (FFmpeg, Python…), y el botón que baja lo que falta. Con `skill`, solo lo
+ * Lo que las skills necesitan fuera de Neva Studio (FFmpeg, Python…), y el botón que baja lo que falta. Con `skill`, solo lo
  * que pide esa skill; sin ella (Opciones), todo.
  */
 function useRequisitos(fresco = false, skill?: string) {
@@ -1014,7 +1140,7 @@ function useRequisitos(fresco = false, skill?: string) {
 type UsoRequisitos = ReturnType<typeof useRequisitos>
 
 /**
- * Lo que ve quien abre la app si falta algo que Sloth puede bajar: encima del compositor, solo lo que falta para la skill
+ * Lo que ve quien abre la app si falta algo que Neva Studio puede bajar: encima del compositor, solo lo que falta para la skill
  * de la card, con un botón que lo baja todo. En Opciones está la lista entera, cada uno con su botón.
  */
 export function Requisitos({ skill, onListo }: { skill?: string; onListo?(listo?: boolean): void }) {
@@ -1133,7 +1259,7 @@ function EstadoRequisito({ r }: { r: Requisito }) {
 }
 
 /**
- * La versión de un agente (`estado`, a la derecha de su fila), la que trae Sloth: llega al día con cada versión de Sloth.
+ * La versión de un agente (`estado`, a la derecha de su fila), la que trae Neva Studio: llega al día con cada versión de Neva Studio.
  * `aviso`, debajo, si no se pudo leer.
  */
 function useVersion(de: Proveedor, mirar = true, instalado?: boolean) {
@@ -1195,7 +1321,7 @@ function Agentes() {
             ) : cuenta.conectando ? (
               <span className="falta">Esperando al navegador…</span>
             ) : (
-              <span className="falta">Sin cuenta: Sloth trabaja con tu plan de pago de Claude (Pro o Max) o con una llave de API</span>
+              <span className="falta">Sin cuenta: Neva Studio trabaja con tu plan de pago de Claude (Pro o Max) o con una llave de API</span>
             )}
           </div>
           {agentes?.claude.instalando ? <Bajando a={agentes.claude} /> : version.estado}
@@ -1264,7 +1390,7 @@ function cuandoReinicia(d: Date) {
 }
 
 /**
- * Los avisos de cuando un hilo termina o te necesita mientras miras otra cosa (`avisos.ts`). En la ventana de Sloth ya
+ * Los avisos de cuando un hilo termina o te necesita mientras miras otra cosa (`avisos.ts`). En la ventana de Neva Studio ya
  * tienen permiso; en Edge, encenderlas se lo pide, y si lo niega se dice dónde dárselo.
  */
 function Avisos() {
@@ -1284,7 +1410,7 @@ function Avisos() {
     const p = permiso === 'default' ? await Notification.requestPermission() : permiso
     setPermiso(p)
     if (p !== 'granted') return setAyuda('permiso')
-    void notificar({ titulo: 'Así avisa Sloth', cuerpo: 'Cuando un hilo termine mientras miras otra cosa.', ids: [] })
+    void notificar({ titulo: 'Así avisa Neva Studio', cuerpo: 'Cuando un hilo termine mientras miras otra cosa.', ids: [] })
     setAyuda('windows')
   }
 
@@ -1304,13 +1430,13 @@ function Avisos() {
       </div>
       {ayuda === 'permiso' && (
         <p className="small fila-extra">
-          Edge no deja avisar a Sloth. Para permitirlo, escribe <span className="mono">edge://settings/content/notifications</span> en una ventana de Edge,
+          Edge no deja avisar a Neva Studio. Para permitirlo, escribe <span className="mono">edge://settings/content/notifications</span> en una ventana de Edge,
           añade <span className="mono">{location.origin}</span> en «Permitir» (o quítalo de «No permitir») y vuelve aquí.
         </p>
       )}
       {ayuda === 'windows' && (
         <p className="muted small fila-extra">
-          ¿No salió? Mira que Windows deje avisar a {window.sloth ? 'Sloth' : 'Microsoft Edge'} (Configuración → Sistema → Notificaciones) y que «No molestar» esté apagado.
+          ¿No salió? Mira que Windows deje avisar a {window.sloth ? 'Neva Studio' : 'Microsoft Edge'} (Configuración → Sistema → Notificaciones) y que «No molestar» esté apagado.
         </p>
       )}
     </div>

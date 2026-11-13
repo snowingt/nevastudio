@@ -33,7 +33,7 @@ const PAQUETES: Record<string, { pip: string; nombre: string; uso: string; skill
   soundfile: { pip: 'soundfile', nombre: 'soundfile', uso: 'sonido', skills: ['video-documental'] },
   scipy: { pip: 'scipy', nombre: 'SciPy', uso: 'sonido', skills: ['video-el-diff', 'video-explicativo'] },
   playwright: { pip: 'playwright', nombre: 'Playwright', uso: 'capturas', skills: ['reel-collage'] },
-  // El Diff recorta con `recorte.py` de video-base.
+  // Noticiero recorta con `recorte.py` de video-base.
   rembg: { pip: 'rembg[cpu]', nombre: 'rembg', uso: 'recortes', skills: ['video-el-diff', 'video-explicativo', 'reel-collage'] },
   edge_tts: { pip: 'edge-tts', nombre: 'edge-tts', uso: 'voz', skills: ['reel-collage'] },
   // El OCR de `ubicar.py` en Mac y Linux (en Windows usa el del sistema). Corre con el onnxruntime que trae rembg[cpu].
@@ -66,7 +66,7 @@ async function modulosQueFaltan(app: string, modulos: string[]): Promise<string[
 
 const WINDOWS = process.platform === 'win32'
 /**
- * Donde lo buscan todos (aquí, `sloth.py` de video-base y `comun.py` de El Diff): `<id>\python\python.exe`, o
+ * Donde lo buscan todos (aquí, `sloth.py` de video-base y `comun.py` de Noticiero): `<id>\python\python.exe`, o
  * `<id>/python/bin/python3` en Mac y Linux. %APPDATA% fuera de Windows lo pone scripts/start.mjs.
  */
 const PYTHONES = join(process.env.APPDATA ?? '', 'youtube', 'piezas', 'python')

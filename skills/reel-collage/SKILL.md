@@ -1,9 +1,9 @@
 ---
 name: reel-collage
-description: Hace un reel de comedia, vertical (TikTok, Reels, Shorts) u horizontal (YouTube), sobre cualquier tema o sobre un guion que traiga el usuario. Un experto muy serio enseña a resolver una situación con pasos físicos absurdos que se ven literales, con las poses recortadas del usuario sobre fotos reales. Úsala cuando pidan un reel de comedia, otro reel como el anterior o un sketch con sus fotos.
+description: Formato Sketch & Diálogo Rápido. Produce piezas de comedia y sketch de alto enganche, vertical (TikTok, Reels, Shorts) u horizontal (YouTube). Emplea poses recortadas del presentador integradas sobre escenarios fotográficos reales, escalada progresiva de situaciones y ritmo cómico vertiginoso con remate memorable.
 ---
 
-# Reel de comedia
+# Formato Sketch & Diálogo Rápido
 
 `<skill>` es esta carpeta y `<base>` es `video-base`, la carpeta junto a ella: lo que comparten
 los estilos de video (bajar y transcribir, masterizar, comprobar, la hoja de contacto). Lee su

@@ -47,19 +47,18 @@ export interface Choice {
 /** Los desplegables separan las dos familias para encontrar cada modelo de un vistazo. */
 export function gruposModelos(models: Model[]) {
   return [
+    { id: 'antigravity', label: 'Google Antigravity (Gemini & Claude)' },
     { id: 'claude', label: 'Anthropic' },
     { id: 'codex', label: 'OpenAI' },
     { id: 'opencode', label: 'OpenCode · gratis' },
-    // Los de pago de OpenCode, debajo de los gratis: se cobran del saldo de la cuenta.
     { id: 'opencode', label: 'OpenCode · de pago (de tu saldo, por millón de tokens)', pago: true },
-    { id: 'deepseek', label: 'DeepSeek · beta' },
-    { id: 'grok', label: 'Grok · beta' },
-    { id: 'antigravity', label: 'Antigravity · beta' },
-    { id: 'gemini', label: 'Gemini · beta' },
+    { id: 'gemini', label: 'Gemini · AI Studio' },
+    { id: 'deepseek', label: 'DeepSeek' },
+    { id: 'grok', label: 'Grok' },
     { id: 'cursor', label: 'Cursor' },
     { id: 'muse', label: 'Muse Code (Meta)' },
-    { id: 'pi', label: 'Pi · beta · gratis' },
-    { id: 'pi', label: 'Pi · beta · de pago (por millón de tokens)', pago: true },
+    { id: 'pi', label: 'Pi · gratis' },
+    { id: 'pi', label: 'Pi · de pago (por millón de tokens)', pago: true },
   ].map((p) => ({
     label: p.label,
     options: models

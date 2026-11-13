@@ -11,7 +11,7 @@ import { integrado } from '../navegador-agente.ts'
  * como lo harías tú a mano. TikTok no tiene API abierta para publicar en público sin una auditoría (ver `docs/adr/`),
  * así que se usa su página web. Instagram sí la tiene y no lo usa.
  *
- * Con la ventana de Sloth abierta, es su página `NAVEGADOR_REDES` del navegador integrado (`electron/navegador.ts`), con
+ * Con la ventana de Neva Studio abierta, es su página `NAVEGADOR_REDES` del navegador integrado (`electron/navegador.ts`), con
  * su propio perfil: no abre otra ventana, y se ve en Opciones → Redes. Es una sola página: `pestana` la da y `cerrar` la
  * deja en blanco. Sin la ventana (Sloth en Edge), un Edge con su propio perfil (`data/redes/perfil`).
  *

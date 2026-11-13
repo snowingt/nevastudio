@@ -1,9 +1,9 @@
 ---
 name: video-explicativo
-description: Hace un video explicativo, vertical (TikTok, Instagram, Shorts) u horizontal (YouTube), sobre cualquier tema y para cualquier propósito. Un solo mundo 3D que la cámara recorre sin cortes, el texto palabra por palabra y el personaje del canal (el perro salchicha u otro), recortado como sticker, que habla y reacciona. Dura lo que pide lo que hay que contar, sin relleno. El usuario graba la voz y el cierre invita a donde él quiera (su Telegram, Instagram, WhatsApp, YouTube…). Úsala cuando pidan explicar algo en un video (un proyecto, una noticia, cómo funciona algo, una historia) o un video con el perro.
+description: Recorrido Visual 3D Sin Cortes. Produce videos explicativos cinematográficos de máxima inmersión para YouTube (16:9) o TikTok/Reels (9:16). Todo transcurre en un entorno tridimensional continuo que la cámara virtual recorre sin cortes bruscos, destacando conceptos, evidencias y visualizaciones clave sincronizadas palabra por palabra con la narración.
 ---
 
-# Video explicativo
+# Recorrido Visual 3D Sin Cortes
 
 `<skill>` es esta carpeta y `<base>` es `video-base`, la carpeta junto a ella: masterizar,
 comprobar y la hoja de contacto. Lee su [`LEEME.md`](../video-base/LEEME.md) antes de empezar (los errores ya vistos). Los scripts

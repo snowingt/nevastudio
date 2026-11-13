@@ -42,14 +42,23 @@ type Tarea = { nombre: string; para: string; model: string; effort: string; medi
  * El modelo del hilo y el de cada subagente, según el modo. En «Optimizado», el hilo va en lo medido para la card; sin
  * medir (o si el catálogo no lo trae), en `ultimo`, lo último que elegiste a mano; y si nunca elegiste, en `POR_DEFECTO`.
  */
+export function conAntigravity(models: Model[]): Avanzado | undefined {
+  const m = models.find((x) => x.id === 'antigravity:gemini-3.8-flash') ?? models.find((x) => x.id === 'antigravity:gemini-2.5-pro') ?? models.find((x) => proveedorDe(x.id) === 'antigravity')
+  return m && { principal: { model: m.id, effort: m.defaultEffort ?? 'high' }, tareas: {} }
+}
+
 export function elegirModelos(conf: ModelosConf | undefined, models: Model[], avanzado: Avanzado | undefined, ultimo?: Choice) {
+  const agyDefault =
+    models.find((m) => m.id === 'antigravity:gemini-3.8-flash') ||
+    models.find((m) => m.id === 'antigravity:gemini-2.5-pro') ||
+    models.find((m) => proveedorDe(m.id) === 'antigravity')
   const optimo =
     (conf?.principal && valido(models, conf.principal)) ||
     (ultimo && valido(models, ultimo)) ||
+    (agyDefault && valido(models, { model: agyDefault.id })) ||
     valido(models, POR_DEFECTO) ||
     (models[0] && valido(models, { model: models[0].id }))
   const choice = (avanzado?.principal && valido(models, avanzado.principal)) || optimo
-  // Las mediciones actuales piden alias de Claude: Codex y OpenCode eligen sus propios subagentes.
   const tareas: Tarea[] = proveedorDe(choice?.model ?? '') !== 'claude' ? [] : (conf?.tareas ?? []).map((t) => ({ ...t, ...(avanzado?.tareas[t.nombre] ?? {}) }))
   return { choice, tareas }
 }

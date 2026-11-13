@@ -19,7 +19,7 @@ async function pedir(path: string, body?: unknown): Promise<Response> {
     try {
       return await fetch(path, body === undefined ? undefined : { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) })
     } catch {
-      if (body !== undefined || i >= 10) throw new Error('No se pudo hablar con Sloth: puede que se esté reiniciando. Intenta otra vez en unos segundos.')
+      if (body !== undefined || i >= 10) throw new Error('No se pudo hablar con Neva Studio: puede que se esté reiniciando. Intenta otra vez en unos segundos.')
       await new Promise((r) => setTimeout(r, 1500))
     }
   }

@@ -73,7 +73,7 @@ function queHace(nombre: string, input: unknown): string {
   return nombre
 }
 
-/** `El Diff · IA` → `el-diff-ia`. */
+/** `Noticiero · IA` → `el-diff-ia`. */
 const slug = (s: string) =>
   s
     .normalize('NFD')

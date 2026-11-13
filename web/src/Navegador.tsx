@@ -6,13 +6,13 @@ import './Navegador.css'
 
 /**
  * El navegador de cada hilo, como el de T3 Code: el globo del encabezado lo enseña o lo esconde, a la derecha del chat (en
- * el estudio, en el centro). La página la pone la ventana de Sloth (`electron/navegador.ts`) encima de la interfaz, en la
+ * el estudio, en el centro). La página la pone la ventana de Neva Studio (`electron/navegador.ts`) encima de la interfaz, en la
  * caja del panel; aquí van su barra y lo que se ve sin página. La usa también el agente: cuando empieza a usarla, el
- * panel de ese hilo se abre solo. Fuera de la ventana de Sloth (en Edge) no hay navegador, y el agente usa el suyo.
+ * panel de ese hilo se abre solo. Fuera de la ventana de Neva Studio (en Edge) no hay navegador, y el agente usa el suyo.
  *
  * El borde izquierdo del panel se arrastra. Cada pestaña puede tener su tamaño fijo (fila del móvil), con bordes que
  * también se arrastran. La primera pestaña es la del hilo, la del agente; las demás son tuyas, y la de las redes no
- * tiene: es una sola página, la que maneja Sloth al publicar.
+ * tiene: es una sola página, la que maneja Neva Studio al publicar.
  */
 
 const puente = window.sloth?.navegador
@@ -116,7 +116,7 @@ if (puente) {
     const antes = estados.get(e.hilo)
     estados.set(e.hilo, e)
     // El agente empieza a usarlo: se abre en su hilo, para verlo trabajar. Si lo cierras, sigue cerrado hasta la próxima.
-    // El de las redes no: Sloth se conecta también para mirar la sesión, y lo abren Mis videos (al subir) y Opciones.
+    // El de las redes no: Neva Studio se conecta también para mirar la sesión, y lo abren Mis videos (al subir) y Opciones.
     if (e.agente && !antes?.agente && e.hilo !== NAVEGADOR_REDES) {
       abrirNavegador(e.hilo, true)
       ponerPestanas(e.hilo, { ...pestanasDe(e.hilo), activa: e.hilo })

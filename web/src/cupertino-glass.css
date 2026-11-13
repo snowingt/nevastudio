@@ -1,0 +1,219 @@
+/* ==========================================================================
+   CUPERTINO DARK GLASS DESIGN SYSTEM (APPLE STUDIO)
+   ========================================================================== */
+
+:root, [data-mode="creator"] {
+  --bg: #09090B;
+  --panel: rgba(24, 24, 27, 0.72);
+  --panel-solid: #18181B;
+  --panel-2: rgba(39, 39, 42, 0.65);
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #F4F4F5;
+  --text-muted: #A1A1AA;
+  --muted: #A1A1AA;
+  --radio: 16px;
+  --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
+  
+  /* Modo Creator: Acento Violeta */
+  --accent: #8B5CF6;
+  --accent-2: #A855F7;
+  --accent-gradient: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+  --accent-glow: rgba(139, 92, 246, 0.35);
+  --accent-tint: rgba(139, 92, 246, 0.12);
+  --sobre-accent: #FFFFFF;
+  color-scheme: dark;
+}
+
+[data-mode="marketer"] {
+  /* Modo Marketer: Acento Azul Esmeralda */
+  --accent: #0EA5E9;
+  --accent-2: #10B981;
+  --accent-gradient: linear-gradient(135deg, #0EA5E9 0%, #10B981 100%);
+  --accent-glow: rgba(14, 165, 233, 0.35);
+  --accent-tint: rgba(14, 165, 233, 0.12);
+  --sobre-accent: #FFFFFF;
+}
+
+body {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: var(--font-apple) !important;
+  letter-spacing: -0.012em;
+}
+
+/* Cupertino Glass Panels */
+.glass-panel {
+  background: var(--panel);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--line);
+  border-radius: var(--radio);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* ==========================================================================
+   DYNAMIC ISLAND MASTER SWITCH
+   ========================================================================== */
+.dynamic-island-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+}
+
+.dynamic-island-pill {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(18, 18, 20, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 3px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dynamic-island-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  background: transparent;
+}
+
+.dynamic-island-btn.active {
+  background: var(--accent-gradient);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+.dynamic-island-icon {
+  font-size: 14px;
+}
+
+.dynamic-island-badge {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  margin-left: 2px;
+}
+
+/* ==========================================================================
+   STUDIO 3-STEP WIZARD
+   ========================================================================== */
+.wizard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 12px 0 20px 0;
+  padding: 16px 20px;
+  background: var(--panel);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--line);
+  border-radius: var(--radio);
+}
+
+.wizard-steps-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.wizard-step-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wizard-step-tab.active {
+  background: var(--accent-tint);
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.wizard-step-tab.completed {
+  color: #10B981;
+}
+
+.wizard-step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.wizard-step-tab.active .wizard-step-num {
+  background: var(--accent);
+  color: #FFF;
+}
+
+.wizard-step-title {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.wizard-step-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.wizard-arrow {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+}
+
+/* Hardware & Time Estimate Badge on Cards */
+.card-hardware-pill {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  background: rgba(9, 9, 11, 0.82);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #E4E4E7;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 5;
+}
+
+.card-hardware-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+}
+
+.card-hardware-dot.warning {
+  background: #FB923C;
+}

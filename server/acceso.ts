@@ -146,12 +146,12 @@ async function probar(p: Proveedor, llave: string) {
   const res =
     p === 'claude'
       ? await fetch('https://api.anthropic.com/v1/models', { headers: { 'x-api-key': llave, 'anthropic-version': '2023-06-01' } })
-      : p === 'gemini'
+      : p === 'gemini' || p === 'antigravity'
         ? await fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=1', { headers: { 'x-goog-api-key': llave } })
         : await fetch(p === 'deepseek' ? 'https://api.deepseek.com/models' : 'https://api.openai.com/v1/models', { headers: { authorization: `Bearer ${llave}` } })
   if (res.ok) return
-  const marca = p === 'claude' ? 'Anthropic' : p === 'deepseek' ? 'DeepSeek' : p === 'gemini' ? 'Google' : 'OpenAI'
+  const marca = p === 'claude' ? 'Anthropic' : p === 'deepseek' ? 'DeepSeek' : p === 'gemini' || p === 'antigravity' ? 'Google' : 'OpenAI'
   // Google contesta 400 a una llave que no vale.
-  if (res.status === 401 || res.status === 403 || (p === 'gemini' && res.status === 400)) throw new Error(`${marca} no aceptó esa llave. Revísala y vuelve a pegarla.`)
+  if (res.status === 401 || res.status === 403 || ((p === 'gemini' || p === 'antigravity') && res.status === 400)) throw new Error(`${marca} no aceptó esa llave. Revísala y vuelve a pegarla.`)
   throw new Error(`${marca} respondió ${res.status}. Vuelve a intentarlo en un momento.`)
 }

@@ -191,7 +191,7 @@ export interface Avance {
   /**
    * El monitor de la fase Video, el mismo para todos los estilos. `motor`: el motor en vivo de Sloth (`server/motor.ts`),
    * el video sin renderizar de cualquier proyecto de Remotion; `v` sube con cada versión y `armando` dice que viene otra.
-   * `vivo`: la página en vivo que arma la propia skill (la de El Diff), para cuando el motor no puede (sin `node_modules`);
+   * `vivo`: la página en vivo que arma la propia skill (la de Noticiero), para cuando el motor no puede (sin `node_modules`);
    * `t` es el de su entrada más nueva. Las dos hablan con el monitor por `postMessage` (`listo`, `tiempo`, `ir`, `play`,
    * `pausa`). `renders`: los videos renderizados de la fase Video, del más avanzado al primero.
    */
@@ -1031,7 +1031,7 @@ export interface Autor {
   creador?: boolean
   /** Fundador (de las primeras personas que apoyaron, para siempre), Apoyo grande o Apoya (mientras apoya). */
   insignia?: 'fundador' | 'grande' | 'apoya'
-  /** Solo en tu perfil: si sales en los créditos de sloth.vancci.org (los Fundadores que lo piden). */
+  /** Solo en tu perfil: si sales en los créditos de nevastudio.app (los Fundadores que lo piden). */
   creditos?: boolean
 }
 
@@ -1210,7 +1210,7 @@ export interface Licencia {
 }
 
 /** La versión de esta app y, si la hay, la nueva y cómo va su descarga (electron/main.ts). */
-export interface ActualizacionSloth {
+export interface ActualizacionNevaStudio {
   actual: string
   nueva?: string
   /** Lo que trae la nueva, en un renglón: se ve al pasar el cursor sobre «Actualizar». */
@@ -1224,16 +1224,16 @@ export interface ActualizacionSloth {
   aMano?: boolean
 }
 
-/** Lo que la ventana de Sloth (electron/preload.ts) le da a la interfaz como `window.sloth`. En un navegador no está. */
+/** Lo que la ventana de Neva Studio (electron/preload.ts) le da a la interfaz como `window.sloth`. En un navegador no está. */
 export interface PuenteSloth {
   /** La de Mac con macOS 12 (Electron 43): al abrirla, el aviso de lo que puede no andar ahí (`AvisoMacViejo`). */
   macViejo?: boolean
-  actualizacion(): Promise<ActualizacionSloth>
+  actualizacion(): Promise<ActualizacionNevaStudio>
   /** Baja la versión nueva y la pone: Sloth se cierra y se vuelve a abrir. */
-  actualizar(): Promise<ActualizacionSloth>
+  actualizar(): Promise<ActualizacionNevaStudio>
   /** La ventana al frente (al pulsar un aviso). */
   traer(): void
-  /** Si Sloth está anclada a la barra de tareas; `null` donde no se puede ofrecer (fuera de la app instalada en Windows). */
+  /** Si Neva Studio está anclada a la barra de tareas; `null` donde no se puede ofrecer (fuera de la app instalada en Windows). */
   anclada(): Promise<boolean | null>
   /** Pide a Windows anclarla, que pregunta en su ventana. `windows`: Windows no dejó pedirlo. */
   anclar(): Promise<'anclada' | 'no' | 'windows'>

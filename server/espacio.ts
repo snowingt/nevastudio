@@ -15,7 +15,7 @@ import { TRABAJO_DEV } from './trabajo.ts'
  * lo borra solo cada 6 horas cuando nada trabaja; lo demás (los videos bajados de internet, otro Python, los adjuntos
  * sueltos) solo con su botón. Nunca toca un video terminado, una grabación ni la carpeta de un hilo que trabaja.
  *
- * Las dependencias de los videos se comparten como en `skills/video-base/scripts/espacio.py` (y `comun.py` de El Diff):
+ * Las dependencias de los videos se comparten como en `skills/video-base/scripts/espacio.py` (y `comun.py` de Noticiero):
  * una carpeta por plantilla en %LOCALAPPDATA%, enlazada desde cada video. Si cambias dónde viven, cámbialo allí también.
  */
 
@@ -310,7 +310,7 @@ export function bajados(carpeta: string, vistos = new Set<string>()): { ruta: st
 
 const completo = (nm: string) => esCarpeta(join(nm, 'remotion')) && esCarpeta(join(nm, '@remotion', 'cli'))
 
-/** La carpeta compartida de una plantilla, como la calculan `espacio.py` (`<estilo>-<huella>`) y `comun.py` de El Diff. */
+/** La carpeta compartida de una plantilla, como la calculan `espacio.py` (`<estilo>-<huella>`) y `comun.py` de Noticiero. */
 export function casaDe(skill: string, plantilla: string): string | undefined {
   let lock: Buffer
   try {

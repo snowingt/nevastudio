@@ -1,5 +1,5 @@
 /**
- * Lo que la ventana de Sloth (main.ts) le da a la interfaz: `window.sloth` (`PuenteSloth`). Corre antes que la página,
+ * Lo que la ventana de Neva Studio (main.ts) le da a la interfaz: `window.sloth` (`PuenteSloth`). Corre antes que la página,
  * aislado de ella.
  */
 import { contextBridge, ipcRenderer, type IpcRendererEvent } from 'electron'
@@ -35,3 +35,4 @@ const puente: PuenteSloth = {
 }
 
 contextBridge.exposeInMainWorld('sloth', puente)
+contextBridge.exposeInMainWorld('nevastudio', puente)

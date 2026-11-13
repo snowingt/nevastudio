@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#09090b" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0a84ff" />
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+  </defs>
+  <rect x="24" y="24" width="464" height="464" rx="108" fill="url(#bgGrad)" stroke="rgba(255,255,255,0.2)" stroke-width="6" />
+  <path d="M168 360V152c0-8.8 7.2-16 16-16h24c8.8 0 16 7.2 16 16v136l120-144c5.8-7 15.6-8.8 23.4-4.2 8.4 5 12.6 14.8 12.6 24.2v208c0 8.8-7.2 16-16 16h-24c-8.8 0-16-7.2-16-16V232L204 376c-5.8 7-15.6 8.8-23.4 4.2-8.4-5-12.6-14.8-12.6-24.2z" fill="url(#blueGrad)" />
+  <path d="M208 140l140 168c4 4.8 10.4 7.2 16.8 6.2 6.4-1 11.2-5.8 12.8-12.2l12-48c2.2-8.8-3.2-17.6-12-19.8L236 128c-11-2.8-21.6 4.8-24.4 15.8z" fill="url(#purpleGrad)" />
+  <circle cx="256" cy="256" r="18" fill="#ffffff" />
+  <circle cx="256" cy="256" r="8" fill="#10b981" />
+</svg>

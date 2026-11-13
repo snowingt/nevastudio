@@ -21,7 +21,7 @@ const POLITICA = 'https://policies.google.com/terms/generative-ai/use-policy'
 function AvisoDerechos({ onHecho, onCerrar }: { onHecho(e: EstadoFlow): void; onCerrar(): void }) {
   return (
     <Confirm title="Derechos de tus imágenes" action="Confirmo" onConfirm={() => api<EstadoFlow>('/api/flow/ajustes', { derechos: true }).then(onHecho)} onClose={onCerrar}>
-      Para que el personaje y el estilo salgan iguales, Sloth sube a Google Flow tus imágenes de referencia, y al subirlas acepta en tu nombre lo que Flow pide. Confirma que:
+      Para que el personaje y el estilo salgan iguales, Neva Studio sube a Google Flow tus imágenes de referencia, y al subirlas acepta en tu nombre lo que Flow pide. Confirma que:
       <ul>
         <li>Tienes los derechos necesarios de las imágenes que mandas, incluido el contenido de menores.</li>
         <li>No generas contenido que infrinja los derechos de otras personas, ni que engañe, hostigue o dañe.</li>
@@ -201,7 +201,7 @@ export function FlowOpciones({ voz }: { voz: UsoVoz }) {
       </div>
       {e?.agregando && (
         <p className="muted small fila-extra">
-          Al llegar a Flow, acepta su aviso si te lo enseña y cierra la ventana: la cuenta queda en Sloth. Cada cuenta gratis da 50 créditos al día; cuando una se queda sin ellos, Sloth sigue con otra.
+          Al llegar a Flow, acepta su aviso si te lo enseña y cierra la ventana: la cuenta queda en Neva Studio. Cada cuenta gratis da 50 créditos al día; cuando una se queda sin ellos, Neva Studio sigue con otra.
         </p>
       )}
       {n > 0 && e && (
@@ -231,7 +231,7 @@ export function FlowOpciones({ voz }: { voz: UsoVoz }) {
                       label: 'Cuenta',
                       options: [
                         { value: 'abrir', label: 'Abrir Flow' },
-                        ...(c.deLaVoz ? [{ value: 'quitar', label: 'Quitar de Sloth (también de AI Studio)' }] : [{ value: 'conectar', label: 'Volver a conectar' }, { value: 'quitar', label: 'Quitar de Sloth' }])
+                        ...(c.deLaVoz ? [{ value: 'quitar', label: 'Quitar de Neva Studio (también de AI Studio)' }] : [{ value: 'conectar', label: 'Volver a conectar' }, { value: 'quitar', label: 'Quitar de Neva Studio' }])
                       ]
                     }
                   ]}
@@ -275,11 +275,11 @@ export function FlowOpciones({ voz }: { voz: UsoVoz }) {
         (quitandoVoz ? (
           <Confirm title="Quitar la cuenta de Flow y de AI Studio" action="Quitar de los dos" danger onConfirm={voz.desconectar} onClose={() => setQuitando(undefined)}>
             <p className="aviso-grande">{quitando} también es la cuenta de la Voz: se quita de AI Studio, y el agente ya no podrá generar la voz de tus videos.</p>
-            Sloth deja de generar con ella en Flow y en AI Studio. Lo que ya generó sigue en tu cuenta. Para volver a usarla, conéctala otra vez en Voz.
+            Neva Studio deja de generar con ella en Flow y en AI Studio. Lo que ya generó sigue en tu cuenta. Para volver a usarla, conéctala otra vez en Voz.
           </Confirm>
         ) : (
           <Confirm title="Quitar la cuenta" action="Quitar" danger onConfirm={() => api<EstadoFlow>('/api/flow/cuentas/quitar', { correo: quitando }).then(poner)} onClose={() => setQuitando(undefined)}>
-            Sloth deja de generar con {quitando} y borra su sesión. Lo que ya generó sigue en su Flow. Para volver a usarla, agrégala otra vez.
+            Neva Studio deja de generar con {quitando} y borra su sesión. Lo que ya generó sigue en su Flow. Para volver a usarla, agrégala otra vez.
           </Confirm>
         ))}
       {(error ?? e?.error) && !e?.agregando && <p className="bad small fila-extra">{error ?? e?.error}</p>}

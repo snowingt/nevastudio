@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url'
  * con WebFetch (`browser_navigate`, `browser_snapshot`, `browser_take_screenshot`…). No se confunde con el de las redes
  * (`server/redes/navegador.ts`).
  *
- * Con la ventana de Sloth abierta, un hilo normal usa su página del navegador integrado (`electron/navegador.ts`): lo que
+ * Con la ventana de Neva Studio abierta, un hilo normal usa su página del navegador integrado (`electron/navegador.ts`): lo que
  * abre el agente se ve en el hilo, sin otra ventana. Playwright se conecta a ella por CDP, a la dirección que la ventana
  * anota en `data/navegador-integrado.json`.
  *
@@ -69,7 +69,7 @@ function cli(): { js: string; version: string } | null {
 }
 
 /**
- * La dirección del navegador integrado, si la ventana de Sloth que la anotó sigue abierta. `redes` y `voz`: tiene la
+ * La dirección del navegador integrado, si la ventana de Neva Studio que la anotó sigue abierta. `redes` y `voz`: tiene la
  * página de las redes (`server/redes/navegador.ts`) o la de la voz (`server/voz/`), con su propio perfil.
  */
 export function integrado(): { puerto: number; secreto: string; redes: boolean; voz: boolean } | null {
@@ -85,7 +85,7 @@ export function integrado(): { puerto: number; secreto: string; redes: boolean; 
 
 /**
  * Para `mcpServers` del SDK. Vacío si falta el paquete o el navegador: el hilo trabaja igual, sin él. `hilo`: el hilo
- * cuya página del navegador integrado usa, si la ventana de Sloth está abierta.
+ * cuya página del navegador integrado usa, si la ventana de Neva Studio está abierta.
  */
 export function navegadorAgente(lote?: boolean, hilo?: string): Record<string, McpStdioServerConfig> {
   const playwright = cli()

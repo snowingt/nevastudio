@@ -370,7 +370,7 @@ function cambioTras(folder: string, entradas: string[], final: Archivo): Archivo
 
 /**
  * El monitor de la fase Video, el mismo para todos los estilos: el motor en vivo (`server/motor.ts`), la vista en vivo de
- * la skill si la trae y los renders, cada uno con la entrada que cambió después de él. Con `editor` (El Diff), su página en
+ * la skill si la trae y los renders, cada uno con la entrada que cambió después de él. Con `editor` (Noticiero), su página en
  * vivo y su video final, con las `entradas` de la card; sin él, solo sus renders (`rendersDe`). `avisar` relee el avance
  * de quien mira la carpeta cuando el motor tiene otra versión.
  */

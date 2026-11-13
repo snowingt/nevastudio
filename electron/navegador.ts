@@ -1,5 +1,5 @@
 /**
- * El navegador integrado, como el de T3 Code: una página por hilo dentro de la ventana de Sloth, que la interfaz pone a
+ * El navegador integrado, como el de T3 Code: una página por hilo dentro de la ventana de Neva Studio, que la interfaz pone a
  * la derecha del chat (o en el centro del estudio) con el botón del globo (`web/src/Navegador.tsx`). La usan tú y el
  * agente a la vez: Playwright MCP (`server/navegador-agente.ts`) se conecta a la del hilo por el relevo CDP de aquí
  * (`relevo.ts`), y lo que abre se ve sin otra ventana. Las pestañas de más son tuyas: páginas como cualquier otra, con
@@ -168,7 +168,7 @@ function prepararPerfil(perfil: Session) {
   })
 }
 
-/** La ventana de Sloth, cada vez que se abre: las páginas van dentro de ella. */
+/** La ventana de Neva Studio, cada vez que se abre: las páginas van dentro de ella. */
 export function ventanaDelNavegador(v: BrowserWindow) {
   ventana = v
   for (const h of hojas.values()) v.contentView.addChildView(h.vista)

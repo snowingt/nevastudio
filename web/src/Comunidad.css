@@ -282,7 +282,7 @@
   .com-post-portada { width: 96px; height: 72px; }
 }
 
-/* Vota qué sigue: el roadmap de sloth.vancci.org, debajo de la comunidad */
+/* Vota qué sigue: el roadmap de nevastudio.app, debajo de la comunidad */
 .com-votar { margin-top: 16px; padding: 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
 .com-votar h3 { margin: 0 0 4px; font-size: 15px; }
 .com-votar > p { margin: 0 0 12px; color: var(--muted); font-size: 12.5px; line-height: 1.45; }

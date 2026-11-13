@@ -239,7 +239,7 @@ ${USA_EL_NAVEGADOR}`
   }
   /**
    * La skill va por su ruta, no como `$nombre`: Codex no lee ~/.claude/skills, y un `$nombre` lo resuelve con la suya de
-   * ese nombre (en ~/.codex/skills), si hay. Así, en octubre de 2026, un El Diff siguió una copia vieja de la skill.
+   * ese nombre (en ~/.codex/skills), si hay. Así, en octubre de 2026, un Noticiero siguió una copia vieja de la skill.
    */
   function input(text: string, images: string[], skill?: SkillRef) {
     const path = skill?.path ?? (skill && join(SKILLS, skill.name, 'SKILL.md'))

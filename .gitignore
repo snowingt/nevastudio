@@ -1,11 +1,37 @@
-node_modules
-/data/
-dist
-/trabajo/
+# ── Dependencias ──────────────────────────────────────────
+node_modules/
 
-# Lo que cada quien guarda solo en su copia: sus poses, su biblioteca de modelos 3D, lo que Sloth aprende de sus
-# videos y el material que no es de Sloth (memes, referencias, las métricas de Ideas).
-/references/
+# ── Builds / dist ─────────────────────────────────────────
+dist/
+out/
+
+# ── Runtimes portables (Python, FFmpeg, yt-dlp, etc.) ─────
+# Estos directorios contienen binarios descargados en tiempo
+# de ejecución; NO van al repo.
+sloth/
+youtube/
+python/
+trabajo/
+references/
+
+# ── Datos de usuario y sesiones ───────────────────────────
+/data/
+data/agentes.json
+data/antigravity/
+data/*.db
+data/sessions/
+tunnel.log
+studio.log
+novedad.txt
+
+# ── Secrets y entorno ─────────────────────────────────────
+*.env
+.env
+.env.*
+*.pem
+*.key
+
+# ── Skills – archivos personales que no van al repo ───────
 /skills/reel-collage/personaje/
 /skills/video-explicativo/huellas/
 /skills/*/series/banco/
@@ -14,7 +40,13 @@ dist
 !/skills/video-el-diff/plantilla/public/img/LEEME.md
 /skills/modelos-3d/modelos/
 /skills/ideas-*/METODO.md
-# Las skills de la cuenta de claude.ai (docx, pdf…): Claude Code las baja a data/claude/skills, que es esta carpeta.
 /skills/synced/
-# Un repo aparte que comparta esta carpeta, para respaldar lo de arriba.
+
+# ── Git privado de respaldo ───────────────────────────────
 /.privado.git/
+
+# ── macOS / Linux ─────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

@@ -1,9 +1,9 @@
 ---
 name: video-documental
-description: Convierte una grabación tuya hablando a cámara en un video documental, horizontal (16:9, para YouTube) o vertical (9:16, para TikTok, Reels y Shorts), con el estilo EDITOR V1 ("editor v1", "ev1", "el documental", "found footage"). La voz manda un torrente de material REAL encontrado en internet para cada frase (las páginas, fotos, películas y posts de la propia empresa, archivo de NASA, Wikimedia o dominio público, interfaces rehechas con datos reales), cada imagen recoloreada (teal, blanco y negro duro, ámbar, flashes en negativo) y animada con dispositivos medidos cuadro a cuadro en tres reels documentales; tú recortado delante de un mundo que cambia con una palabra roja enorme detrás de la cabeza; un clic en cada cambio y una cama musical que se corta bajo el remate. La imagen cambia cada 0,6–1,5 s. Úsala cuando alguien da una grabación y pide este estilo, o un montaje documental rápido de una toma a cámara.
+description: Estudio de Edición Dinámica & Documental (basado en el motor Editor V1). Convierte una grabación a cámara o material en bruto en una pieza documental de alto impacto, horizontal (16:9 para YouTube) o vertical (9:16 para TikTok, Reels y Shorts). Integra corte preciso en línea de tiempo, B-roll contextual automatizado, zooms y reframing medidos cuadro a cuadro, recorte de sujeto sobre mundos dinámicos, gradación de color cinemática (teal, monocromo duro, flashes) y diseño sonoro rítmico con micro-cortes bajo el remate. La imagen evoluciona cada 0,6–1,5 s manteniendo máxima retención.
 ---
 
-# Documental (EDITOR V1)
+# Estudio de Edición Dinámica & Documental (Editor V1 Pro)
 
 Tú grabas; la edición busca las pruebas. Cada frase lleva una imagen real de lo que se nombra, encontrada en internet,
 recoloreada para que sea de la película y animada con uno de los dispositivos de abajo. **La imagen cambia cada 0,6–1,5 s.**

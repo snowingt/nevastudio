@@ -3,17 +3,17 @@
 </p>
 
 <p align="center">
-  <a href="https://sloth.vancci.org"><img alt="Versión" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.sloth.vancci.org%2Fversion&query=%24.version&label=versi%C3%B3n&color=e8a33d&labelColor=171512"></a>
+  <a href="https://snowstudio.app"><img alt="Versión" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.snowstudio.app%2Fversion&query=%24.version&label=versi%C3%B3n&color=e8a33d&labelColor=171512"></a>
   <img alt="Windows, Mac y Linux" src="https://img.shields.io/badge/Windows%20%C2%B7%20Mac%20%C2%B7%20Linux-171512?logo=electron&logoColor=ede6d6">
   <img alt="Con Claude" src="https://img.shields.io/badge/con-Claude-e8a33d?labelColor=171512">
   <a href="LICENSE"><img alt="Licencia" src="https://img.shields.io/badge/licencia-Apache%202.0%20%2B%20Commons%20Clause-ede6d6?labelColor=171512"></a>
 </p>
 
 <p align="center">
-  <a href="https://api.sloth.vancci.org/descargar"><b>Descargar</b></a> ·
-  <a href="https://sloth.vancci.org">Página</a> ·
-  <a href="https://sloth.vancci.org/#roadmap">Roadmap</a> ·
-  <a href="https://sloth.vancci.org/#apoyar">Apoyar</a> ·
+  <a href="https://api.snowstudio.app/descargar"><b>Descargar</b></a> ·
+  <a href="https://snowstudio.app">Página</a> ·
+  <a href="https://snowstudio.app/#roadmap">Roadmap</a> ·
+  <a href="https://snowstudio.app/#apoyar">Apoyar</a> ·
   <a href="CONTRIBUTING.md">Aportar</a>
 </p>
 
@@ -42,7 +42,7 @@ Es gratis, sin tarjeta y sin límite de videos. Trabaja con tu propia cuenta de 
   </tr>
 </table>
 
-<p align="center"><a href="https://sloth.vancci.org">Míralos completos y con sonido en sloth.vancci.org</a></p>
+<p align="center"><a href="https://snowstudio.app">Míralos completos y con sonido en snowstudio.app</a></p>
 
 ## Cómo funciona
 
@@ -66,9 +66,9 @@ Descarga la última versión para tu sistema y ábrela:
 
 | Sistema | Descarga | Nota |
 | --- | --- | --- |
-| **Windows** 10 u 11 | [Sloth para Windows](https://api.sloth.vancci.org/descargar) | Si dice «Windows protegió tu PC», da clic en *Más información* y luego en *Ejecutar de todas formas*. |
-| **Mac** con Apple Silicon (M1 o más nueva) o con Intel | [Sloth para Mac](https://api.sloth.vancci.org/descargar?so=mac) | La página deja elegir la de tu Mac. |
-| **Linux** | [Sloth para Linux](https://api.sloth.vancci.org/descargar?so=linux) | Es un AppImage: dale permiso de ejecutar y ábrelo. |
+| **Windows** 10 u 11 | [Sloth para Windows](https://api.snowstudio.app/descargar) | Si dice «Windows protegió tu PC», da clic en *Más información* y luego en *Ejecutar de todas formas*. |
+| **Mac** con Apple Silicon (M1 o más nueva) o con Intel | [Sloth para Mac](https://api.snowstudio.app/descargar?so=mac) | La página deja elegir la de tu Mac. |
+| **Linux** | [Sloth para Linux](https://api.snowstudio.app/descargar?so=linux) | Es un AppImage: dale permiso de ejecutar y ábrelo. |
 
 Necesitas una IA conectada, con una basta: **Claude**, **ChatGPT**, **OpenCode** (tiene modelos gratis) u otro agente.
 Con ChatGPT, Sloth además hace las imágenes. FFmpeg, Python y lo que pide cada estilo los instala la propia app. Las
@@ -79,7 +79,7 @@ versiones nuevas se instalan desde la misma app.
 Necesitas Node 24.
 
 ```bash
-git clone https://github.com/Vancci-sloth/sloth.git
+git clone https://github.com/snow-studio/snow-studio.git
 cd sloth
 npm ci
 npm start
@@ -131,11 +131,11 @@ Las metas se cuentan con las personas que apoyan hoy, y quien apoya recibe cada 
 | 250 | La tienda de estilos: sube los tuyos y usa los de la comunidad |
 
 El orden lo puede cambiar la comunidad: se vota dentro de Sloth, y el voto de un Fundador vale doble.
-[Míralo en vivo en la página](https://sloth.vancci.org/#roadmap).
+[Míralo en vivo en la página](https://snowstudio.app/#roadmap).
 
 ## Apoya a Sloth
 
-Sloth es gratis y lo seguirá siendo. Si te sirve, puedes [apoyarla](https://sloth.vancci.org/#apoyar) desde
+Sloth es gratis y lo seguirá siendo. Si te sirve, puedes [apoyarla](https://snowstudio.app/#apoyar) desde
 $15 USD al mes: con ese apoyo salen las metas del roadmap. Las primeras 25 personas que apoyan son **Fundadores**
 para siempre, con insignia en la comunidad, su nombre en los créditos de la página y voto doble.
 
@@ -155,10 +155,10 @@ venía para HyperFrames; en Sloth se dibuja con Remotion.
 **Código abierto para uso libre, sin reventa.** Puedes usar Sloth para lo que quieras (también para trabajos de
 paga), modificarla y compartirla. Lo que no puedes es venderla, ni una versión modificada, ni un servicio cuyo valor
 venga de ella. Los videos que hagas son tuyos y los puedes vender. Es la [Apache 2.0 con Commons Clause](LICENSE), a
-nombre de [Vancci](https://vancci.org); por esa condición no es «open source» según la definición de la OSI.
+nombre de [Snow Studio](https://snowstudio.app); por esa condición no es «open source» según la definición de la OSI.
 
 Remotion, que arma los videos, tiene su [propia licencia](https://www.remotion.dev/license): gratis para personas y
 equipos pequeños; las empresas más grandes pagan la suya. Sloth no está afiliada, patrocinada ni respaldada por
 Anthropic ni por OpenAI.
 
-<p align="center"><sub>Hecho por <a href="https://vancci.org">Vancci</a> en México</sub></p>
+<p align="center"><sub>Hecho por <a href="https://snowstudio.app">Snow Studio</a> en México</sub></p>

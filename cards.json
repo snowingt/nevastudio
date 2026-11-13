@@ -1,5 +1,217 @@
 [
   {
+    "id": "video-documental",
+    "title": "Estudio de Edición Dinámica & Documental",
+    "description": "Editor multicapa profesional basado en Editor V1: corte en línea de tiempo, B-roll dinámico, zooms medidos cuadro a cuadro, máscaras con recorte de sujeto, subtítulos cinemáticos y diseño sonoro rítmico.",
+    "skill": "video-documental",
+    "icon": "video",
+    "etapas": [
+      {
+        "nombre": "Idea & Enfoque",
+        "listo": "idea.md",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Guion & Transcripción",
+        "listo": "guion.md",
+        "fase": "guion"
+      },
+      {
+        "nombre": "B-roll & Material Encontrado",
+        "listo": "material.md",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Línea de Tiempo Dinámica",
+        "listo": "src/edicion.json",
+        "fase": "video"
+      },
+      {
+        "nombre": "Edición Final Renderizada",
+        "listo": "out/documental.mp4",
+        "fase": "video"
+      },
+      {
+        "nombre": "Portada & Miniatura",
+        "listo": "portada.png",
+        "fase": "entrega"
+      }
+    ]
+  },
+  {
+    "id": "video-el-diff",
+    "title": "Noticiero Vertical & Resumen de Impacto",
+    "description": "Noticiero vertical de alto impacto para TikTok, Reels y Shorts: síntesis de noticias, fuentes verificadas, dinamismo visual y cierre con gancho.",
+    "skill": "video-el-diff",
+    "icon": "noticiero",
+    "etapas": [
+      {
+        "nombre": "Fuentes & Titulares",
+        "listo": "fuentes/tema/transcripcion.txt",
+        "muestra": "fuentes/tema/video.mp4",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Material & Evidencias",
+        "listo": "material.md",
+        "muestra": "{material.md,fuentes/material/**/*.{png,jpg,jpeg,webp}}",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Guion & Ritmo",
+        "listo": "guion.md",
+        "copiar": true,
+        "fase": "guion"
+      },
+      {
+        "nombre": "Locución & Voz",
+        "listo": "public/voz/narracion.wav",
+        "espera": "Graba el guion (con el celular basta) y súbelo aquí o mándalo por el chat.",
+        "fase": "sonido"
+      },
+      {
+        "nombre": "Escenas & Composición",
+        "listo": "guion.json",
+        "fase": "video"
+      },
+      {
+        "nombre": "Revisión",
+        "listo": "revision/hoja_95_*.png",
+        "fase": "video"
+      },
+      {
+        "nombre": "Video Final 9:16",
+        "listo": "out/noticiero-final.mp4",
+        "fase": "video"
+      },
+      {
+        "nombre": "Portada",
+        "listo": "portada.png",
+        "fase": "entrega"
+      }
+    ]
+  },
+  {
+    "id": "video-explicativo",
+    "title": "Recorrido Visual 3D Sin Cortes",
+    "description": "Explicaciones inmersivas en un entorno 3D continuo sin cortes: la cámara virtual recorre el espacio destacando conceptos clave sincronizados palabra por palabra.",
+    "skill": "video-explicativo",
+    "icon": "pizarra",
+    "etapas": [
+      {
+        "nombre": "Investigación & Conceptos",
+        "listo": "fuentes/investigacion.md",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Guion Explicativo",
+        "listo": "guion.md",
+        "copiar": true,
+        "fase": "guion"
+      },
+      {
+        "nombre": "Audio & Locución",
+        "listo": "fuentes/voz/original.wav",
+        "fase": "sonido"
+      },
+      {
+        "nombre": "Revisión 3D",
+        "listo": "revision/borrador-*.png",
+        "fase": "video"
+      },
+      {
+        "nombre": "Video Renderizado",
+        "listo": "out/!(render*|borrador*|_*).mp4",
+        "fase": "video"
+      },
+      {
+        "nombre": "Portada",
+        "listo": "portada.png",
+        "fase": "entrega"
+      }
+    ]
+  },
+  {
+    "id": "reel-collage",
+    "title": "Formato Sketch & Diálogo Rápido",
+    "description": "Sketch dinámico con recortes del presentador sobre escenarios reales, ritmo acelerado y diálogos ágiles para alta retención en formato vertical u horizontal.",
+    "skill": "reel-collage",
+    "icon": "claqueta",
+    "etapas": [
+      {
+        "nombre": "Guion y Escenas",
+        "listo": "guion.md",
+        "copiar": true,
+        "fase": "guion"
+      },
+      {
+        "nombre": "Fotos y Recortes",
+        "listo": "material.md",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Locución",
+        "listo": "public/audio.mp3",
+        "fase": "sonido"
+      },
+      {
+        "nombre": "Video Renderizado",
+        "listo": "out/sketch-final.mp4",
+        "fase": "video"
+      },
+      {
+        "nombre": "Portada",
+        "listo": "portada.png",
+        "fase": "entrega"
+      }
+    ]
+  },
+  {
+    "id": "kdrama-dominicana",
+    "title": "Domi-Drama (K-Drama + Novela Dominicana)",
+    "description": "Productora de micro-novelas cinematográficas verticales (9:16) con Google Flow (Veo 3.1 & Nano Banana) y Antigravity. Suspenso coreano, cliffhangers intensos y sazón caribeño dominicano.",
+    "skill": "domidrama",
+    "icon": "claqueta",
+    "etapas": [
+      {
+        "nombre": "Sinopsis & Arquetipos",
+        "listo": "sinopsis.md",
+        "fase": "idea"
+      },
+      {
+        "nombre": "Guion Cinético & Diálogos",
+        "listo": "guion.md",
+        "copiar": true,
+        "fase": "guion"
+      },
+      {
+        "nombre": "Locución & Diseño Sonoro",
+        "listo": "public/audio.mp3",
+        "fase": "sonido"
+      },
+      {
+        "nombre": "Prompts Google Flow (Veo 3.1)",
+        "listo": "flow_prompts.json",
+        "fase": "video"
+      },
+      {
+        "nombre": "Clips Flow Generados",
+        "listo": "clips/*.mp4",
+        "fase": "video"
+      },
+      {
+        "nombre": "Episodio Final 9:16",
+        "listo": "salida/episodio.mp4",
+        "fase": "video"
+      },
+      {
+        "nombre": "Portada & Multi-Despacho",
+        "listo": "salida/portada.png",
+        "fase": "entrega"
+      }
+    ]
+  },
+  {
     "id": "becario-reels",
     "title": "Becario Reels (Cinética Fluida 60fps)",
     "description": "Reels y TikToks dinámicos con código (Remotion + React) aplicando los 5 efectos Anti-PowerPoint: texto desde máscara, empuje cinético, cámara continua, morphing de interfaces y sincronización rítmica.",
@@ -115,22 +327,15 @@
     ]
   },
   {
-    "id": "video-el-diff",
-    "title": "El Diff",
-    "description": "Tu noticiero para TikTok o YouTube, con tu nombre, tu sello y tu despedida: le das un enlace o un tema, te escribe el guion, grabas tu voz y arma el episodio, o un short.",
-    "skill": "video-el-diff",
-    "icon": "noticiero",
+    "id": "novela-tipo-koreana",
+    "title": "Novela tipo coreana",
+    "description": "Micro-novelas dramáticas con estética de K-drama, personajes detallados en Google Flow con Nano Banana 2.1 y clips cinemáticos.",
+    "skill": "novela-tipo-koreana",
+    "icon": "escena",
     "etapas": [
       {
-        "nombre": "Fuentes",
-        "listo": "fuentes/tema/transcripcion.txt",
-        "muestra": "fuentes/tema/video.mp4",
-        "fase": "idea"
-      },
-      {
-        "nombre": "Material",
-        "listo": "material.md",
-        "muestra": "{material.md,fuentes/material/**/*.{png,jpg,jpeg,webp}}",
+        "nombre": "Sinopsis & Elenco",
+        "listo": "sinopsis.md",
         "fase": "idea"
       },
       {
@@ -140,64 +345,14 @@
         "fase": "guion"
       },
       {
-        "nombre": "Tu voz",
-        "listo": "public/voz/narracion.wav",
-        "espera": "Graba el guion (con el celular basta) y súbelo aquí o mándalo por el chat.",
-        "fase": "sonido"
-      },
-      {
-        "nombre": "Escenas",
-        "listo": "guion.json",
-        "fase": "video"
-      },
-      {
-        "nombre": "Revisión",
-        "listo": "revision/hoja_95_*.png",
-        "fase": "video"
-      },
-      {
-        "nombre": "Video",
-        "listo": "out/el-diff-final.mp4",
-        "fase": "video"
-      },
-      {
-        "nombre": "Portada",
-        "listo": "portada.png",
-        "fase": "entrega"
-      }
-    ]
-  },
-  {
-    "id": "video-explicativo",
-    "title": "Video explicativo 3D",
-    "description": "Un video que explica cualquier tema en el tiempo que necesite: un solo mundo 3D que la cámara recorre sin cortes, el texto palabra por palabra y tu personaje.",
-    "skill": "video-explicativo",
-    "icon": "pizarra",
-    "etapas": [
-      {
-        "nombre": "Investigación",
-        "listo": "fuentes/investigacion.md",
-        "fase": "idea"
-      },
-      {
-        "nombre": "Guion",
-        "listo": "guion.md",
-        "copiar": true,
-        "fase": "guion"
-      },
-      {
-        "nombre": "Tu voz",
+        "nombre": "Voz",
         "listo": "fuentes/voz/original.wav",
+        "espera": "Sube o graba tu archivo de voz.",
         "fase": "sonido"
       },
       {
-        "nombre": "Revisión",
-        "listo": "revision/borrador-*.png",
-        "fase": "video"
-      },
-      {
-        "nombre": "Video",
-        "listo": "out/!(render*|borrador*|_*).mp4",
+        "nombre": "Imágenes y Clips",
+        "listo": "out/episodio.mp4",
         "fase": "video"
       },
       {
@@ -208,33 +363,64 @@
     ]
   },
   {
-    "id": "video-documental",
-    "title": "Documental",
-    "description": "Videos estilo documental cinematográfico para YouTube horizontal o vertical.",
-    "skill": "video-documental",
+    "id": "skill-xray-motion",
+    "title": "Rayos X Neuro-Mecánico",
+    "description": "Estética Rayos X Neuro-Mecánico en grafito y amarillo neón con esquemas Zod, micro-animación anatómica y retención científica.",
+    "skill": "skill-xray-motion",
+    "icon": "foco",
+    "etapas": [
+      { "nombre": "Estructura Zod & Conceptos", "listo": "guion.md", "fase": "idea" },
+      { "nombre": "Locución & Beats", "listo": "audio.mp3", "fase": "sonido" },
+      { "nombre": "Composición Rayos X", "listo": "salida/xray.mp4", "fase": "video" },
+      { "nombre": "Portada", "listo": "portada.png", "fase": "entrega" }
+    ]
+  },
+  {
+    "id": "skill-procedural-canvas",
+    "title": "Procedural Motion Canvas (120 BPM)",
+    "description": "Motor continuo de 3 etapas (Paper → Blueprint → Hologram) a 120 BPM sin cortes. Geometría audio-reactiva y retención extrema de 60 segundos.",
+    "skill": "skill-procedural-canvas",
+    "icon": "claqueta",
+    "etapas": [
+      { "nombre": "Guion & Ritmo", "listo": "guion.md", "fase": "idea" },
+      { "nombre": "Audio & Sincronización BPM", "listo": "audio.mp3", "fase": "sonido" },
+      { "nombre": "Renderizado Procedural", "listo": "salida/procedural.mp4", "fase": "video" },
+      { "nombre": "Portada", "listo": "portada.png", "fase": "entrega" }
+    ]
+  },
+  {
+    "id": "skill-frutinovelas-microdrama",
+    "title": "Micro-Novelas & Frutinovelas",
+    "description": "Generador de micro-novelas cinematográficas, frutinovelas y K-dramas de 60s con consistencia de personaje y rupturas de 4ta pared.",
+    "skill": "skill-frutinovelas-microdrama",
+    "icon": "escena",
+    "etapas": [
+      { "nombre": "Sinopsis & Arquetipos", "listo": "sinopsis.md", "fase": "idea" },
+      { "nombre": "Guion Cinético", "listo": "guion.md", "fase": "guion" },
+      { "nombre": "Locución & Audio", "listo": "public/audio.mp3", "fase": "sonido" },
+      { "nombre": "Clips de Personaje Flow", "listo": "clips/*.mp4", "fase": "video" },
+      { "nombre": "Episodio Final 9:16", "listo": "salida/episodio.mp4", "fase": "video" },
+      { "nombre": "Portada", "listo": "portada.png", "fase": "entrega" }
+    ]
+  },
+  {
+    "id": "skill-marketer-commerce",
+    "title": "Video Marketing & E-Commerce",
+    "description": "Videos comerciales para empresas, e-commerce y catálogo con estructura AIDA, demostración de producto y llamados a la acción de alta conversión.",
+    "skill": "skill-marketer-commerce",
     "icon": "video",
     "etapas": [
-      {
-        "nombre": "Idea",
-        "listo": "idea.md",
-        "fase": "idea"
-      },
-      {
-        "nombre": "Guion",
-        "listo": "guion.md",
-        "fase": "guion"
-      },
-      {
-        "nombre": "Video",
-        "listo": "out/documental.mp4",
-        "fase": "video"
-      }
+      { "nombre": "Oferta & Gancho AIDA", "listo": "oferta.md", "fase": "idea" },
+      { "nombre": "Guion de Ventas", "listo": "guion.md", "fase": "guion" },
+      { "nombre": "Locución Comercial", "listo": "audio.mp3", "fase": "sonido" },
+      { "nombre": "Video Comercial Renderizado", "listo": "salida/comercial.mp4", "fase": "video" },
+      { "nombre": "Portada & Variaciones", "listo": "portada.png", "fase": "entrega" }
     ]
   },
   {
     "id": "nuevo-estilo",
     "title": "Nuevo estilo personalizado",
-    "description": "Crea una card con tu propio estilo de video para agregarlo a la barra de Snow Studio.",
+    "description": "Crea una card con tu propio estilo de video para agregarlo a la barra de Neva Studio.",
     "skill": "crear-estilo",
     "icon": "mas",
     "etapas": [

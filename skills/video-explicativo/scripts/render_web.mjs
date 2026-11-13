@@ -1,6 +1,6 @@
 /**
  * PROTOTIPO: renderiza el video del proyecto (el directorio actual) con el renderizador web de Remotion
- * (@remotion/web-renderer), como hace El Diff: cada Edge sin ventana pinta los cuadros en un canvas (HTML-in-canvas) y
+ * (@remotion/web-renderer), como hace Noticiero: cada Edge sin ventana pinta los cuadros en un canvas (HTML-in-canvas) y
  * la tarjeta los codifica en H.264 con WebCodecs. Sin capturas JPEG ni x264 en el procesador.
  *
  *   node <skill>/scripts/render_web.mjs <salida.mp4> [--frames=600-899 | --mitad=1|2] [--scale=0.5] [--bitrate=20]

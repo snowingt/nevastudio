@@ -1,4 +1,4 @@
-// Arma la ventana de Sloth (electron/): main.cjs y preload.cjs, con esbuild. Lo usan `npm run compilar` (para la app que
+// Arma la ventana de Neva Studio (electron/): main.cjs y preload.cjs, con esbuild. Lo usan `npm run compilar` (para la app que
 // se vende) y `npm start` (para abrir el repo en esa misma ventana, con `abrirVentana`).
 import { spawn } from 'node:child_process'
 import { createRequire } from 'node:module'
@@ -27,7 +27,7 @@ export async function armarVentana(salida, { macFirmada = false, mac12 = false }
 }
 
 /**
- * Abre la interfaz del repo (`url`) en la ventana de Sloth. `false` si Electron no está (falta `npm install`): quien llama
+ * Abre la interfaz del repo (`url`) en la ventana de Neva Studio. `false` si Electron no está (falta `npm install`): quien llama
  * abre Edge, como antes.
  */
 export async function abrirVentana(url) {
@@ -41,6 +41,10 @@ export async function abrirVentana(url) {
   await armarVentana(salida)
   // Si quien lanza Sloth corre dentro de otra app de Electron (un editor), esto haría de electron.exe un Node.
   const { ELECTRON_RUN_AS_NODE, ...env } = process.env
-  spawn(electron, [join(salida, 'main.cjs')], { detached: true, stdio: 'ignore', env: { ...env, SLOTH_VENTANA: url, SLOTH_APP: REPO } }).unref()
+  const extraArgs = []
+  if (process.platform === 'linux' && (process.env.WAYLAND_DISPLAY || process.env.XDG_SESSION_TYPE === 'wayland')) {
+    extraArgs.push('--ozone-platform=wayland')
+  }
+  spawn(electron, [...extraArgs, join(salida, 'main.cjs')], { detached: true, stdio: 'ignore', env: { ...env, SLOTH_VENTANA: url, SLOTH_APP: REPO } }).unref()
   return true
 }

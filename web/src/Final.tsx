@@ -9,7 +9,7 @@ import './Final.css'
  * un cambio de un clic. Los cambios le llegan al agente como si los escribieras, y no se pueden pedir mientras trabaja.
  */
 
-/** Lo que pide cada cambio de un clic. `conVoz`: vale también cuando la voz es una grabación del usuario (El Diff). */
+/** Lo que pide cada cambio de un clic. `conVoz`: vale también cuando la voz es una grabación del usuario (Noticiero). */
 const CAMBIOS: { texto: string; pide: string; conVoz?: boolean }[] = [
   { texto: 'Hazlo más corto', pide: 'Hazlo más corto: quita lo que sobra y deja lo esencial, sin perder el gancho ni el cierre.' },
   { texto: 'Dale más ritmo', pide: 'Dale más ritmo: cortes más rápidos, menos pausas y más movimiento, con la música y los efectos a tono.', conVoz: true },
@@ -31,7 +31,7 @@ export function Final({ session, card, carpeta, finales }: { session: SessionMet
   useEffect(() => {
     if (trabaja) setPedido('')
   }, [trabaja])
-  // En El Diff la voz la graba el usuario: lo que cambiaría lo que se dice pediría grabarla otra vez.
+  // En Noticiero la voz la graba el usuario: lo que cambiaría lo que se dice pediría grabarla otra vez.
   const narrado = !!card.editor
   const cambios = CAMBIOS.filter((c) => !narrado || c.conVoz)
 
@@ -56,7 +56,7 @@ export function Final({ session, card, carpeta, finales }: { session: SessionMet
       const res = await api<{ success: boolean; salida?: string }>('/api/snow/telegram-dispatch', {
         tipo: 'video',
         archivo: rutaAbsoluta(f.ruta),
-        caption: `🎬 ${session.title}\nGenerado con Snow Studio 60fps`
+        caption: `${session.title}\nGenerado con Neva Studio 60fps`
       })
       setSnowEstado(res.success ? '¡Despachado a Telegram con éxito!' : 'Error despachando a Telegram')
     } catch (e) {
@@ -72,10 +72,29 @@ export function Final({ session, card, carpeta, finales }: { session: SessionMet
       const res = await api<{ success: boolean; salida?: string }>('/api/snow/youtube-upload', {
         video: rutaAbsoluta(f.ruta),
         title: session.title,
-        desc: `${session.title}\n\nCreado y renderizado autónomamente con Snow Studio.\n#Shorts #SnowStudio`,
+        desc: `${session.title}\n\nCreado y renderizado autónomamente con Neva Studio.\n#Shorts #NevaStudio`,
         visibility: 'PUBLIC'
       })
       setSnowEstado(res.success ? '¡Publicado en YouTube Studio con éxito!' : 'Fallo en subida CDP')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e))
+      setSnowEstado(null)
+    }
+  }
+
+  async function lanzarRed(platform: 'tiktok' | 'instagram' | 'facebook', f: VideoFinal) {
+    const ruta = rutaAbsoluta(f.ruta)
+    try {
+      if (navigator.clipboard) await navigator.clipboard.writeText(ruta).catch(() => {})
+    } catch {}
+    setSnowEstado(`Abriendo ${platform} (ruta copiada)…`)
+    setError('')
+    try {
+      await api<{ success: boolean }>('/api/snow/social-launch', {
+        platform,
+        video: ruta
+      })
+      setSnowEstado(`¡${platform.toUpperCase()} abierto en el navegador! Ruta en portapapeles.`)
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e))
       setSnowEstado(null)
@@ -113,7 +132,33 @@ export function Final({ session, card, carpeta, finales }: { session: SessionMet
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
               <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
             </svg>
-            Publicar (CDP)
+            YouTube (CDP)
+          </button>
+        ))}
+        {finales.map((f) => (
+          <button key={`tiktok:${f.ruta}`} className="final-boton tiktok" disabled={trabaja || !!snowEstado} onClick={() => lanzarRed('tiktok', f)} title="Abrir TikTok Studio para subir el video (ruta copiada)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.36a6.33 6.33 0 0 0-.85-.06A6.34 6.34 0 0 0 3 15.64a6.34 6.34 0 0 0 6.34 6.36 6.34 6.34 0 0 0 6.34-6.36V8.71a8.21 8.21 0 0 0 4.91 1.63V6.89a4.84 4.84 0 0 1-1-.2z"/>
+            </svg>
+            TikTok
+          </button>
+        ))}
+        {finales.map((f) => (
+          <button key={`instagram:${f.ruta}`} className="final-boton instagram" disabled={trabaja || !!snowEstado} onClick={() => lanzarRed('instagram', f)} title="Abrir Instagram para subir el Reel (ruta copiada)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+            Instagram
+          </button>
+        ))}
+        {finales.map((f) => (
+          <button key={`facebook:${f.ruta}`} className="final-boton facebook" disabled={trabaja || !!snowEstado} onClick={() => lanzarRed('facebook', f)} title="Abrir Facebook Reels para subir el video (ruta copiada)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            Facebook
           </button>
         ))}
         {finales.map((f) => <YoutubeBoton key={`youtube:${f.ruta}`} nombre={finales.length > 1 ? etiqueta(f) : undefined} disabled={trabaja} video={{ cardId: card.id, ruta: rutaAbsoluta(f.ruta), titulo: session.title }} />)}
@@ -122,7 +167,7 @@ export function Final({ session, card, carpeta, finales }: { session: SessionMet
           Ver en la carpeta
         </button>
       </div>
-      {snowEstado && <div className="final-estado-snow">⚡ {snowEstado}</div>}
+      {snowEstado && <div className="final-estado-snow">{snowEstado}</div>}
       <div className="final-cambios">
         <span className="muted small">¿Algún cambio?</span>
         {cambios.map((c) => (

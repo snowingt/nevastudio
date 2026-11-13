@@ -1,6 +1,6 @@
-# Escribir en Anuncios como Vancci
+# Escribir en Anuncios como Snow Studio
 
-Cada versión que sale se cuenta en Anuncios de la comunidad, a nombre de Vancci, el creador, y a cada miembro le llega una
+Cada versión que sale se cuenta en Anuncios de la comunidad, a nombre de Snow Studio, el creador, y a cada miembro le llega una
 notificación con el título del anuncio (si Sloth está cerrada, al abrirla). Al creador no le llega la suya. Lo escribe el agente que la publicó ([publicacion.md](publicacion.md), paso 5) y lo sube sin preguntar. Este tono también
 sirve para cualquier otro anuncio que te pida.
 

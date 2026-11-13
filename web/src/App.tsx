@@ -16,7 +16,7 @@ import { Composer, Icon, Picker, type Choice, type Draft } from './Composer'
 import { LINK, pedirMejora, threadIcons, threadRef } from './etiquetas'
 import { Confirm } from './Confirm'
 import { TusCambios } from './TusCambios'
-import { ActualizarSloth, AvisoAgentes } from './Actualizar' // versiones nuevas
+import { ActualizarNevaStudio, AvisoAgentes } from './Actualizar' // versiones nuevas
 import { TarjetasEnlaces } from './Enlaces' // tarjeta de los enlaces
 import { esDeEstudio, Estudio } from './Estudio' // panel de etapas
 import { BotonNavegador, PanelNavegador, useNavegadorAbierto } from './Navegador' // navegador de cada hilo
@@ -43,6 +43,14 @@ import { SelectorClips, SelectorImagenes, useChatGPT, useFlow } from './Flow' //
 import { imagenPosible, lineaClips, lineaImagenes, MODELOS_VIDEO, OPCIONES_CLIPS } from '../../shared/flow'
 import { Timeline } from './Timeline'
 import { compact, duration } from './items'
+import { DynamicIslandToggle, type StudioMode } from './DynamicIslandToggle'
+import { StudioWizard } from './StudioWizard'
+import { SkillsHub } from './SkillsHub'
+import { MediaGallery } from './MediaGallery'
+import { PromptVault } from './PromptVault'
+import { PiAgentPanel } from './PiAgentPanel'
+import { BatchFactoryView } from './BatchFactoryView'
+import { AccountsView } from './AccountsView'
 import './Barra.css'
 
 /** El inicio es siempre un hilo nuevo; sin card en el hash, toma la última que se usó. Un borrador es un inicio a medias. */
@@ -55,6 +63,11 @@ type View =
   | { kind: 'videos'; estilo?: string }
   | { kind: 'modelos3d' } // modelos 3D
   | { kind: 'comunidad' } // comunidad
+  | { kind: 'skills' }
+  | { kind: 'galeria' }
+  | { kind: 'prompts' }
+  | { kind: 'lotes' }
+  | { kind: 'cuentas' }
 
 /** Lo que se escribió en un hilo nuevo sin mandarlo. Vive en localStorage hasta que se manda o se borra. */
 type Saved = Draft & { cardId: string; at: number }
@@ -74,6 +87,11 @@ function readHash(): View {
   if (kind === 'mis-videos') return { kind: 'videos', estilo: id || undefined }
   if (kind === 'modelos-3d') return { kind: 'modelos3d' } // modelos 3D
   if (kind === 'comunidad' || kind === 'mejoras') return { kind: 'comunidad' } // comunidad (antes, Mejoras)
+  if (kind === 'skills') return { kind: 'skills' }
+  if (kind === 'galeria') return { kind: 'galeria' }
+  if (kind === 'prompts') return { kind: 'prompts' }
+  if (kind === 'lotes') return { kind: 'lotes' }
+  if (kind === 'cuentas') return { kind: 'cuentas' }
   return { kind: 'new', cardId: kind === 'new' ? id : undefined }
 }
 
@@ -93,6 +111,16 @@ function go(view: View) {
                 ? '/modelos-3d'
                 : view.kind === 'comunidad' // comunidad
                 ? '/comunidad'
+                : view.kind === 'skills'
+                ? '/skills'
+                : view.kind === 'galeria'
+                ? '/galeria'
+                : view.kind === 'prompts'
+                ? '/prompts'
+                : view.kind === 'lotes'
+                ? '/lotes'
+                : view.kind === 'cuentas'
+                ? '/cuentas'
                 : view.cardId
                 ? `/new/${view.cardId}`
                 : '/'
@@ -125,6 +153,7 @@ export function App() {
   const [connected, setConnected] = useState(false)
   const [falloEstado, setFalloEstado] = useState('')
   const [app, setApp] = useState('')
+  const [studioMode, setStudioMode] = useState<StudioMode>('creator')
   const [menu, setMenu] = useState<{ session: SessionMeta; x: number; y: number } | null>(null)
   // El hilo que se renombra en su fila de la barra lateral.
   const [renombrando, setRenombrando] = useState<string | null>(null)
@@ -160,7 +189,8 @@ export function App() {
     let ws: WebSocket
     let retry: ReturnType<typeof setTimeout>
     const connect = () => {
-      ws = new WebSocket(`ws://${location.host}/ws`)
+      const proto = location.protocol === 'https:' ? 'wss:' : 'ws:'
+      ws = new WebSocket(`${proto}//${location.host}/ws`)
       socket.current = ws
       ws.onopen = async () => {
         const socket = ws
@@ -180,7 +210,7 @@ export function App() {
           dispatchEvent(new CustomEvent('sloth-etapas')) // panel de etapas
         } catch (e) {
           // Sin el estado la app se queda vacía: se dice abajo en la barra y se vuelve a intentar al reconectar.
-          setFalloEstado(`No se pudo leer el estado de Sloth: ${e instanceof Error ? e.message : String(e)}`)
+          setFalloEstado(`No se pudo leer el estado de Neva Studio: ${e instanceof Error ? e.message : String(e)}`)
           socket.close()
         }
       }
@@ -453,7 +483,7 @@ export function App() {
         {/* Plegada, cada botón es su icono y dice qué es al pasar el ratón; los textos se esconden en Barra.css. */}
         <div className="brand-fila">
           <button className="brand" onClick={newChat} title={plegada ? 'Nuevo chat' : undefined}>
-            <img src="/icon.svg" alt="" /> Snow Studio
+            <img src="/icon.svg" alt="" /> Neva Studio
           </button>
           <button className="plegar" title={plegada ? 'Desplegar la barra (Ctrl+B)' : 'Plegar la barra (Ctrl+B)'} aria-expanded={!plegada} onClick={() => plegar(!plegada)}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -503,6 +533,56 @@ export function App() {
               {avisosComunidad > 99 ? '99+' : avisosComunidad}
             </span>
           )}
+        </button>
+        {/* Hub de Habilidades */}
+        <button className={`new-chat${view.kind === 'skills' ? ' active' : ''}`} onClick={() => go({ kind: 'skills' })} title={plegada ? 'Habilidades' : undefined}>
+          <span className="new-chat-icon">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round">
+              <path d="M12 2v4m0 12v4M2 12h4m12 0h4m-3.5-6.5-2.8 2.8m-7.4 7.4-2.8 2.8m0-13 2.8 2.8m7.4 7.4 2.8 2.8" />
+            </svg>
+          </span>{' '}
+          Habilidades
+        </button>
+        {/* Galería Multimedia */}
+        <button className={`new-chat${view.kind === 'galeria' ? ' active' : ''}`} onClick={() => go({ kind: 'galeria' })} title={plegada ? 'Galería' : undefined}>
+          <span className="new-chat-icon">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path d="m21 15-5-5L5 21" />
+            </svg>
+          </span>{' '}
+          Galería
+        </button>
+        {/* Banco de Prompts */}
+        <button className={`new-chat${view.kind === 'prompts' ? ' active' : ''}`} onClick={() => go({ kind: 'prompts' })} title={plegada ? 'Prompts' : undefined}>
+          <span className="new-chat-icon">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+              <path d="M6 6h10M6 10h10" />
+            </svg>
+          </span>{' '}
+          Prompts
+        </button>
+        {/* Fábrica de Lotes */}
+        <button className={`new-chat${view.kind === 'lotes' ? ' active' : ''}`} onClick={() => go({ kind: 'lotes' })} title={plegada ? 'Lotes' : undefined}>
+          <span className="new-chat-icon">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2" />
+              <path d="M3 9h18M9 21V9" />
+            </svg>
+          </span>{' '}
+          Lotes
+        </button>
+        {/* Cuentas y Navegador Seguro */}
+        <button className={`new-chat${view.kind === 'cuentas' ? ' active' : ''}`} onClick={() => go({ kind: 'cuentas' })} title={plegada ? 'Cuentas' : undefined}>
+          <span className="new-chat-icon">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round">
+              <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+          </span>{' '}
+          Cuentas
         </button>
         <label className="buscar" title={plegada ? 'Buscar (Ctrl K)' : undefined} onClick={() => plegada && buscar()}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -600,6 +680,7 @@ export function App() {
       </aside>
 
       <main className="main">
+        <DynamicIslandToggle onModeChange={setStudioMode} />
         <Bienvenida />
         <AvisoMacViejo />
         <AvisoVideos />
@@ -632,11 +713,28 @@ export function App() {
             <MisVideos cards={cards} sessions={sessions} estilo={view.estilo} onEstilo={(estilo) => go({ kind: 'videos', estilo })} />
           </ConNavegadorRedes>
         )}
+        {view.kind === 'skills' && <SkillsHub onSelectSkill={(id) => go({ kind: 'new', cardId: id })} />}
+        {view.kind === 'galeria' && <MediaGallery />}
+        {view.kind === 'prompts' && (
+          <PromptVault
+            onUsarPrompt={(p) => {
+              const id = newId()
+              const cId = newCard?.id || 'video-documental'
+              setDrafts((all) => ({ ...all, [id]: { id, cardId: cId, text: p, html: p, images: [], at: Date.now() } }))
+              go({ kind: 'draft', id })
+            }}
+          />
+        )}
+        {view.kind === 'lotes' && <BatchFactoryView />}
+        {view.kind === 'cuentas' && <AccountsView />}
         {newCard && draftId && (
           <div className="avisos-nuevo">
             <AvisoAgentes /> {/* versiones nuevas de los agentes */}
             <AvisoEquipo /> {/* tu equipo */}
           </div>
+        )}
+        {newCard && draftId && (
+          <StudioWizard styleTitle={newCard.title} />
         )}
         {newCard && draftId && (
           <NewSession
@@ -674,6 +772,21 @@ export function App() {
             models={models}
           />
         )}
+        <PiAgentPanel
+          activeSessionId={view.kind === 'session' ? view.id : undefined}
+          onApplyEdits={(payload) => {
+            if (payload?.scriptText) {
+              if (view.kind === 'session') {
+                void api(`/api/sessions/${view.id}/send`, { text: payload.scriptText })
+              } else {
+                const id = newId()
+                const cId = payload.style || newCard?.id || 'video-documental'
+                setDrafts((all) => ({ ...all, [id]: { id, cardId: cId, text: payload.scriptText, html: payload.scriptText, images: [], at: Date.now() } }))
+                go({ kind: 'draft', id })
+              }
+            }
+          }}
+        />
       </main>
     </div>
   )
@@ -855,7 +968,7 @@ function NewSession(props: {
         draft={props.draft}
         onDraft={props.onDraft}
         bloqueo={sinCuenta ? 'Primero conecta tu cuenta (arriba)' : undefined}
-        placeholder={card.skill ? `Qué quieres de /${card.skill}…` : 'Qué cambio quieres en Sloth…'}
+        placeholder={card.skill ? `Qué quieres de /${card.skill}…` : 'Qué video deseas producir con Neva Studio…'}
         modelos={<Modelos conf={card.modelos} models={models} avanzado={avanzado} choice={choice} tareas={tareas} sinClaude={sinClaude} onAvanzado={cambiarModelos} />}
         extra={
           <>
@@ -1025,6 +1138,11 @@ const Carteles = memo(function Carteles({ cards, activa, previas, sessions, acci
           onMouseEnter={(e) => e.currentTarget.querySelector('video')?.play().catch(() => {})}
           onMouseLeave={(e) => e.currentTarget.querySelector('video')?.load()}
         >
+          {/* hardware render estimate pill */}
+          <span className="card-hardware-pill" title="Estimación calculada para tu hardware (12GB RAM)">
+            <span className={`card-hardware-dot ${c.id.includes('3d') || c.id.includes('explicativo') ? 'warning' : ''}`} />
+            {c.id.includes('3d') || c.id.includes('explicativo') ? '~25-40m' : c.id.includes('procedural') || c.id.includes('kinetic') || c.id.includes('reels') ? '~3-4m' : '~2-3m'}
+          </span>
           {/* previas de las cards: el cuadro quieto hasta que pasas por encima. Al salir, `load()` vuelve a él y suelta el video. */}
           {previas[c.id] ? (
             <video className="card-previa" src={previas[c.id].video} poster={previas[c.id].cuadro} muted loop playsInline preload="none" />
@@ -1490,7 +1608,7 @@ function Pie({ running, connected, enOpciones, fallo, plegada }: { running: bool
       {/* Reiniciar aplica los cambios del código: en la app que se vende solo llegan con una versión nueva. */}
       {VENTA ? (
         <>
-          <ActualizarSloth />
+          <ActualizarNevaStudio />
           {!connected && <span className="muted small pie-nota">Reconectando…</span>}
         </>
       ) : (

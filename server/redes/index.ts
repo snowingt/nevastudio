@@ -931,7 +931,7 @@ function tamano(ruta: string) {
 
 /**
  * Lo que se rehace solo en una carpeta de video, y nada más: `out/partes` y `out/redes/partes` (los tramos del episodio
- * y de los cortes de El Diff, que `final.py` y `redes.py` vuelven a hacer si faltan) y cada `_bundle_rev` dentro de
+ * y de los cortes de Noticiero, que `final.py` y `redes.py` vuelven a hacer si faltan) y cada `_bundle_rev` dentro de
  * `out` (el bundle de las revisiones de los episodios de antes). Ni la carpeta ni su `out` pueden ser un enlace, y
  * dentro no se sigue ninguno.
  */
