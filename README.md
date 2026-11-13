@@ -1,164 +1,114 @@
+# ❄️ NevaStudio
+
 <p align="center">
-  <img src="docs/imagenes/portada.png" alt="Sloth: videos verticales que se hacen casi solos" width="100%">
+  <img src="assets/icon.png" alt="NevaStudio Logo" width="128" height="128">
 </p>
 
 <p align="center">
-  <a href="https://snowstudio.app"><img alt="Versión" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.snowstudio.app%2Fversion&query=%24.version&label=versi%C3%B3n&color=e8a33d&labelColor=171512"></a>
-  <img alt="Windows, Mac y Linux" src="https://img.shields.io/badge/Windows%20%C2%B7%20Mac%20%C2%B7%20Linux-171512?logo=electron&logoColor=ede6d6">
-  <img alt="Con Claude" src="https://img.shields.io/badge/con-Claude-e8a33d?labelColor=171512">
-  <a href="LICENSE"><img alt="Licencia" src="https://img.shields.io/badge/licencia-Apache%202.0%20%2B%20Commons%20Clause-ede6d6?labelColor=171512"></a>
+  <b>Estudio autónomo de producción y edición de video vertical con IA y animación cinética fluida.</b>
 </p>
 
 <p align="center">
-  <a href="https://api.snowstudio.app/descargar"><b>Descargar</b></a> ·
-  <a href="https://snowstudio.app">Página</a> ·
-  <a href="https://snowstudio.app/#roadmap">Roadmap</a> ·
-  <a href="https://snowstudio.app/#apoyar">Apoyar</a> ·
-  <a href="CONTRIBUTING.md">Aportar</a>
+  <img alt="Versión" src="https://img.shields.io/badge/versión-1.0.0-blue?style=flat-square">
+  <img alt="Plataformas" src="https://img.shields.io/badge/plataformas-Windows%20%C2%B7%20Mac%20%C2%B7%20Linux-171512?logo=electron&logoColor=ede6d6&style=flat-square">
+  <img alt="Antigravity & Claude" src="https://img.shields.io/badge/IA-Antigravity%20%7C%20Claude-e8a33d?style=flat-square">
+  <a href="LICENSE"><img alt="Licencia" src="https://img.shields.io/badge/licencia-MIT-green?style=flat-square"></a>
 </p>
 
 ---
 
-**Sloth** es una app de escritorio que hace videos verticales para TikTok, Reels y Shorts. Eliges un estilo, le das
-un tema o un enlace, y un agente de Claude investiga, escribe el guion, te pide tu voz y edita el video en tu
-computadora. No es una caja negra: lo ves trabajar paso a paso y le pides cambios con tus palabras.
+**NevaStudio** es una suite de escritorio comercial para la creación, edición y automatización de videos verticales (9:16) diseñados para máxima retención en TikTok, Instagram Reels y YouTube Shorts. 
 
-Es gratis, sin tarjeta y sin límite de videos. Trabaja con tu propia cuenta de Claude.
+A diferencia de los editores basados en plantillas estáticas tipo PowerPoint, NevaStudio integra agentes de IA autónomos (con **Google Antigravity** como motor #1 y soporte para Claude y OpenAI), un pipeline de renderizado determinista en **Remotion**, motor de voz en streaming y navegación automatizada por CDP para distribución masiva.
 
-## Ejemplos
+---
 
-<table>
-  <tr>
-    <td align="center" width="50%">
-      <img src="docs/imagenes/el-diff.gif" alt="Un episodio de El Diff" width="270"><br>
-      <b>El Diff</b><br>
-      <sub>Tu noticiero vertical, con tu nombre, tu sello y tu despedida. De una a dos horas por episodio.</sub>
-    </td>
-    <td align="center" width="50%">
-      <img src="docs/imagenes/explicativo.gif" alt="Un video explicativo" width="270"><br>
-      <b>Video explicativo</b><br>
-      <sub>Cualquier tema en un mundo 3D que la cámara recorre sin cortes, con el texto palabra por palabra. Unos 40 minutos.</sub>
-    </td>
-  </tr>
-</table>
+## ✨ Características Principales
 
-<p align="center"><a href="https://snowstudio.app">Míralos completos y con sonido en snowstudio.app</a></p>
+### 🎬 Los 5 Mandamientos de Animación Cinética Fluida
+NevaStudio prohíbe las transiciones genéricas y estáticas, implementando por defecto:
+1. **Revelado de Textos desde Máscara (`Text Mask Reveal`):** Titulares y palabras con desplazamiento vertical elástico (`translateY: 105% → 0%`) y rotación sutil (`rotate: 2deg → 0deg`) con física de muelles.
+2. **Encadenamiento por Impacto (`Momentum Push`):** Elementos entrantes interactúan físicamente empujando a los existentes con rebote (`overshoot`).
+3. **Cámara Dinámica Continua (`Camera Tracking`):** Viewport virtual dinámico con zoom-in guiado al foco de atención y paneo elástico.
+4. **Transición Morfométrica Continua (`Morphing Seamless`):** Transformación elástica de tarjetas y contenedores de una escena a otra sin cortes a negro.
+5. **Sincronización Rítmica con la Narración (`Rhythmic Audio Lock`):** Impactos visuales y SFX calibrados al milisegundo exacto de la locución.
 
-## Cómo funciona
+---
 
-Cada estilo de video es una **card**. Escribes qué quieres y el agente avanza por cinco fases, que ves en el estudio:
+### 🖥️ Interfaz Cupertino Dark Glass
+* **Diseño Premium:** Paleta Zinc-950 (`#09090b`), efectos de cristal esmerilado translúcido con desenfoque (`backdrop-filter: blur(24px)`).
+* **Dynamic Island Toggle:** Alternancia instantánea con un clic entre:
+  * **Modo Creator:** Optimizado para viralidad, Shorts, TikTok, engagement y cliffhangers.
+  * **Modo Marketer:** Enfoque comercial B2B, anuncios directos, testimonios y conversión.
 
-| Fase | Qué pasa |
-| --- | --- |
-| **Idea** | Investiga el tema: lee el enlace, busca las fuentes y junta el material (capturas, clips, datos). |
-| **Guion** | Escribe el guion en el tono del estilo, con su gancho de 3 segundos y su cierre. |
-| **Sonido y voz** | Te pide tu voz (la grabas con el celular) o, en El Diff, la pone una voz de Gemini si quieres. |
-| **Video** | Arma cada escena con Remotion y la renderiza en tu computadora. |
-| **Entrega** | El video final con su portada, listo para descargar o publicar. Si algo no te gusta, se lo dices. |
+---
 
-<p align="center">
-  <img src="docs/imagenes/estudio.jpg" alt="El estudio de Sloth: las cinco fases, el video y la línea de tiempo con sus escenas y la voz" width="560">
-</p>
+### 🧠 Arquitectura de Motor Modular (8 Sprints)
 
-## Instalar
+| Módulo | Descripción Técnica |
+| :--- | :--- |
+| **Pi Agent & Antigravity** | Panel copilot multi-proveedor con **Antigravity** como proveedor nativo preferente, guiando la redacción de guiones y la orquestación. |
+| **Perfilador de Hardware** | Detección automática de CPU, hilos y RAM (calibrado para equipos desde 12 GB RAM), mostrando tiempos estimados de renderizado y protecciones de memoria. |
+| **Motor de Audio Ultrarrápido** | Síntesis TTS en streaming (<1.5s) con alineación temporal palabra por palabra (`timestamps.json`), fallback offline sintético y clonador de voz zero-shot. |
+| **Ghost Browser Vault (CDP)** | Navegación autónoma en Chrome vía CDP (`--remote-debugging-port=0`), aislamiento de perfiles por red social y regla `browser.disconnect()` para preservar sesiones indefinidamente. |
+| **Skills Hub & Prompt Vault** | Gestor interactivo de habilidades de video (Documental, Procedural, Kinetic Typography, Micro-dramas) y almacenamiento persistente de prompts. |
+| **Fábrica de Lotes (Batch Factory)** | Generación masiva automatizada con cola de renderizado en segundo plano y métricas en tiempo real. |
 
-Descarga la última versión para tu sistema y ábrela:
+---
 
-| Sistema | Descarga | Nota |
-| --- | --- | --- |
-| **Windows** 10 u 11 | [Sloth para Windows](https://api.snowstudio.app/descargar) | Si dice «Windows protegió tu PC», da clic en *Más información* y luego en *Ejecutar de todas formas*. |
-| **Mac** con Apple Silicon (M1 o más nueva) o con Intel | [Sloth para Mac](https://api.snowstudio.app/descargar?so=mac) | La página deja elegir la de tu Mac. |
-| **Linux** | [Sloth para Linux](https://api.snowstudio.app/descargar?so=linux) | Es un AppImage: dale permiso de ejecutar y ábrelo. |
+## 🚀 Instalación y Puesta en Marcha
 
-Necesitas una IA conectada, con una basta: **Claude**, **ChatGPT**, **OpenCode** (tiene modelos gratis) u otro agente.
-Con ChatGPT, Sloth además hace las imágenes. FFmpeg, Python y lo que pide cada estilo los instala la propia app. Las
-versiones nuevas se instalan desde la misma app.
+### Requisitos Previos
+* **Node.js:** Versión 20+ o 24 (recomendado).
+* **Python:** 3.10+ (con FFmpeg disponible en el PATH).
 
-## Correrla desde el código
-
-Necesitas Node 24.
+### Clonar y Ejecutar
 
 ```bash
-git clone https://github.com/snow-studio/snow-studio.git
-cd sloth
-npm ci
+# 1. Clonar el repositorio
+git clone https://github.com/snowingt/nevastudio.git
+cd nevastudio
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Iniciar el estudio de desarrollo
 npm start
 ```
 
-`npm start` levanta el servidor en `http://localhost:4848` y abre la ventana de Sloth. Sus agentes leen las skills de
-`skills/` de este repo, con su propia configuración de Claude en `data/claude` (la cuenta se conecta una vez desde
-Sloth): tu `~/.claude` no cambia, y una Sloth instalada en la misma computadora sigue con las suyas.
+El servidor backend y la interfaz web levantarán automáticamente en `http://localhost:4848`.
 
-Antes de dar algo por hecho: `npm run typecheck`, `npm test` y, si tocaste `skills/`, `npm run comprobar-skills`.
+---
 
-## Cómo está hecha
+## 🛠️ Scripts del Proyecto
 
-| Pieza | Con qué |
-| --- | --- |
-| La ventana | [Electron](https://www.electronjs.org), con instalador y actualizaciones que bajan solo lo que cambió |
-| La interfaz | React y Vite (`web/`) |
-| El servidor local | Node (`server/`): sesiones, estudio, galerías, comunidad y requisitos |
-| Los agentes | [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk), con tu cuenta de Claude |
-| Los videos | [Remotion](https://www.remotion.dev) en cada estilo, y Python para transcribir y descargar |
-| El cobro y la comunidad | Un Worker de Cloudflare con D1 y R2 (`licencias/`) |
+* `npm start`: Inicia el servidor de desarrollo y la interfaz de usuario.
+* `npm run typecheck`: Comprobación estricta de TypeScript en todo el proyecto.
+* `npm test`: Ejecución de la suite completa de pruebas unitarias.
+* `npm run compilar`: Compila y empaqueta la aplicación de escritorio vía Electron Builder.
+* `npm run redes`: Lanza las rutinas de publicación e interacción por CDP.
+
+---
+
+## 📁 Estructura del Repositorio
 
 ```
-electron/   la ventana de escritorio
-server/     el servidor local que corre los agentes
-web/        la interfaz
-shared/     los tipos que comparten servidor e interfaz
-skills/     los estilos de video (El Diff, explicativo, reel de comedia, documental) y sus herramientas
-licencias/  el cobro del apoyo, la comunidad y las descargas (Cloudflare Worker)
-nube/       la nube que publica en Instagram (Cloudflare Worker)
-python/     los procesos de Python de Sloth
-scripts/    compilar, publicar y desplegar
-docs/       las decisiones (adr/) y las guías para agentes (agents/)
+electron/     Bootstrap de Electron y Ghost Browser Vault (CDP)
+server/       Servidor Node, controlador de Pi Agent y fábrica de lotes
+web/          Interfaz React 19 + Vite con componentes Cupertino Glass
+skills/       Habilidades de video y renderizado (Remotion, Motion Graphics)
+python/       Procesos de voz (TTS rápido, clonación de audio)
+replica/      Configuración de marca y módulos de licenciamiento
+scripts/      Scripts de compilación, verificación y empaquetado
+shared/       Tipos e interfaces compartidas entre cliente y servidor
 ```
 
-Las reglas del proyecto y el mapa del código están en [`AGENTS.md`](AGENTS.md) y
-[`docs/agents/mapa.md`](docs/agents/mapa.md).
+---
 
-## Roadmap
+## 📄 Licencia
 
-Las metas se cuentan con las personas que apoyan hoy, y quien apoya recibe cada versión 7 días antes que todos.
+Este proyecto está bajo la Licencia **MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
-| Personas que apoyan | Qué sale |
-| --- | --- |
-| 25 | Sloth firmada por Apple: en Mac se abre sin avisos y se actualiza sola |
-| 50 | Publicar en YouTube desde Sloth, con su API oficial |
-| 100 | Publicar en Instagram y Facebook, con la API oficial de Meta |
-| 150 | Publicar en TikTok, con su API oficial |
-| 250 | La tienda de estilos: sube los tuyos y usa los de la comunidad |
+---
 
-El orden lo puede cambiar la comunidad: se vota dentro de Sloth, y el voto de un Fundador vale doble.
-[Míralo en vivo en la página](https://snowstudio.app/#roadmap).
-
-## Apoya a Sloth
-
-Sloth es gratis y lo seguirá siendo. Si te sirve, puedes [apoyarla](https://snowstudio.app/#apoyar) desde
-$15 USD al mes: con ese apoyo salen las metas del roadmap. Las primeras 25 personas que apoyan son **Fundadores**
-para siempre, con insignia en la comunidad, su nombre en los créditos de la página y voto doble.
-
-## Aportar
-
-Los PRs son bienvenidos. Lee [`CONTRIBUTING.md`](CONTRIBUTING.md) antes de empezar: la interfaz va en español, la
-paleta es la de Sloth y cada cambio se comprueba en Windows, Mac y Linux. Para reportar un problema de seguridad, no
-abras un issue: sigue [`SECURITY.md`](SECURITY.md).
-
-## Créditos
-
-El estilo **Documental** parte de EDITOR V1, de [NextPhase AI](https://www.skool.com/nextphase-5790/about), que
-venía para HyperFrames; en Sloth se dibuja con Remotion.
-
-## Licencia
-
-**Código abierto para uso libre, sin reventa.** Puedes usar Sloth para lo que quieras (también para trabajos de
-paga), modificarla y compartirla. Lo que no puedes es venderla, ni una versión modificada, ni un servicio cuyo valor
-venga de ella. Los videos que hagas son tuyos y los puedes vender. Es la [Apache 2.0 con Commons Clause](LICENSE), a
-nombre de [Snow Studio](https://snowstudio.app); por esa condición no es «open source» según la definición de la OSI.
-
-Remotion, que arma los videos, tiene su [propia licencia](https://www.remotion.dev/license): gratis para personas y
-equipos pequeños; las empresas más grandes pagan la suya. Sloth no está afiliada, patrocinada ni respaldada por
-Anthropic ni por OpenAI.
-
-<p align="center"><sub>Hecho por <a href="https://snowstudio.app">Snow Studio</a> en México</sub></p>
+<p align="center">Desarrollado por <b>NevaStudio / Snowing Torres</b></p>

@@ -1,8 +1,9 @@
 {
   "name": "nevastudio",
+  "productName": "NevaStudio",
   "version": "1.0.0",
   "private": true,
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "type": "module",
   "description": "Neva Studio: Estudio autónomo de video con agentes de IA y los 5 efectos de animación fluida.",
   "scripts": {
